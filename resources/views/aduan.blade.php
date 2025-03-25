@@ -6,14 +6,27 @@
     showEditModal: false,
     showDeleteConfirm: false,
     selectedAduan: {},
-    deleteIndex: null
+    deleteIndex: null,
+    aduan: [
+        { pelapor: 'Budi', kategori: 'Infrastruktur', tanggal: '2025-03-10', status: 'Belum Diproses' },
+        { pelapor: 'Siti', kategori: 'Lingkungan', tanggal: '2025-03-09', status: 'Diproses' },
+        { pelapor: 'Andi', kategori: 'Pelayanan Publik', tanggal: '2025-03-08', status: 'Selesai' },
+        { pelapor: 'Rina', kategori: 'Keamanan', tanggal: '2025-03-07', status: 'Belum Diproses' },
+    ],
+    searchQuery: '',
+    get filteredAduan() {
+        return this.aduan.filter(item => {
+            return item.pelapor.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+                   item.kategori.toLowerCase().includes(this.searchQuery.toLowerCase());
+        });
+    }
 }" class="p-6 bg-[#F8F9FD]">
     <div class="flex justify-between items-center mb-8">
         <h1 class="text-2xl font-bold text-[#2B3674]">Tabel Aduan</h1>
 
         <div class="flex items-center gap-4">
             <form action="#" method="GET" class="relative">
-                <input type="text" name="query" placeholder="Cari Aduan..."
+                <input type="text" x-model="searchQuery" placeholder="Cari Aduan..."
                     class="w-full pl-10 pr-4 py-2 text-gray-500 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500">
             </form>
 
@@ -38,38 +51,30 @@
                 </tr>
             </thead>
             <tbody class="divide-y divide-gray-200">
-                @php
-                    $aduan = [
-                        ['pelapor' => 'Budi', 'kategori' => 'Infrastruktur', 'tanggal' => '2025-03-10', 'status' => 'Belum Diproses'],
-                        ['pelapor' => 'Siti', 'kategori' => 'Lingkungan', 'tanggal' => '2025-03-09', 'status' => 'Diproses'],
-                        ['pelapor' => 'Andi', 'kategori' => 'Pelayanan Publik', 'tanggal' => '2025-03-08', 'status' => 'Selesai'],
-                        ['pelapor' => 'Rina', 'kategori' => 'Keamanan', 'tanggal' => '2025-03-07', 'status' => 'Belum Diproses'],
-                    ];
-                @endphp
-
-                @foreach ($aduan as $index => $data)
-                <tr class="hover:bg-gray-50">
-                    <td class="px-6 py-4 text-sm text-gray-500 text-center">{{ $index + 1 }}</td>
-                    <td class="px-6 py-4 text-center">{{ $data['pelapor'] }}</td>
-                    <td class="px-6 py-4 text-center">{{ $data['kategori'] }}</td>
-                    <td class="px-6 py-4 text-center">{{ $data['tanggal'] }}</td>
-                    <td class="px-6 py-4 text-center">
-                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{
-                            $data['status'] == 'Diproses' ? 'bg-yellow-100 text-yellow-800' : (
-                            $data['status'] == 'Selesai' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800') }}">
-                            {{ $data['status'] }}
-                        </span>
-                    </td>
-                    <td class="px-6 py-4 border-gray-400">
-                        <div class="flex gap-2">
-                            <button @click="showDetailModal = true; selectedAduan = {{ json_encode($data) }}" class="flex-1 px-3 py-1 bg-emerald-500 text-white rounded-md text-sm">Detail</button>
-                            <button @click="showEditModal = true; selectedAduan = {{ json_encode($data) }}"
-                                class="flex-1 px-3 py-1 bg-yellow-400 text-white rounded-md text-sm" style="background-color: #facc15 !important;">Edit</button>
-                            <button @click="deleteIndex = {{ $index }}; showDeleteConfirm = true" class="flex-1 px-3 py-1 bg-red-500 text-white rounded-md text-sm">Hapus</button>
-                        </div>
-                    </td>
-                </tr>
-                @endforeach
+                <template x-for="(data, index) in filteredAduan" :key="index">
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-6 py-4 text-sm text-gray-500 text-center" x-text="index + 1"></td>
+                        <td class="px-6 py-4 text-center" x-text="data.pelapor"></td>
+                        <td class="px-6 py-4 text-center" x-text="data.kategori"></td>
+                        <td class="px-6 py-4 text-center" x-text="data.tanggal"></td>
+                        <td class="px-6 py-4 text-center">
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full"
+                                  :class="{
+                                      'bg-yellow-100 text-yellow-800': data.status === 'Diproses',
+                                      'bg-green-100 text-green-800': data.status === 'Selesai',
+                                      'bg-red-100 text-red-800': data.status === 'Belum Diproses'
+                                  }"
+                                  x-text="data.status"></span>
+                        </td>
+                        <td class="px-6 py-4 border-gray-400">
+                            <div class="flex gap-2">
+                                <button @click="showDetailModal = true; selectedAduan = data" class="flex-1 px-3 py-1 bg-emerald-500 text-white rounded-md text-sm">Detail</button>
+                                <button @click="showEditModal = true; selectedAduan = data" class="flex-1 px-3 py-1 bg-yellow-400 text-white rounded-md text-sm" style="background-color: #facc15 !important;">Edit</button>
+                                <button @click="deleteIndex = index; showDeleteConfirm = true" class="flex-1 px-3 py-1 bg-red-500 text-white rounded-md text-sm">Hapus</button>
+                            </div>
+                        </td>
+                    </tr>
+                </template>
             </tbody>
         </table>
     </div>
@@ -153,7 +158,7 @@
             <p class="mb-4">Apakah Anda yakin ingin menghapus aduan ini?</p>
             <div class="flex justify-end gap-2">
                 <button @click="showDeleteConfirm = false" class="bg-gray-500 text-white px-4 py-2 rounded-lg">Batal</button>
-                <button @click="showDeleteConfirm = false; /* Add your delete function here */" class="bg-red-500 text-white px-4 py-2 rounded-lg">Hapus</button>
+                <button @click="showDeleteConfirm = false; aduan.splice(deleteIndex, 1)" class="bg-red-500 text-white px-4 py-2 rounded-lg">Hapus</button>
             </div>
         </div>
     </div>

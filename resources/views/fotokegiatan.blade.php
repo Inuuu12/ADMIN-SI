@@ -13,6 +13,7 @@
     ],
     filteredKegiatan: [],
     selectedCategory: 'Semua Kategori',
+    searchQuery: '',
 
     openModal(type, kegiatan = null) {
         this.modalType = type;
@@ -26,11 +27,11 @@
         this.showModal = false;
     },
     filterKegiatan() {
-        if (this.selectedCategory === 'Semua Kategori') {
-            this.filteredKegiatan = this.kegiatanList;
-        } else {
-            this.filteredKegiatan = this.kegiatanList.filter(kegiatan => kegiatan.kategori === this.selectedCategory);
-        }
+        this.filteredKegiatan = this.kegiatanList.filter(kegiatan => {
+            const matchesCategory = this.selectedCategory === 'Semua Kategori' || kegiatan.kategori === this.selectedCategory;
+            const matchesSearch = kegiatan.judul.toLowerCase().includes(this.searchQuery.toLowerCase());
+            return matchesCategory && matchesSearch;
+        });
     },
     handleFileUpload(e) {
         const file = e.target.files[0];
@@ -64,8 +65,9 @@ class="p-6 bg-[#F8F9FD]">
         <h1 class="text-2xl font-bold text-[#2B3674]">Foto Kegiatan</h1>
         <div class="flex items-center gap-4">
             <form action="#" method="GET" class="relative w-full max-w-xs">
-                <input type="text" name="query" placeholder="Cari Kegiatan..."
-                    class="w-full pl-10 pr-4 py-2 text-gray-500 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <input type="text" x-model="searchQuery" placeholder="Cari Kegiatan..."
+                    class="w-full pl-10 pr-4 py-2 text-gray-500 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    @input="filterKegiatan">
             </form>
             <div class="flex items-center gap-3">
                 <div class="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-600 font-medium">

@@ -10,7 +10,7 @@
 
             <!-- Search Bar -->
             <form action="#" method="GET" class="relative">
-                <input type="text" name="query" placeholder="Cari Pembayaran SPP..." class="w-full pl-10 pr-4 py-2 text-gray-500 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <input type="text" x-model="query" placeholder="Cari Pembayaran SPP..." class="w-full pl-10 pr-4 py-2 text-gray-500 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500">
             </form>
 
             <div class="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-600 font-medium">
@@ -36,7 +36,7 @@
                 </tr>
             </thead>
             <tbody class="divide-y divide-gray-200">
-                <template x-for="(spp, index) in sppList" :key="spp.id">
+            <template x-for="(spp, index) in filteredSppList" :key="spp.id">
                     <tr class="hover:bg-gray-50">
                         <td class="px-6 py-4 text-sm text-gray-500 text-center" x-text="index + 1"></td>
                         <td class="px-6 py-4 text-center" x-text="spp.nama"></td>
@@ -144,4 +144,42 @@ function sppApp() {
         }
     };
 }
+function sppApp() {
+    return {
+        showEditModal: false,
+        showDeleteModal: false,
+        showDetailModal: false,
+        selectedSpp: {},
+        query: '',
+        sppList: [
+            { id: 1, nama: "Budi Santoso", status: "Lunas", tanggal: "2024-03-01", jumlah: "500.000" },
+            { id: 2, nama: "Siti Aminah", status: "Belum Lunas", tanggal: "2024-03-10", jumlah: "500.000" },
+            { id: 3, nama: "Andi Wijaya", status: "Lunas", tanggal: "2024-02-20", jumlah: "500.000" }
+        ],
+        get filteredSppList() {
+            return this.sppList.filter(spp =>
+                spp.nama.toLowerCase().includes(this.query.toLowerCase())
+            );
+        },
+        openModal(type, spp = null) {
+            this.selectedSpp = spp || {};
+            this.showEditModal = type === 'edit';
+            this.showDeleteModal = type === 'hapus';
+            this.showDetailModal = type === 'detail';
+        },
+        closeModal() {
+            this.showEditModal = false;
+            this.showDeleteModal = false;
+            this.showDetailModal = false;
+        },
+        saveEdit() {
+            this.closeModal();
+        },
+        deleteSpp() {
+            this.sppList = this.sppList.filter(spp => spp.id !== this.selectedSpp.id);
+            this.closeModal();
+        }
+    };
+}
+
 </script>

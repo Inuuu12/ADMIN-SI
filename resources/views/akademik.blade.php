@@ -7,14 +7,19 @@
     modalTitle: '',
     form: { id: '', name: '', subject: '' },
     deleteIndex: null,
+    searchQuery: '',
     teachers: [
         { id: 1, name: 'Tom Housenburg', subject: 'Science' },
         { id: 2, name: 'Jack Sally', subject: 'Physics' },
         { id: 3, name: 'Sarah Doe', subject: 'Mathematics' },
         { id: 4, name: 'John Smith', subject: 'History' }
     ],
-    filteredTeachers: [],
-
+    get filteredTeachers() {
+        return this.teachers.filter(teacher =>
+            teacher.name.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+            teacher.subject.toLowerCase().includes(this.searchQuery.toLowerCase())
+        );
+    },
     openModal(type, teacher = null) {
         this.modalTitle = type === 'tambah' ? 'Add Teacher' : 'Edit Teacher';
         this.form = teacher ? { ...teacher } : { id: '', name: '', subject: '' };
@@ -33,14 +38,16 @@
     }
 }" class="p-6 bg-[#F8F9FD] w-full min-h-screen flex flex-col">
 
+
     <!-- Header Section -->
     <div class="flex flex-wrap justify-between items-center mb-8 gap-4">
         <h1 class="text-2xl font-bold text-[#2B3674]">Teachers</h1>
         <div class="flex items-center gap-4">
             <!-- Search Bar -->
             <form action="{{ route('search') }}" method="GET" class="relative w-full max-w-xs">
-                <input type="text" name="query" placeholder="Search teacher..."
-                    class="w-full pl-10 pr-4 py-2 text-gray-500 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <input type="text" name="query" x-model="searchQuery" placeholder="Search teacher..."
+    class="w-full pl-10 pr-4 py-2 text-gray-500 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500">
+
                 <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M17 10a7 7 0 1 0-7 7 7 7 0 0 0 7-7z"/>
                 </svg>
@@ -67,22 +74,19 @@
 
     <!-- Teachers Grid -->
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        <template x-for="(teacher, index) in teachers" :key="teacher.id">
-            <div class="bg-white p-6 rounded-2xl shadow-lg flex flex-col items-center text-center">
-                <!-- Teacher Photo -->
-                <img src="{{ asset('img/dashboard/teacher/OIP.jpeg') }}" alt="Teacher Picture"
-                    class="w-24 h-24 rounded-full object-cover border-4 border-emerald-500 mx-auto">
+    <template x-for="(teacher, index) in filteredTeachers" :key="teacher.id">
+    <div class="bg-white p-6 rounded-2xl shadow-lg flex flex-col items-center text-center">
+        <img src="{{ asset('img/dashboard/teacher/OIP.jpeg') }}" alt="Teacher Picture"
+            class="w-24 h-24 rounded-full object-cover border-4 border-emerald-500 mx-auto">
+        <h3 class="text-lg font-semibold text-[#2B3674] mt-4" x-text="teacher.name"></h3>
+        <p class="text-gray-500" x-text="teacher.subject"></p>
+        <div class="mt-4 flex gap-2">
+            <button @click="openModal('edit', teacher)" class="px-4 py-1 bg-yellow-400 text-white rounded-md text-sm">Edit</button>
+            <button @click="confirmDelete(index)" class="px-4 py-1 bg-red-500 text-white rounded-md text-sm">Delete</button>
+        </div>
+    </div>
+</template>
 
-                <h3 class="text-lg font-semibold text-[#2B3674] mt-4" x-text="teacher.name"></h3>
-                <p class="text-gray-500" x-text="teacher.subject"></p>
-
-                <!-- Action Buttons -->
-                <div class="mt-4 flex gap-2">
-                    <button @click="openModal('edit', teacher)" class="px-4 py-1 bg-yellow-400 text-white rounded-md text-sm">Edit</button>
-                    <button @click="confirmDelete(index)" class="px-4 py-1 bg-red-500 text-white rounded-md text-sm">Delete</button>
-                </div>
-            </div>
-        </template>
     </div>
 
     <!-- Add Teacher Modal -->
