@@ -1,6 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
+<style>
+  @keyframes scaleIn {
+    0% { transform: scale(0.95); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  .animate-scaleIn {
+    animation: scaleIn 0.3s ease-out forwards;
+  }
+</style>
+
 <div x-data="{
     showModal: false,
     showDeleteConfirm: false,
@@ -90,36 +101,37 @@
     </div>
 
     <!-- Add Teacher Modal -->
-    <div x-show="showModal" x-transition.opacity.scale.95 class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 p-4">
-        <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
-            <h2 class="text-xl font-bold mb-4 text-gray-700" x-text="modalTitle"></h2>
+   <!-- Add/Edit Modal -->
+<div x-show="showModal" x-transition.opacity class="fixed inset-0 z-50 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md animate-scaleIn">
+        <h2 class="text-xl font-bold mb-4 text-gray-700" x-text="modalTitle"></h2>
 
-            <form @submit.prevent="showModal = false">
-                <label class="block text-sm font-medium">Name</label>
-                <input type="text" class="border p-2 w-full mb-4 rounded-lg" x-model="form.name" placeholder="Enter teacher name">
+        <form @submit.prevent="showModal = false">
+            <label class="block text-sm font-medium">Name</label>
+            <input type="text" class="border p-2 w-full mb-4 rounded-lg" x-model="form.name" placeholder="Enter teacher name">
 
-                <label class="block text-sm font-medium">Subject</label>
-                <input type="text" class="border p-2 w-full mb-4 rounded-lg" x-model="form.subject" placeholder="Enter subject">
+            <label class="block text-sm font-medium">Subject</label>
+            <input type="text" class="border p-2 w-full mb-4 rounded-lg" x-model="form.subject" placeholder="Enter subject">
 
-                <div class="flex justify-end gap-2 mt-4">
-                    <button @click="showModal = false" class="px-4 py-2 bg-gray-500 text-white rounded-lg">Cancel</button>
-                    <button type="submit" class="px-4 py-2 bg-emerald-500 text-white rounded-lg">Save</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- Delete Confirmation Modal -->
-    <div x-show="showDeleteConfirm" x-transition.opacity.scale.95 class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 p-4">
-        <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
-            <h2 class="text-xl font-bold mb-4 text-gray-700">Confirm Deletion</h2>
-            <p class="mb-4">Are you sure you want to delete this teacher?</p>
-            <div class="flex justify-end gap-2">
-                <button @click="showDeleteConfirm = false" class="px-4 py-2 bg-gray-500 text-white rounded-lg">Cancel</button>
-                <button @click="deleteTeacher; showDeleteConfirm = false" class="px-4 py-2 bg-red-500 text-white rounded-lg">Delete</button>
+            <div class="flex justify-end gap-2 mt-4">
+                <button @click="showModal = false" class="px-4 py-2 bg-gray-500 text-white rounded-lg">Cancel</button>
+                <button type="submit" class="px-4 py-2 bg-emerald-500 text-white rounded-lg">Save</button>
             </div>
+        </form>
+    </div>
+</div>
+<!-- Delete Confirmation Modal -->
+<div x-show="showDeleteConfirm" x-transition.opacity class="fixed inset-0 z-50 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md animate-scaleIn text-center">
+        <h2 class="text-xl font-bold mb-4 text-gray-700">Confirm Deletion</h2>
+        <p class="mb-4">Are you sure you want to delete this teacher?</p>
+        <div class="flex justify-center gap-2">
+            <button @click="showDeleteConfirm = false" class="px-4 py-2 bg-gray-500 text-white rounded-lg">Cancel</button>
+            <button @click="deleteTeacher(); showDeleteConfirm = false" class="px-4 py-2 bg-red-500 text-white rounded-lg">Delete</button>
         </div>
     </div>
+</div>
+
 
 </div>
 @endsection

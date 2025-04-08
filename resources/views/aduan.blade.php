@@ -1,6 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
+<style>
+  @keyframes scaleIn {
+    0% { transform: scale(0.95); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  .animate-scaleIn {
+    animation: scaleIn 0.3s ease-out forwards;
+  }
+</style>
+
 <div x-data="{
     showDetailModal: false,
     showEditModal: false,
@@ -80,88 +91,94 @@
     </div>
 
     <!-- Modal Edit -->
-    <div x-show="showEditModal" x-transition.opacity class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-        <div class="bg-white p-6 rounded-lg shadow-lg w-96">
-            <h2 class="text-xl font-bold mb-4">Edit Aduan</h2>
+<div x-show="showEditModal" x-transition.opacity class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md animate-scaleIn">
+        <h2 class="text-xl font-bold mb-4 text-gray-700">Edit Aduan</h2>
 
-            <form action="#" method="POST">
-                @csrf
-                <div class="mb-3">
-                    <label class="block text-gray-700">Nama Pelapor</label>
-                    <input type="text" x-model="selectedAduan.pelapor" class="w-full px-3 py-2 border rounded-lg">
-                </div>
+        <form action="#" method="POST">
+            @csrf
+            <div class="mb-3">
+                <label class="block text-sm text-gray-700">Nama Pelapor</label>
+                <input type="text" x-model="selectedAduan.pelapor" class="w-full px-3 py-2 border rounded-lg">
+            </div>
 
-                <div class="mb-3">
-                    <label class="block text-gray-700">Kategori</label>
-                    <input type="text" x-model="selectedAduan.kategori" class="w-full px-3 py-2 border rounded-lg">
-                </div>
+            <div class="mb-3">
+                <label class="block text-sm text-gray-700">Kategori</label>
+                <input type="text" x-model="selectedAduan.kategori" class="w-full px-3 py-2 border rounded-lg">
+            </div>
 
-                <div class="mb-3">
-                    <label class="block text-gray-700">Tanggal</label>
-                    <input type="date" x-model="selectedAduan.tanggal" class="w-full px-3 py-2 border rounded-lg">
-                </div>
+            <div class="mb-3">
+                <label class="block text-sm text-gray-700">Tanggal</label>
+                <input type="date" x-model="selectedAduan.tanggal" class="w-full px-3 py-2 border rounded-lg">
+            </div>
 
-                <div class="mb-3">
-                    <label class="block text-gray-700">Status</label>
-                    <select x-model="selectedAduan.status" class="w-full px-3 py-2 border rounded-lg">
-                        <option value="Belum Diproses">Belum Diproses</option>
-                        <option value="Diproses">Diproses</option>
-                        <option value="Selesai">Selesai</option>
-                    </select>
-                </div>
+            <div class="mb-3">
+                <label class="block text-sm text-gray-700">Status</label>
+                <select x-model="selectedAduan.status" class="w-full px-3 py-2 border rounded-lg">
+                    <option value="Belum Diproses">Belum Diproses</option>
+                    <option value="Diproses">Diproses</option>
+                    <option value="Selesai">Selesai</option>
+                </select>
+            </div>
 
-                <div class="flex justify-end gap-2 mt-4">
-                    <button type="button" @click="showEditModal = false" class="bg-gray-500 text-white px-4 py-2 rounded-lg">Batal</button>
-                    <button type="submit" class="bg-emerald-500 text-white px-4 py-2 rounded-lg">Simpan</button>
-                </div>
-            </form>
-        </div>
+            <div class="flex justify-end gap-2 mt-4">
+                <button type="button" @click="showEditModal = false" class="bg-gray-500 text-white px-4 py-2 rounded-lg">Batal</button>
+                <button type="submit" class="bg-emerald-500 text-white px-4 py-2 rounded-lg">Simpan</button>
+            </div>
+        </form>
     </div>
+</div>
 
-    <!-- Modal Detail -->
-    <div x-show="showDetailModal" x-transition.opacity class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-        <div class="bg-white p-8 rounded-lg shadow-lg w-96 max-w-lg">
-            <h2 class="text-2xl font-semibold text-[#2B3674] mb-6">Detail Aduan</h2>
+<!-- Modal Detail -->
+<!-- Modal Detail -->
+<div x-show="showDetailModal" x-transition.opacity class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md animate-scaleIn">
+        <h2 class="text-2xl font-semibold text-[#2B3674] mb-6">Detail Aduan</h2>
 
-            <div class="space-y-4">
-                <div class="flex justify-between items-center">
-                    <p class="font-medium text-gray-700">Pelapor:</p>
-                    <p class="text-gray-500" x-text="selectedAduan.pelapor"></p>
-                </div>
+        <form class="space-y-4 text-sm">
+            <div>
+                <label class="block text-gray-700">Nama Pelapor</label>
+                <input type="text" x-model="selectedAduan.pelapor" readonly class="w-full px-3 py-2 border rounded-lg bg-gray-100 cursor-not-allowed">
+            </div>
 
-                <div class="flex justify-between items-center">
-                    <p class="font-medium text-gray-700">Kategori:</p>
-                    <p class="text-gray-500" x-text="selectedAduan.kategori"></p>
-                </div>
+            <div>
+                <label class="block text-gray-700">Kategori</label>
+                <input type="text" x-model="selectedAduan.kategori" readonly class="w-full px-3 py-2 border rounded-lg bg-gray-100 cursor-not-allowed">
+            </div>
 
-                <div class="flex justify-between items-center">
-                    <p class="font-medium text-gray-700">Tanggal:</p>
-                    <p class="text-gray-500" x-text="selectedAduan.tanggal"></p>
-                </div>
+            <div>
+                <label class="block text-gray-700">Tanggal</label>
+                <input type="date" x-model="selectedAduan.tanggal" readonly class="w-full px-3 py-2 border rounded-lg bg-gray-100 cursor-not-allowed">
+            </div>
 
-                <div class="flex justify-between items-center">
-                    <p class="font-medium text-gray-700">Status:</p>
-                    <p class="text-gray-500" x-text="selectedAduan.status"></p>
-                </div>
+            <div>
+                <label class="block text-gray-700">Status</label>
+                <select x-model="selectedAduan.status" disabled class="w-full px-3 py-2 border rounded-lg bg-gray-100 cursor-not-allowed">
+                    <option value="Belum Diproses">Belum Diproses</option>
+                    <option value="Diproses">Diproses</option>
+                    <option value="Selesai">Selesai</option>
+                </select>
             </div>
 
             <div class="flex justify-end mt-6">
-                <button @click="showDetailModal = false" class="bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-400">Tutup</button>
+                <button type="button" @click="showDetailModal = false" class="bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-400">Tutup</button>
             </div>
-        </div>
+        </form>
     </div>
+</div>
 
-    <!-- Delete Confirmation Modal -->
-    <div x-show="showDeleteConfirm" x-transition.opacity class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-        <div class="bg-white p-6 rounded-lg shadow-lg w-96">
-            <h2 class="text-xl font-bold mb-4">Konfirmasi Hapus</h2>
-            <p class="mb-4">Apakah Anda yakin ingin menghapus aduan ini?</p>
-            <div class="flex justify-end gap-2">
-                <button @click="showDeleteConfirm = false" class="bg-gray-500 text-white px-4 py-2 rounded-lg">Batal</button>
-                <button @click="showDeleteConfirm = false; aduan.splice(deleteIndex, 1)" class="bg-red-500 text-white px-4 py-2 rounded-lg">Hapus</button>
-            </div>
+
+<!-- Delete Confirmation Modal -->
+<div x-show="showDeleteConfirm" x-transition.opacity class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md animate-scaleIn">
+        <h2 class="text-xl font-bold mb-4 text-gray-700">Konfirmasi Hapus</h2>
+        <p class="mb-4 text-sm text-gray-600">Apakah Anda yakin ingin menghapus aduan ini?</p>
+        <div class="flex justify-end gap-2">
+            <button @click="showDeleteConfirm = false" class="bg-gray-500 text-white px-4 py-2 rounded-lg">Batal</button>
+            <button @click="showDeleteConfirm = false; aduan.splice(deleteIndex, 1)" class="bg-red-500 text-white px-4 py-2 rounded-lg">Hapus</button>
         </div>
     </div>
+</div>
 
 </div>
 @endsection

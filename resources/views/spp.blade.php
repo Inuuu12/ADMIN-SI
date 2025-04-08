@@ -1,6 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
+<style>
+  @keyframes scaleIn {
+    0% { transform: scale(0.9); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  .animate-scaleIn {
+    animation: scaleIn 0.3s ease-out forwards;
+  }
+</style>
+
 <div class="p-6 bg-[#F8F9FD]" x-data="sppApp()">
 
     <!-- Header with Profile and Search -->
@@ -57,58 +68,76 @@
             </tbody>
         </table>
     </div>
+<!-- Modal Detail SPP -->
+<div x-show="showDetailModal" x-transition.opacity class="fixed inset-0 z-50 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center px-4">
+  <div class="bg-white rounded-xl shadow-xl w-full max-w-md p-6 animate-scaleIn">
+    <h2 class="text-2xl font-bold text-center text-emerald-600 mb-4">Detail SPP</h2>
 
-    <!-- Modal Detail -->
-    <div x-show="showDetailModal" x-transition.opacity class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-        <div class="bg-white p-6 rounded-lg shadow-lg w-96">
-            <h2 class="text-xl font-bold mb-4">Detail SPP</h2>
-            <p><strong>Nama:</strong> <span x-text="selectedSpp.nama"></span></p>
-            <p><strong>Status:</strong> <span x-text="selectedSpp.status"></span></p>
-            <p><strong>Tanggal:</strong> <span x-text="selectedSpp.tanggal"></span></p>
-            <p><strong>Jumlah:</strong> <span x-text="selectedSpp.jumlah"></span></p>
-            <div class="flex justify-end gap-2 mt-4">
-                <button type="button" @click="closeModal()" class="bg-gray-500 text-white px-4 py-2 rounded-lg">Tutup</button>
-            </div>
-        </div>
+    <div>
+      <label class="block font-medium text-gray-700 mb-1">Nama</label>
+      <div class="w-full border rounded px-4 py-2 bg-gray-100 text-gray-800" x-text="selectedSpp.nama"></div>
     </div>
 
-    <!-- Modal Edit -->
-    <div x-show="showEditModal" x-transition.opacity class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-        <div class="bg-white p-6 rounded-lg shadow-lg w-96">
-            <h2 class="text-xl font-bold mb-4">Edit SPP</h2>
-            <form @submit.prevent="saveEdit()">
-                <label class="block text-gray-700">Nama</label>
-                <input type="text" x-model="selectedSpp.nama" class="w-full px-3 py-2 border rounded-lg mb-3">
-
-                <label class="block text-gray-700">Status Pembayaran</label>
-                <select x-model="selectedSpp.status" class="w-full px-3 py-2 border rounded-lg mb-3">
-                    <option value="Lunas">Lunas</option>
-                    <option value="Belum Lunas">Belum Lunas</option>
-                </select>
-
-                <label class="block text-gray-700">Tanggal Pembayaran</label>
-                <input type="text" x-model="selectedSpp.tanggal" class="w-full px-3 py-2 border rounded-lg mb-3">
-
-                <label class="block text-gray-700">Jumlah</label>
-                <input type="text" x-model="selectedSpp.jumlah" class="w-full px-3 py-2 border rounded-lg mb-3">
-
-                <div class="flex justify-end gap-2 mt-4">
-                    <button type="button" @click="closeModal()" class="bg-gray-500 text-white px-4 py-2 rounded-lg">Batal</button>
-                    <button type="submit" class="bg-emerald-500 text-white px-4 py-2 rounded-lg">Simpan</button>
-                </div>
-            </form>
-        </div>
+    <div class="mt-4">
+      <label class="block font-medium text-gray-700 mb-1">Status</label>
+      <div class="w-full border rounded px-4 py-2 bg-gray-100 text-gray-800" x-text="selectedSpp.status"></div>
     </div>
-    <div x-show="showDeleteModal" x-transition.opacity class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-        <div class="bg-white p-6 rounded-lg shadow-lg w-96 text-center" @click.away="closeModal()">
-            <h2 class="text-xl font-bold mb-4">Yakin akan menghapus?</h2>
-            <p><strong>Nama:</strong> <span x-text="selectedSpp.nama"></span></p>
-            <div class="flex justify-center gap-2 mt-4">
-                <button type="button" @click="closeModal()" class="bg-gray-500 text-white px-4 py-2 rounded-lg">Tutup</button>
-                <button type="button" @click="deleteSpp()" class="bg-red-500 text-white px-4 py-2 rounded-lg">Hapus</button>
-            </div>
-        </div>
+
+    <div class="mt-4">
+      <label class="block font-medium text-gray-700 mb-1">Tanggal</label>
+      <div class="w-full border rounded px-4 py-2 bg-gray-100 text-gray-800" x-text="selectedSpp.tanggal"></div>
     </div>
+
+    <div class="mt-4">
+      <label class="block font-medium text-gray-700 mb-1">Jumlah</label>
+      <div class="w-full border rounded px-4 py-2 bg-gray-100 text-gray-800" x-text="selectedSpp.jumlah"></div>
+    </div>
+
+    <button @click="closeModal()" class="mt-6 w-full py-2 bg-rose-500 hover:bg-rose-600 text-white rounded-lg">Tutup</button>
+  </div>
+</div>
+
+<!-- Modal Edit -->
+<div x-show="showEditModal" x-transition.opacity class="fixed inset-0 z-50 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center px-4">
+  <div class="bg-white p-6 rounded-lg shadow-xl w-full max-w-md animate-scaleIn">
+    <h2 class="text-xl font-bold text-center text-yellow-500 mb-4">Edit SPP</h2>
+    <form @submit.prevent="saveEdit()">
+      <label class="block text-gray-700">Nama</label>
+      <input type="text" x-model="selectedSpp.nama" class="w-full px-3 py-2 border rounded-lg mb-3">
+
+      <label class="block text-gray-700">Status Pembayaran</label>
+      <select x-model="selectedSpp.status" class="w-full px-3 py-2 border rounded-lg mb-3">
+        <option value="Lunas">Lunas</option>
+        <option value="Belum Lunas">Belum Lunas</option>
+      </select>
+
+      <label class="block text-gray-700">Tanggal Pembayaran</label>
+      <input type="text" x-model="selectedSpp.tanggal" class="w-full px-3 py-2 border rounded-lg mb-3">
+
+      <label class="block text-gray-700">Jumlah</label>
+      <input type="text" x-model="selectedSpp.jumlah" class="w-full px-3 py-2 border rounded-lg mb-3">
+
+      <div class="flex justify-end gap-2 mt-4">
+        <button type="button" @click="closeModal()" class="bg-gray-500 text-white px-4 py-2 rounded-lg">Batal</button>
+        <button type="submit" class="bg-emerald-500 text-white px-4 py-2 rounded-lg">Simpan</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal Hapus -->
+<div x-show="showDeleteModal" x-transition.opacity class="fixed inset-0 z-50 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center px-4">
+  <div class="bg-white p-6 rounded-lg shadow-xl w-full max-w-md text-center animate-scaleIn">
+    <h2 class="text-xl font-bold text-red-600 mb-4">Yakin akan menghapus?</h2>
+    <p><strong>Nama:</strong> <span x-text="selectedSpp.nama"></span></p>
+    <div class="flex justify-center gap-2 mt-4">
+      <button type="button" @click="closeModal()" class="bg-gray-500 text-white px-4 py-2 rounded-lg">Tutup</button>
+      <button type="button" @click="deleteSpp()" class="bg-red-500 text-white px-4 py-2 rounded-lg">Hapus</button>
+    </div>
+  </div>
+</div>
+
+
 </div>
 @endsection
 

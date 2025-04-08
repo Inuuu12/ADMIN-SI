@@ -1,6 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
+<style>
+  @keyframes scaleIn {
+    0% { transform: scale(0.9); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  .animate-scaleIn {
+    animation: scaleIn 0.3s ease-out forwards;
+  }
+</style>
+
 <div class="p-6 bg-[#F8F9FD]">
     <!-- Wrapper -->
     <div class="flex flex-col mb-8">
@@ -11,9 +22,9 @@
             <div class="flex items-center gap-3 w-full md:w-auto">
 
                 <!-- Search Bar -->
-                <form action="{{ route('search') }}" method="GET" class="relative flex-1 md:flex-none w-full md:w-64">
-                    <input type="text" name="query" placeholder="Search Siswa Baru..."
-                        class="w-full pl-10 pr-4 py-2 text-gray-500 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <form onsubmit="event.preventDefault(); renderTable();" class="relative flex-1 md:flex-none w-full md:w-64">
+                <input type="text" id="searchQuery" placeholder="Search Siswa Baru..."
+                    class="w-full pl-10 pr-4 py-2 text-gray-500 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </form>
 
                 <!-- Notifikasi -->
@@ -94,47 +105,47 @@
         </div>
 
         <!-- Modal Tambah Siswa -->
-        <div x-show="showTambah" x-transition class="fixed inset-0 z-20 flex justify-center items-center bg-black bg-opacity-50 px-4">
-            <div @click.away="showTambah = false" class="bg-white p-6 rounded-md w-full max-w-md shadow-lg">
-                <h3 class="text-2xl font-semibold mb-4 text-center">Form Tambah Siswa Baru</h3>
-                <form id="tambahSiswaForm" class="space-y-4">
-                    <!-- Nama -->
-                    <div>
-                        <label class="block mb-1 font-medium">Nama:</label>
-                        <input type="text" class="w-full p-2 border rounded-md focus:ring focus:ring-emerald-300" id="tambahNama" placeholder="Nama Siswa">
-                    </div>
-
-                    <!-- Sekolah -->
-                    <div>
-                        <label class="block mb-1 font-medium">Sekolah:</label>
-                        <input type="text" class="w-full p-2 border rounded-md focus:ring focus:ring-emerald-300" id="tambahSekolah" placeholder="Sekolah Asal">
-                    </div>
-
-                    <!-- Usia -->
-                    <div>
-                        <label class="block mb-1 font-medium">Usia:</label>
-                        <input type="number" class="w-full p-2 border rounded-md focus:ring focus:ring-emerald-300" id="tambahUsia" placeholder="Usia">
-                    </div>
-
-                    <!-- Status -->
-                    <div>
-                        <label class="block mb-1 font-medium">Status:</label>
-                        <select class="w-full p-2 border rounded-md focus:ring focus:ring-emerald-300" id="tambahStatus">
-                            <option value="">Pilih Status</option>
-                            <option value="Diterima">Diterima</option>
-                            <option value="Menunggu">Menunggu</option>
-                            <option value="Ditolak">Ditolak</option>
-                        </select>
-                    </div>
-
-                    <!-- Tombol Simpan -->
-                    <button type="button" class="w-full py-2 px-4 bg-emerald-500 text-white rounded-md hover:bg-emerald-600" onclick="saveTambahSiswa()">Simpan</button>
-                </form>
-                <!-- Tombol Tutup -->
-                <button class="mt-4 w-full py-2 bg-red-500 text-white rounded-md hover:bg-red-600" @click="showTambah = false">Tutup</button>
+        <div x-show="showTambah" x-transition class="fixed inset-0 z-20 flex justify-center items-center bg-black/50 backdrop-blur-sm px-4">
+    <div @click.away="showTambah = false" class="bg-white p-6 rounded-md w-full max-w-md shadow-lg">
+        <h3 class="text-2xl font-semibold mb-4 text-center">Form Tambah Siswa Baru</h3>
+        <form id="tambahSiswaForm" class="space-y-4">
+            <!-- Nama -->
+            <div>
+                <label class="block mb-1 font-medium">Nama:</label>
+                <input type="text" class="w-full p-2 border rounded-md focus:ring focus:ring-emerald-300" id="tambahNama" placeholder="Nama Siswa">
             </div>
-        </div>
+
+            <!-- Sekolah -->
+            <div>
+                <label class="block mb-1 font-medium">Sekolah:</label>
+                <input type="text" class="w-full p-2 border rounded-md focus:ring focus:ring-emerald-300" id="tambahSekolah" placeholder="Sekolah Asal">
+            </div>
+
+            <!-- Usia -->
+            <div>
+                <label class="block mb-1 font-medium">Usia:</label>
+                <input type="number" class="w-full p-2 border rounded-md focus:ring focus:ring-emerald-300" id="tambahUsia" placeholder="Usia">
+            </div>
+
+            <!-- Status -->
+            <div>
+                <label class="block mb-1 font-medium">Status:</label>
+                <select class="w-full p-2 border rounded-md focus:ring focus:ring-emerald-300" id="tambahStatus">
+                    <option value="">Pilih Status</option>
+                    <option value="Diterima">Diterima</option>
+                    <option value="Menunggu">Menunggu</option>
+                    <option value="Ditolak">Ditolak</option>
+                </select>
+            </div>
+
+            <!-- Tombol Simpan -->
+            <button type="button" class="w-full py-2 px-4 bg-emerald-500 text-white rounded-md hover:bg-emerald-600" onclick="saveTambahSiswa()">Simpan</button>
+        </form>
+        <!-- Tombol Tutup -->
+        <button class="mt-4 w-full py-2 bg-red-500 text-white rounded-md hover:bg-red-600" @click="showTambah = false">Tutup</button>
     </div>
+</div>
+
 
     <!-- Stats Cards -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
@@ -193,250 +204,265 @@
 
     <!-- Filter & Sorting Section -->
     <div class="bg-white p-6 rounded-md mb-8">
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
 
-            <!-- Filter Status -->
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Status Pendaftaran</label>
-                <select class="w-full border rounded-lg px-3 py-2">
-                    <option value="">Semua Status</option>
-                    <option value="diterima">Diterima</option>
-                    <option value="pending">Pending</option>
-                    <option value="ditolak">Ditolak</option>
-                </select>
-            </div>
-
-            <!-- Filter Sekolah -->
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Sekolah Asal</label>
-                <select class="w-full border rounded-lg px-3 py-2">
-                    <option value="">Semua Sekolah</option>
-                    <option value="sdn">SD Negeri</option>
-                    <option value="sds">SD Swasta</option>
-                    <option value="mi">MI</option>
-                </select>
-            </div>
-
-            <!-- Filter Usia -->
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Rentang Usia</label>
-                <select class="w-full border rounded-lg px-3 py-2">
-                    <option value="">Semua Usia</option>
-                    <option value="11-12">11-12 tahun</option>
-                    <option value="13-14">13-14 tahun</option>
-                    <option value="15">15+ tahun</option>
-                </select>
-            </div>
-
-            <!-- Sorting -->
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Urutkan</label>
-                <select class="w-full border rounded-lg px-3 py-2">
-                    <option value="terbaru">Terbaru</option>
-                    <option value="terlama">Terlama</option>
-                    <option value="nama_asc">Nama (A-Z)</option>
-                    <option value="nama_desc">Nama (Z-A)</option>
-                </select>
-            </div>
+        <!-- Filter Status -->
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Status Pendaftaran</label>
+            <select id="filterStatus" onchange="renderTable()" class="w-full border rounded-lg px-3 py-2">
+                <option value="">Semua Status</option>
+                <option value="Diterima">Diterima</option>
+                <option value="Menunggu">Pending</option>
+                <option value="Ditolak">Ditolak</option>
+            </select>
         </div>
-    </div>
 
-    <!-- Modal Edit -->
-    <div id="modal" class="hidden fixed inset-0 z-10 flex justify-center items-center bg-black bg-opacity-50">
-        <div class="bg-white p-6 rounded-md w-full max-w-md">
-            <h3 id="modalTitle" class="text-2xl font-semibold mb-4">Form Edit Siswa</h3>
-            <div id="modalContent"></div>
-            <button class="mt-4 px-4 py-2 bg-red-500 text-white rounded-md" onclick="closeModal()">Tutup</button>
+        <!-- Filter Usia -->
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Rentang Usia</label>
+            <select id="filterUsia" onchange="renderTable()" class="w-full border rounded-lg px-3 py-2">
+                <option value="">Semua Usia</option>
+                <option value="11-12">11-12 tahun</option>
+                <option value="13-14">13-14 tahun</option>
+                <option value="15+">15+ tahun</option>
+            </select>
         </div>
-    </div>
 
-    <!-- Modal Detail -->
-    <div id="detailModal" class="hidden fixed inset-0 z-10 flex justify-center items-center bg-black bg-opacity-50">
-        <div class="bg-white p-8 rounded-lg w-full max-w-lg space-y-6 shadow-lg">
-            <h3 class="text-2xl font-semibold text-center text-[#2B3674] mb-4">Detail Siswa</h3>
-            <div class="space-y-4">
-                <div class="flex justify-between">
-                    <span class="font-medium text-gray-700">Nama:</span>
-                    <span class="text-lg text-gray-900" id="detailNama">Budi Santoso</span>
-                </div>
-                <div class="flex justify-between">
-                    <span class="font-medium text-gray-700">Sekolah:</span>
-                    <span class="text-lg text-gray-900" id="detailSekolah">SMA 1 Jakarta</span>
-                </div>
-                <div class="flex justify-between">
-                    <span class="font-medium text-gray-700">Usia:</span>
-                    <span class="text-lg text-gray-900" id="detailUsia">17 Tahun</span>
-                </div>
-                <div class="flex justify-between">
-                    <span class="font-medium text-gray-700">Status:</span>
-                    <span class="text-lg text-gray-900" id="detailStatus">Diterima</span>
-                </div>
-            </div>
-            <div class="flex justify-center gap-4 mt-6">
-                <button onclick="closeDetailModal()" class="px-6 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500">Tutup</button>
-            </div>
+        <!-- Sorting -->
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Urutkan</label>
+            <select id="sortBy" onchange="renderTable()" class="w-full border rounded-lg px-3 py-2">
+                <option value="terbaru">Terbaru</option>
+                <option value="terlama">Terlama</option>
+                <option value="nama_asc">Nama (A-Z)</option>
+                <option value="nama_desc">Nama (Z-A)</option>
+            </select>
         </div>
-    </div>
 
-    <!-- Table -->
-    <div class="container mx-auto mt-8">
-        <h1 class="text-1xl font-semibold text-center mb-4">Data Siswa</h1>
-        <div class="overflow-x-auto">
-            <table class="min-w-full bg-white shadow-md rounded-md">
-                <thead class="bg-gray-200">
-                    <tr>
-                        <th class="px-6 py-3 text-left text-sm text-gray-600">No</th>
-                        <th class="px-6 py-3 text-left text-sm text-gray-600">Nama</th>
-                        <th class="px-6 py-3 text-left text-sm text-gray-600">Sekolah</th>
-                        <th class="px-6 py-3 text-left text-sm text-gray-600">Usia</th>
-                        <th class="px-6 py-3 text-left text-sm text-gray-600">Status</th>
-                        <th class="px-6 py-3 text-left text-sm text-gray-600 text-center">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody id="siswaTable">
-                </tbody>
-            </table>
-        </div>
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.3/dist/tailwind.min.js"></script>
-<script>
-    // Data siswa
-    let siswa = [
-        { nama: "Budi Santoso", sekolah: "SMA 1 Jakarta", usia: 17, status: "Diterima" },
-        { nama: "Rina Putri", sekolah: "SMA 2 Bandung", usia: 16, status: "Menunggu" },
-        { nama: "Andi Wijaya", sekolah: "SMA 3 Surabaya", usia: 18, status: "Ditolak" },
+<!-- Modal Detail -->
+<div id="modalDetail" class="hidden fixed inset-0 z-50 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center transition-opacity duration-300 px-4">
+  <div class="bg-white rounded-xl shadow-xl w-full max-w-md p-6 animate-scaleIn">
+    <h2 class="text-2xl font-bold text-center text-emerald-600 mb-4">Detail Siswa</h2>
+    <div>
+      <label class="block font-medium text-gray-700 mb-1">Nama</label>
+      <div id="detailNama" class="w-full border rounded px-4 py-2 bg-gray-100 text-gray-800"></div>
+    </div>
+    <div>
+      <label class="block font-medium text-gray-700 mb-1">Sekolah</label>
+      <div id="detailSekolah" class="w-full border rounded px-4 py-2 bg-gray-100 text-gray-800"></div>
+    </div>
+    <div>
+      <label class="block font-medium text-gray-700 mb-1">Usia</label>
+      <div id="detailUsia" class="w-full border rounded px-4 py-2 bg-gray-100 text-gray-800"></div>
+    </div>
+    <div>
+      <label class="block font-medium text-gray-700 mb-1">Status</label>
+      <div id="detailStatus" class="w-full border rounded px-4 py-2 bg-gray-100 text-gray-800"></div>
+    </div>
+    <button onclick="closeDetail()" class="mt-6 w-full py-2 bg-rose-500 hover:bg-rose-600 text-white rounded-lg">Tutup</button>
+  </div>
+</div>
+
+<!-- Modal Edit -->
+<div id="modalEdit" class="hidden fixed inset-0 z-50 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center transition-opacity duration-300 px-4">
+  <div class="bg-white rounded-xl shadow-xl w-full max-w-md p-6 animate-scaleIn">
+    <h2 class="text-2xl font-bold text-center text-yellow-600 mb-4">Edit Siswa</h2>
+    <form id="formEdit" onsubmit="saveEdit(event)" class="space-y-4">
+      <input type="hidden" id="editIndex">
+
+      <div>
+        <label for="editNama" class="block font-medium text-gray-700 mb-1">Nama</label>
+        <input type="text" id="editNama" placeholder="Masukkan nama siswa" class="w-full border rounded px-4 py-2" required>
+      </div>
+
+      <div>
+        <label for="editSekolah" class="block font-medium text-gray-700 mb-1">Sekolah</label>
+        <input type="text" id="editSekolah" placeholder="Nama sekolah" class="w-full border rounded px-4 py-2" required>
+      </div>
+
+      <div>
+        <label for="editUsia" class="block font-medium text-gray-700 mb-1">Usia</label>
+        <input type="number" id="editUsia" placeholder="Contoh: 16" class="w-full border rounded px-4 py-2" required>
+      </div>
+
+      <div>
+        <label for="editStatus" class="block font-medium text-gray-700 mb-1">Status</label>
+        <select id="editStatus" class="w-full border rounded px-4 py-2" required>
+          <option value="">-- Pilih Status --</option>
+          <option value="Diterima">Diterima</option>
+          <option value="Menunggu">Menunggu</option>
+          <option value="Ditolak">Ditolak</option>
+        </select>
+      </div>
+
+      <div class="flex flex-col sm:flex-row gap-2 pt-2">
+        <button type="submit" class="sm:flex-1 bg-green-500 hover:bg-green-600 text-white py-2 rounded-md">Simpan</button>
+        <button type="button" onclick="closeEdit()" class="sm:flex-1 bg-gray-400 hover:bg-gray-500 text-white py-2 rounded-md">Batal</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal Hapus -->
+<div id="modalHapus" class="hidden fixed inset-0 z-50 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center transition-opacity duration-300 px-4">
+  <div class="bg-white rounded-xl shadow-xl w-full max-w-sm p-6 animate-scaleIn text-center">
+    <h2 class="text-2xl font-bold text-red-600 mb-2">Konfirmasi Hapus</h2>
+    <p class="text-gray-700 mb-4" id="hapusNama"></p>
+    <div class="flex flex-col sm:flex-row justify-center gap-4">
+      <button onclick="confirmDelete()" class="flex-1 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg">Ya, Hapus</button>
+      <button onclick="closeHapus()" class="flex-1 bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded-lg">Batal</button>
+    </div>
+  </div>
+</div>
+
+
+
+
+    <!-- Table -->
+    <div class="container mx-auto mt-8 px-4">
+  <div class="w-full overflow-x-auto rounded-md">
+    <table class="min-w-full bg-white shadow-md text-sm">
+      <thead class="bg-gray-200">
+        <tr>
+          <th class="px-6 py-3 text-left text-gray-600 whitespace-nowrap">No</th>
+          <th class="px-6 py-3 text-left text-gray-600 whitespace-nowrap">Nama</th>
+          <th class="px-6 py-3 text-left text-gray-600 whitespace-nowrap">Sekolah</th>
+          <th class="px-6 py-3 text-left text-gray-600 whitespace-nowrap">Usia</th>
+          <th class="px-6 py-3 text-left text-gray-600 whitespace-nowrap">Status</th>
+          <th class="px-6 py-3 text-center text-gray-600 whitespace-nowrap">Aksi</th>
+        </tr>
+      </thead>
+      <tbody id="siswaTable"></tbody>
+    </table>
+  </div>
+</div>
+
+
+
+
+  <script>
+  let siswa = [
+      { nama: "Andi", sekolah: "SMA 1 Jakarta", usia: 12, status: "Diterima" },
+      { nama: "Budi", sekolah: "SMA 2 Bandung", usia: 14, status: "Menunggu" },
+      { nama: "Citra", sekolah: "SMA 3 Surabaya", usia: 15, status: "Ditolak" },
+      { nama: "Dina", sekolah: "SMA 1 Jakarta", usia: 13, status: "Diterima" },
     ];
 
-    // Render tabel
+    let deleteIndex = null;
+
     function renderTable() {
-        let tableBody = document.getElementById('siswaTable');
-        tableBody.innerHTML = '';  // Mengosongkan tabel sebelum di-render ulang
+      const filterStatus = document.getElementById("filterStatus").value;
+      const filterUsia = document.getElementById("filterUsia").value;
+      const sortBy = document.getElementById("sortBy").value;
+      const searchQuery = document.getElementById("searchQuery").value.toLowerCase();
 
-        siswa.forEach((data, index) => {
-            tableBody.innerHTML += `
-                <tr class="hover:bg-gray-50">
-                    <td class="px-6 py-4 text-sm text-gray-500">${index + 1}</td>
-                    <td class="px-6 py-4 break-words">${data.nama}</td>
-                    <td class="px-6 py-4 text-sm text-gray-500">${data.sekolah}</td>
-                    <td class="px-6 py-4 text-sm text-gray-500">${data.usia} tahun</td>
-                    <td class="px-6 py-4">
-                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                            data.status === "Diterima" ? "bg-green-100 text-green-800" :
-                            data.status === "Menunggu" ? "bg-yellow-100 text-yellow-800" :
-                            "bg-red-100 text-red-800"
-                        }">${data.status}</span>
-                    </td>
-                    <td class="px-6 py-4">
-                        <div class="flex gap-2">
-                            <button onclick="openEdit(${index})" class="flex-1 px-3 py-1 bg-yellow-400 text-white rounded-md text-sm">Edit</button>
-                            <button onclick="deleteSiswa(${index})" class="flex-1 px-3 py-1 bg-red-500 text-white rounded-md text-sm">Hapus</button>
-                            <button onclick="viewDetail(${index})" class="flex-1 px-3 py-1 bg-emerald-500 text-white rounded-md text-sm">Detail</button>
-                        </div>
-                    </td>
-                </tr>
-            `;
+      let filtered = siswa
+        .map((s, idx) => ({ ...s, originalIndex: idx }))
+        .filter(s => {
+          if (filterStatus && s.status !== filterStatus) return false;
+          if (filterUsia === "11-12" && !(s.usia >= 11 && s.usia <= 12)) return false;
+          if (filterUsia === "13-14" && !(s.usia >= 13 && s.usia <= 14)) return false;
+          if (filterUsia === "15+" && s.usia < 15) return false;
+          if (!s.nama.toLowerCase().includes(searchQuery)) return false;
+          return true;
         });
+
+      if (sortBy === "nama_asc") {
+        filtered.sort((a, b) => a.nama.localeCompare(b.nama));
+      } else if (sortBy === "nama_desc") {
+        filtered.sort((a, b) => b.nama.localeCompare(a.nama));
+      } else if (sortBy === "terbaru") {
+        filtered.reverse();
+      }
+
+      const tbody = document.getElementById("siswaTable");
+      tbody.innerHTML = "";
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" class="text-center py-4 text-gray-500">Data tidak ditemukan</td></tr>`;
+        return;
+      }
+
+      filtered.forEach((s, i) => {
+        tbody.innerHTML += `
+          <tr>
+            <td class="px-6 py-4">${i + 1}</td>
+            <td class="px-6 py-4">${s.nama}</td>
+            <td class="px-6 py-4">${s.sekolah}</td>
+            <td class="px-6 py-4">${s.usia}</td>
+            <td class="px-6 py-4">${s.status}</td>
+            <td class="px-6 py-4">
+              <div class="flex flex-col md:flex-row gap-2 justify-center">
+                <button onclick="showDetail(${s.originalIndex})" class="bg-emerald-500 text-white px-3 py-1 rounded text-sm">Detail</button>
+                <button onclick="showEdit(${s.originalIndex})" class="bg-yellow-400 text-white px-3 py-1 rounded text-sm">Edit</button>
+                <button onclick="deleteSiswa(${s.originalIndex})" class="bg-red-500 text-white px-3 py-1 rounded text-sm">Hapus</button>
+              </div>
+            </td>
+          </tr>`;
+      });
     }
 
-    // Fungsi untuk membuka modal edit
-    function openEdit(index) {
-        let student = siswa[index];
-
-        let content = `
-            <form>
-                <label class="block">Nama:</label>
-                <input type="text" class="w-full mb-4 p-2 border rounded-md" value="${student.nama}" id="editNama">
-                <label class="block">Sekolah:</label>
-                <input type="text" class="w-full mb-4 p-2 border rounded-md" value="${student.sekolah}" id="editSekolah">
-                <label class="block">Usia:</label>
-                <input type="number" class="w-full mb-4 p-2 border rounded-md" value="${student.usia}" id="editUsia">
-                <label class="block">Status:</label>
-                <select class="w-full mb-4 p-2 border rounded-md" id="editStatus">
-                    <option value="Diterima" ${student.status === "Diterima" ? "selected" : ""}>Diterima</option>
-                    <option value="Menunggu" ${student.status === "Menunggu" ? "selected" : ""}>Menunggu</option>
-                    <option value="Ditolak" ${student.status === "Ditolak" ? "selected" : ""}>Ditolak</option>
-                </select>
-                <button type="button" class="w-full py-2 px-4 bg-yellow-500 text-white rounded-md" onclick="saveEdit(${index})">Simpan</button>
-            </form>
-        `;
-        openModal('Edit Siswa', content);
+    function showDetail(i) {
+      const s = siswa[i];
+      document.getElementById("detailNama").innerText = s.nama;
+      document.getElementById("detailSekolah").innerText = s.sekolah;
+      document.getElementById("detailUsia").innerText = s.usia;
+      document.getElementById("detailStatus").innerText = s.status;
+      document.getElementById("modalDetail").classList.remove("hidden");
     }
 
-    // Fungsi untuk menyimpan hasil edit
-    function saveEdit(index) {
-        let updatedNama = document.getElementById('editNama').value;
-        let updatedSekolah = document.getElementById('editSekolah').value;
-        let updatedUsia = document.getElementById('editUsia').value;
-        let updatedStatus = document.getElementById('editStatus').value;
+    function closeDetail() {
+      document.getElementById("modalDetail").classList.add("hidden");
+    }
 
-        siswa[index] = { nama: updatedNama, sekolah: updatedSekolah, usia: updatedUsia, status: updatedStatus };
+    function showEdit(i) {
+      const s = siswa[i];
+      document.getElementById("editIndex").value = i;
+      document.getElementById("editNama").value = s.nama;
+      document.getElementById("editSekolah").value = s.sekolah;
+      document.getElementById("editUsia").value = s.usia;
+      document.getElementById("editStatus").value = s.status;
+      document.getElementById("modalEdit").classList.remove("hidden");
+    }
+
+    function closeEdit() {
+      document.getElementById("modalEdit").classList.add("hidden");
+    }
+
+    function saveEdit(e) {
+      e.preventDefault();
+      const i = document.getElementById("editIndex").value;
+      siswa[i].nama = document.getElementById("editNama").value;
+      siswa[i].sekolah = document.getElementById("editSekolah").value;
+      siswa[i].usia = parseInt(document.getElementById("editUsia").value);
+      siswa[i].status = document.getElementById("editStatus").value;
+      closeEdit();
+      renderTable();
+    }
+
+    function deleteSiswa(i) {
+      deleteIndex = i;
+      document.getElementById("hapusNama").innerText = `Siswa: ${siswa[i].nama}`;
+      document.getElementById("modalHapus").classList.remove("hidden");
+    }
+
+    function closeHapus() {
+      document.getElementById("modalHapus").classList.add("hidden");
+      deleteIndex = null;
+    }
+
+    function confirmDelete() {
+      if (deleteIndex !== null) {
+        siswa.splice(deleteIndex, 1);
+        deleteIndex = null;
         renderTable();
-        closeModal();
+        closeHapus();
+      }
     }
 
-    // Fungsi untuk menghapus siswa
-    function deleteSiswa(index) {
-        siswa.splice(index, 1);
-        renderTable();
-    }
-
-    // Modal Edit
-    function openModal(title, content) {
-        document.getElementById('modalTitle').innerText = title;
-        document.getElementById('modalContent').innerHTML = content;
-        document.getElementById('modal').classList.remove('hidden');
-    }
-
-    function closeModal() {
-        document.getElementById('modal').classList.add('hidden');
-    }
-
-    // Modal Detail
-    function viewDetail(index) {
-        let student = siswa[index];
-
-        document.getElementById('detailNama').innerText = student.nama;
-        document.getElementById('detailSekolah').innerText = student.sekolah;
-        document.getElementById('detailUsia').innerText = student.usia + " tahun";
-        document.getElementById('detailStatus').innerText = student.status;
-
-        document.getElementById('detailModal').classList.remove('hidden');
-    }
-
-    function closeDetailModal() {
-        document.getElementById('detailModal').classList.add('hidden');
-    }
-
-    // Render tabel pertama kali saat halaman dimuat
-    renderTable();
-
-    // Fungsi untuk menyimpan data siswa baru
-    function saveTambahSiswa() {
-        // Ambil data dari form
-        let nama = document.getElementById('tambahNama').value;
-        let sekolah = document.getElementById('tambahSekolah').value;
-        let usia = document.getElementById('tambahUsia').value;
-        let status = document.getElementById('tambahStatus').value;
-
-        // Validasi sederhana (bisa ditambah dengan validasi lain)
-        if (!nama || !sekolah || !usia || !status) {
-            alert("Semua kolom harus diisi.");
-            return;
-        }
-
-        // Menambah siswa baru ke array (bisa diganti dengan logic untuk menyimpan ke database)
-        siswa.push({ nama, sekolah, usia, status });
-
-        // Render ulang tabel
-        renderTable();
-
-        // Tutup modal
-        closeTambahSiswaModal();
-
-        // Reset form
-        document.getElementById('tambahSiswaForm').reset();
-    }
+    document.addEventListener("DOMContentLoaded", renderTable);
 </script>
 @endsection

@@ -1,6 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
+<style>
+  @keyframes scaleIn {
+    0% { transform: scale(0.95); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  .animate-scaleIn {
+    animation: scaleIn 0.3s ease-out forwards;
+  }
+</style>
+
 <div x-data="{
     showModal: false,
     modalType: '',
@@ -122,7 +133,7 @@ class="p-6 bg-[#F8F9FD]">
                         </td>
                         <td class="px-4 py-4">
                             <div class="flex justify-center gap-2">
-                                <button @click="openModal('detail', kegiatan)" class="px-3 py-1 bg-blue-500 text-white rounded-md text-sm">Detail</button>
+                                <button @click="openModal('detail', kegiatan)" class="px-3 py-1 bg-emerald-500 text-white rounded-md text-sm">Detail</button>
                                 <button @click="openModal('edit', kegiatan)" class="px-3 py-1 bg-yellow-400 text-white rounded-md text-sm">Edit</button>
                                 <button @click="openModal('hapus', kegiatan)" class="px-3 py-1 bg-red-500 text-white rounded-md text-sm">Hapus</button>
                             </div>
@@ -134,53 +145,62 @@ class="p-6 bg-[#F8F9FD]">
     </div>
 
     <!-- Modal -->
-    <div x-show="showModal" class="fixed inset-0 flex items-center justify-center bg-black/50">
-        <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
-            <h2 class="text-xl font-bold mb-4" x-text="modalTitle"></h2>
-            <template x-if="modalType !== 'hapus'">
-                <div>
-                    <label class="block text-sm font-medium">Judul</label>
-                    <input type="text" class="border p-2 w-full mb-2 rounded-lg" x-model="form.judul" :readonly="modalType === 'detail'">
+<div x-show="showModal" x-transition.opacity class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md animate-scaleIn">
+        <h2 class="text-xl font-bold mb-4 text-gray-700" x-text="modalTitle"></h2>
 
-                    <label class="block text-sm font-medium">Kategori</label>
-                    <input type="text" class="border p-2 w-full mb-2 rounded-lg" x-model="form.kategori" :readonly="modalType === 'detail'">
+        <!-- Formulir Tambah/Edit/Detail -->
+        <template x-if="modalType !== 'hapus'">
+            <div>
+                <label class="block text-sm font-medium">Judul</label>
+                <input type="text" class="border p-2 w-full mb-2 rounded-lg" x-model="form.judul" :readonly="modalType === 'detail'">
 
-                    <label class="block text-sm font-medium">Tanggal</label>
-                    <input type="date" class="border p-2 w-full mb-2 rounded-lg" x-model="form.tanggal" :readonly="modalType === 'detail'">
+                <label class="block text-sm font-medium">Kategori</label>
+                <input type="text" class="border p-2 w-full mb-2 rounded-lg" x-model="form.kategori" :readonly="modalType === 'detail'">
 
-                    <template x-if="modalType === 'tambah' || modalType === 'edit'">
-                        <div>
-                            <label class="block text-sm font-medium">Gambar</label>
-                            <input type="file" @change="e => handleFileUpload(e)" class="border p-2 w-full mb-2 rounded-lg">
+                <label class="block text-sm font-medium">Tanggal</label>
+                <input type="date" class="border p-2 w-full mb-2 rounded-lg" x-model="form.tanggal" :readonly="modalType === 'detail'">
 
-                            <template x-if="form.gambar">
-                                <img :src="form.gambar" class="w-full h-48 object-cover rounded-lg shadow-md mt-2">
-                            </template>
-                        </div>
-                    </template>
-
-                    <template x-if="modalType === 'detail'">
-                        <div class="mb-4">
-                            <label class="block text-sm font-medium">Gambar</label>
-                            <img :src="form.gambar" class="w-full h-48 object-cover rounded-lg shadow-md">
-                        </div>
-                    </template>
-                </div>
-            </template>
-            <template x-if="modalType === 'hapus'">
-                <p class="text-center text-gray-700">Apakah Anda yakin ingin menghapus kegiatan ini?</p>
-            </template>
-
-            <div class="flex justify-end gap-2 mt-4">
-                <button @click="closeModal()" class="px-4 py-2 bg-gray-500 text-white rounded-lg">Batal</button>
-                <template x-if="modalType === 'hapus'">
-                    <button @click="() => { kegiatanList = kegiatanList.filter(k => k.id !== form.id); filterKegiatan(); closeModal(); }" class="px-4 py-2 bg-red-500 text-white rounded-lg">Hapus</button>
-                </template>
                 <template x-if="modalType === 'tambah' || modalType === 'edit'">
-                    <button @click="simpanData()" class="px-4 py-2 bg-emerald-500 text-white rounded-lg">Simpan</button>
+                    <div>
+                        <label class="block text-sm font-medium">Gambar</label>
+                        <input type="file" @change="e => handleFileUpload(e)" class="border p-2 w-full mb-2 rounded-lg">
+
+                        <template x-if="form.gambar">
+                            <img :src="form.gambar" class="w-full h-48 object-cover rounded-lg shadow-md mt-2">
+                        </template>
+                    </div>
+                </template>
+
+                <template x-if="modalType === 'detail'">
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium">Gambar</label>
+                        <img :src="form.gambar" class="w-full h-48 object-cover rounded-lg shadow-md">
+                    </div>
                 </template>
             </div>
+        </template>
+
+        <!-- Konfirmasi Hapus -->
+        <template x-if="modalType === 'hapus'">
+            <p class="text-center text-gray-700">Apakah Anda yakin ingin menghapus kegiatan ini?</p>
+        </template>
+
+        <!-- Tombol -->
+        <div class="flex justify-end gap-2 mt-4">
+            <button @click="closeModal()" class="px-4 py-2 bg-gray-500 text-white rounded-lg">Batal</button>
+
+            <template x-if="modalType === 'hapus'">
+                <button @click="() => { kegiatanList = kegiatanList.filter(k => k.id !== form.id); filterKegiatan(); closeModal(); }"
+                        class="px-4 py-2 bg-red-500 text-white rounded-lg">Hapus</button>
+            </template>
+
+            <template x-if="modalType === 'tambah' || modalType === 'edit'">
+                <button @click="simpanData()" class="px-4 py-2 bg-emerald-500 text-white rounded-lg">Simpan</button>
+            </template>
         </div>
     </div>
+</div>
+
 </div>
 @endsection
