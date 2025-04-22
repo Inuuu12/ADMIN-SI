@@ -13,28 +13,32 @@ class DashboardController extends Controller
     }
 }
 
+// Route::get('/', function () {
+//     return redirect()->route('dashboard');
+// });
+
 Route::get('/', function () {
-    return redirect()->route('dashboard');
+    return redirect()->route('beranda');
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return view('ADMIN-SI.dashboard');
 })->name('dashboard');
 
 Route::get('/pendaftaran', function () {
-    return view('pendaftaran');
+    return view('ADMIN-SI.pendaftaran');
 })->name('pendaftaran');
 
 Route::get('/akademik', function () {
-    return view('akademik');
+    return view('ADMIN-SI.akademik');
 })->name('akademik');
 
 Route::get('/aduan', function () {
-    return view('aduan');
+    return view('ADMIN-SI.aduan');
 })->name('aduan');
 
 Route::get('/panduan', function () {
-    return view('panduan');
+    return view('ADMIN-SI.panduan');
 })->name('panduan');
 
 Route::get('/search', function () {
@@ -42,15 +46,15 @@ Route::get('/search', function () {
 })->name('search');
 
 Route::get('/fotokegiatan', function () {
-    return view('fotokegiatan');
+    return view('ADMIN-SI.fotokegiatan');
 })->name('fotokegiatan');
 
 Route::get('/spp', function () {
-    return view('spp');
+    return view('ADMIN-SI.spp');
 })->name('spp');
 
 Route::get('/profil', function () {
-    return view('profil');
+    return view('ADMIN-SI.profil');
 })->name('profil');
 
 Route::get('/login', function () {
