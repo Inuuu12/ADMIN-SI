@@ -22,11 +22,11 @@
             <div class="container mx-auto flex justify-between items-center px-32">
 
                 <!-- Logo -->
-                <a href="/beranda.blade.php" class="text-xl font-bold text-gray-800">Logo</a>
+                <a href="{{ route('beranda') }}" class="text-xl font-bold text-gray-800">Logo</a>
 
                 <!-- Menu Tengah -->
                 <ul class="hidden md:flex space-x-10">
-                    <li><a href="/beranda.blade.php" class="text-gray-600 hover:text-green-500 transition">Beranda</a></li>
+                    <li><a href="{{ route('beranda') }}" class="text-gray-600 hover:text-green-500 transition">Beranda</a></li>
 
                     <!-- Dropdown Profil -->
                     <li class="relative group">
@@ -35,19 +35,19 @@
                             Profil <i class="ph ph-caret-down ml-1"></i>
                         </button>
                         <ul id="profilDropdown" class="absolute hidden bg-white shadow-md mt-2 py-2 w-40">
-                            <li><a href="/tentang.blade.php"
+                            <li><a href="{{ route('tentang') }}"
                                     class="block px-4 py-2 text-gray-600 hover:bg-green-100">Tentang</a>
                             </li>
-                            <li><a href="/pengajar.blade.php"
+                            <li><a href="{{ route('pengajar') }}"
                                     class="block px-4 py-2 text-gray-600 hover:bg-green-100">Guru</a>
                             </li>
-                            <li><a href="/program.blade.php"
+                            <li><a href="{{ route('program') }}"
                                     class="block px-4 py-2 text-gray-600 hover:bg-green-100">Program</a>
                             </li>
                         </ul>
                     </li>
 
-                    <li><a href="/galeri.blade.php" class="text-gray-600 hover:text-green-500 transition">Galeri</a></li>
+                    <li><a href="{{ route('galeri') }}" class="text-gray-600 hover:text-green-500 transition">Galeri</a></li>
 
                     <!-- Dropdown Layanan -->
                     <li class="relative group">
@@ -56,16 +56,16 @@
                             Layanan <i class="ph ph-caret-down ml-1"></i>
                         </button>
                         <ul id="layananDropdown" class="absolute hidden bg-white shadow-md mt-2 py-2 w-48">
-                            <li><a href="/informasi_pendaftaran1.blade.php"
+                            <li><a href="{{ route('informasi_pendaftaran') }}"
                                     class="block px-4 py-2 text-gray-600 hover:bg-green-100">Informasi
                                     Pendaftaran</a></li>
-                            <li><a href="/pendaftaran.blade.php"
+                            <li><a href="{{ route('pendaftaran') }}"
                                     class="block px-4 py-2 text-gray-600 hover:bg-green-100">Pendaftaran Online</a>
                             </li>
                         </ul>
                     </li>
 
-                    <li><a href="/kontak.blade.php" class="text-gray-600 hover:text-green-500 transition">Kontak</a></li>
+                    <li><a href="{{ route('kontak') }}" class="text-gray-600 hover:text-green-500 transition">Kontak</a></li>
                 </ul>
 
                 <!-- Tombol Login -->
@@ -83,30 +83,30 @@
 
             <!-- Menu Mobile -->
             <div id="mobileMenu" class="hidden md:hidden bg-white shadow-md py-3 px-6">
-                <a href="#" class="block text-gray-600 hover:text-green-500 transition py-2">Beranda</a>
+                <a href="{{ route('beranda') }}" class="block text-gray-600 hover:text-green-500 transition py-2">Beranda</a>
                 <button class="w-full flex justify-between text-gray-600 hover:text-green-500 transition py-2"
                     onclick="toggleDropdown('profilDropdownMobile')">
                     Profil <i class="ph ph-caret-down"></i>
                 </button>
                 <div id="profilDropdownMobile" class="hidden pl-4">
-                    <a href="/tentang.blade.php" class="block text-gray-600 hover:bg-green-100 py-1">Tentang</a>
-                    <a href="/pengajar.blade.php" class="block text-gray-600 hover:bg-green-100 py-1">Guru</a>
-                    <a href="/program.blade.php" class="block text-gray-600 hover:bg-green-100 py-1">Program</a>
+                    <a href="{{ route('tentang') }}" class="block text-gray-600 hover:bg-green-100 py-1">Tentang</a>
+                    <a href="{{ route('pengajar') }}" class="block text-gray-600 hover:bg-green-100 py-1">Guru</a>
+                    <a href="{{ route('program') }}" class="block text-gray-600 hover:bg-green-100 py-1">Program</a>
                 </div>
 
-                <a href="/galeri.blade.php" class="block text-gray-600 hover:text-green-500 transition py-2">Galeri</a>
+                <a href="{{ route('galeri') }}" class="block text-gray-600 hover:text-green-500 transition py-2">Galeri</a>
 
                 <button class="w-full flex justify-between text-gray-600 hover:text-green-500 transition py-2"
                     onclick="toggleDropdown('layananDropdownMobile')">
                     Layanan <i class="ph ph-caret-down"></i>
                 </button>
                 <div id="layananDropdownMobile" class="hidden pl-4">
-                    <a href="/informasi_pendaftaran1.blade.php" class="block text-gray-600 hover:bg-green-100 py-1">Informasi
+                    <a href="{{ route('informasi_pendaftaran') }}" class="block text-gray-600 hover:bg-green-100 py-1">Informasi
                         Pendaftaran</a>
-                    <a href="/pendaftaran.blade.php" class="block text-gray-600 hover:bg-green-100 py-1">Pendaftaran</a>
+                    <a href="{{ route('pendaftaran') }}" class="block text-gray-600 hover:bg-green-100 py-1">Pendaftaran</a>
                 </div>
 
-                <a href="/kontak.blade.php" class="block text-gray-600 hover:text-green-500 transition py-2">Kontak</a>
+                <a href="{{ route('kontak') }}" class="block text-gray-600 hover:text-green-500 transition py-2">Kontak</a>
 
                 <a href="#"
                     class="block text-gray-600 border border-gray-300 rounded-lg text-center mt-2 py-2 hover:border-green-500 hover:text-green-500 transition">
@@ -338,7 +338,7 @@
 
     <section id="hero">
         <!-- Sumber: https://unsplash.com/ -->
-        <div class="bg-cover bg-center h-screen relative" style="background-image: url('images/photo-01.png');">
+        <div class="bg-cover bg-center h-screen relative" style="background-image: url('img/photo-01.png');">
             <div class="absolute inset-0 bg-black opacity-10"></div>
             <div class="absolute inset-0 flex flex-col justify-center items-center text-center px-10">
                 <h1 class="text-white text-2xl lg:text-5xl font-poppins font-bold mb-1"
@@ -357,7 +357,7 @@
     <div class="mt-20 px-48">
         <div class="flex gap-8">
 
-            <img class="w-60 aspect-square rounded-md" src="images/photo1.jpg" alt="">
+            <img class="w-60 aspect-square rounded-md" src="img/photo1.jpg" alt="">
 
             <div class="flex flex-col bg-green-600 p-8 rounded-lg shadow-md gap-4">
                 <h1 class="text-2xl font-semibold text-white">Sambutan Kepala Sekolah</h1>
@@ -390,7 +390,7 @@
                         <!-- Card 1 -->
                         <div
                             class="border border-gray-300 shadow-md rounded-lg overflow-hidden w-80 min-h-[360px] flex flex-col">
-                            <img src="images/photo1.png" alt="Gambar 1" class="w-full h-2/3 object-cover">
+                            <img src="img/photo1.png" alt="Gambar 1" class="w-full h-2/3 object-cover">
                             <div class="p-4 flex flex-col flex-1">
                                 <h2 class="text-lg font-semibold text-gray-800 text-center">Pesantren Kilat</h2>
                                 <p class="text-sm text-gray-600 mt-2 flex-grow text-center">
@@ -409,7 +409,7 @@
                         <!-- Card 2 -->
                         <div
                             class="border border-gray-300 shadow-md rounded-lg overflow-hidden w-80 min-h-[360px] flex flex-col">
-                            <img src="images/photo1.png" alt="Gambar 2" class="w-full h-2/3 object-cover">
+                            <img src="img/photo1.png" alt="Gambar 2" class="w-full h-2/3 object-cover">
                             <div class="p-4 flex flex-col flex-1">
                                 <h2 class="text-lg font-semibold text-gray-800 text-center">Kajian Islami</h2>
                                 <p class="text-sm text-gray-600 mt-2 flex-grow text-center">
@@ -428,7 +428,7 @@
                         <!-- Card 3 -->
                         <div
                             class="border border-gray-300 shadow-md rounded-lg overflow-hidden w-80 min-h-[360px] flex flex-col">
-                            <img src="images/photo1.png" alt="Gambar 3" class="w-full h-2/3 object-cover">
+                            <img src="img/photo1.png" alt="Gambar 3" class="w-full h-2/3 object-cover">
                             <div class="p-4 flex flex-col flex-1">
                                 <h2 class="text-lg font-semibold text-gray-800 text-center">Buka Puasa Bersama</h2>
                                 <p class="text-sm text-gray-600 mt-2 flex-grow text-center">
@@ -468,11 +468,11 @@
                 <div>
                     <h2 class="text-lg font-bold mb-4">Tautan Cepat</h2>
                     <ul class="text-sm space-y-2">
-                        <li><a href="/beranda.blade.php" class="hover:underline">Beranda</a></li>
-                        <li><a href="/tentang.blade.php" class="hover:underline">Tentang Kami</a></li>
-                        <li><a href="/program.blade.php" class="hover:underline">Program Belajar</a></li>
-                        <li><a href="/pendaftaran.blade.php" class="hover:underline">Pendaftaran</a></li>
-                        <li><a href="/kontak.blade.php" class="hover:underline">Kontak</a></li>
+                        <li><a href="{{ route('beranda') }}" class="hover:underline">Beranda</a></li>
+                        <li><a href="{{ route('tentang') }}" class="hover:underline">Tentang Kami</a></li>
+                        <li><a href="{{ route('program') }}" class="hover:underline">Program Belajar</a></li>
+                        <li><a href="{{ route('pendaftaran') }}" class="hover:underline">Pendaftaran</a></li>
+                        <li><a href="{{ route('kontak') }}" class="hover:underline">Kontak</a></li>
                     </ul>
                 </div>
                 <!-- Kontak -->

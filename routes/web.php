@@ -17,10 +17,50 @@ class DashboardController extends Controller
 //     return redirect()->route('dashboard');
 // });
 
+// Route User
 Route::get('/', function () {
     return redirect()->route('beranda');
 });
 
+Route::get('/beranda', function () {
+    return view('beranda');
+})->name('beranda');
+
+Route::get('/galeri', function () {
+    return view('galeri');
+})->name('galeri');
+
+Route::get('/informasi_pendaftaran', function () {
+    return view('informasi_pendaftaran1');
+})->name('informasi_pendaftaran');
+
+Route::get('/kontak', function () {
+    return view('kontak');
+})->name('kontak');
+
+Route::get('/pembayaran', function () {
+    return view('pembayaran');
+})->name('pembayaran');
+
+Route::get('/pendaftaran', function () {
+    return view('pendaftaran');
+})->name('pendaftaran');
+
+Route::get('/pengajar', function () {
+    return view('pengajar');
+})->name('pengajar');
+
+Route::get('/program', function () {
+    return view('program');
+})->name('program');
+
+Route::get('/tentang', function () {
+    return view('tentang');
+})->name('tentang');
+
+
+
+// Route Admin
 Route::get('/dashboard', function () {
     return view('ADMIN-SI.dashboard');
 })->name('dashboard');
