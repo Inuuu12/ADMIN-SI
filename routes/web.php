@@ -29,9 +29,8 @@ Route::get('/pendaftaran', function () {
     return view('ADMIN-SI.pendaftaran');
 })->name('pendaftaran');
 
-Route::get('/akademik', function () {
-    return view('ADMIN-SI.akademik');
-})->name('akademik');
+Route::get('/akademik', [GuruController::class, 'index'])->name('akademik');
+Route::resource('guru', GuruController::class);
 
 Route::get('/aduan', function () {
     return view('ADMIN-SI.aduan');

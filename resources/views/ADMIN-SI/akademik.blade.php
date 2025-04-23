@@ -85,19 +85,22 @@
 
     <!-- Teachers Grid -->
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-    <template x-for="(teacher, index) in filteredTeachers" :key="teacher.id">
-    <div class="bg-white p-6 rounded-2xl shadow-lg flex flex-col items-center text-center">
-        <img src="{{ asset('img/dashboard/teacher/OIP.jpeg') }}" alt="Teacher Picture"
-            class="w-24 h-24 rounded-full object-cover border-4 border-emerald-500 mx-auto">
-        <h3 class="text-lg font-semibold text-[#2B3674] mt-4" x-text="teacher.name"></h3>
-        <p class="text-gray-500" x-text="teacher.subject"></p>
-        <div class="mt-4 flex gap-2">
-            <button @click="openModal('edit', teacher)" class="px-4 py-1 bg-yellow-400 text-white rounded-md text-sm">Edit</button>
-            <button @click="confirmDelete(index)" class="px-4 py-1 bg-red-500 text-white rounded-md text-sm">Delete</button>
+    @foreach ($gurus as $guru)
+        <div class="bg-white p-6 rounded-2xl shadow-lg flex flex-col items-center text-center">
+            <img src="{{ asset('img/dashboard/teacher/OIP.jpeg') }}" alt="Teacher Picture"
+                class="w-24 h-24 rounded-full object-cover border-4 border-emerald-500 mx-auto">
+            <h3 class="text-lg font-semibold text-[#2B3674] mt-4">{{ $guru->nama }}</h3>
+            <p class="text-gray-500">{{ $guru->mata_pelajaran }}</p>
+            <div class="mt-4 flex gap-2">
+                <a href="{{ route('guru.edit', $guru->id) }}" class="px-4 py-1 bg-yellow-400 text-white rounded-md text-sm">Edit</a>
+                <form action="{{ route('guru.destroy', $guru->id) }}" method="POST" onsubmit="return confirm('Yakin hapus?')">
+                    @csrf
+                    @method('DELETE')
+                    <button class="px-4 py-1 bg-red-500 text-white rounded-md text-sm">Delete</button>
+                </form>
+            </div>
         </div>
-    </div>
-</template>
-
+    @endforeach
     </div>
 
     <!-- Add Teacher Modal -->
