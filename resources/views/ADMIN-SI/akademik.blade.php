@@ -222,6 +222,14 @@
       },
 
       closeModal() {
+        // Reset form data to initial empty state
+        this.form = { id: null, nama: '', nip: '', jabatan: '', pengalaman: '', pendidikan_terakhir: '', mata_pelajaran: '', gambar: null };
+        // Clear modal title
+        this.modalTitle = '';
+        // Hide validation error messages by removing error divs
+        const errorDivs = document.querySelectorAll('.text-red-500.text-sm.mt-0\\.5.mb-4');
+        errorDivs.forEach(div => div.style.display = 'none');
+        // Hide modal
         this.showModal = false;
       },
 
