@@ -10,10 +10,10 @@ class Guru extends Model
     protected $fillable = [
         'nama',
         'nip',
-        'alamat',
-        'no_hp',
-        'email',
-        'pendidikan_terakhir',
+        'jabatan',
         'mata_pelajaran',
+        'pengalaman',
+        'pendidikan_terakhir',
+        'gambar',
     ];
 }

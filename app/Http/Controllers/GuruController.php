@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Guru;
 
-
 class GuruController extends Controller
 {
     // Tampilkan semua data guru
@@ -25,16 +24,40 @@ class GuruController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama' => 'required',
-            'nip' => 'required|unique:tblguru,nip',
-            'alamat' => 'required',
-            'no_hp' => 'nullable',
-            'email' => 'nullable|email',
-            'pendidikan_terakhir' => 'nullable',
+            'nama' => 'required|max:100',
+            'nip' => 'required|max:20|unique:tblguru,nip',
+            'jabatan' => 'required|max:50',
             'mata_pelajaran' => 'required',
+            'pengalaman' => 'required|integer',
+            'pendidikan_terakhir' => 'required|max:100',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        ], [
+            'nama.required' => 'Nama wajib diisi.',
+            'nama.max' => 'Nama maksimal 100 karakter.',
+            'nip.required' => 'NIP wajib diisi.',
+            'nip.max' => 'NIP maksimal 20 karakter.',
+            'nip.unique' => 'NIP sudah digunakan.',
+            'jabatan.required' => 'Jabatan wajib diisi.',
+            'jabatan.max' => 'Jabatan maksimal 50 karakter.',
+            'mata_pelajaran.required' => 'Mata pelajaran wajib diisi.',
+            'pengalaman.required' => 'Pengalaman wajib diisi.',
+            'pengalaman.integer' => 'Pengalaman harus berupa angka.',
+            'pendidikan_terakhir.required' => 'Pendidikan terakhir wajib diisi.',
+            'pendidikan_terakhir.max' => 'Pendidikan terakhir maksimal 100 karakter.',
+            'gambar.image' => 'File harus berupa gambar.',
+            'gambar.mimes' => 'Format gambar harus jpeg, png, atau jpg.',
+            'gambar.max' => 'Ukuran gambar maksimal 2MB.',
         ]);
 
-        Guru::create($request->all());
+        $data = $request->all();
+
+        if ($request->hasFile('gambar')) {
+            $imageName = time() . '.' . $request->gambar->extension();
+            $request->gambar->move(public_path('gambar'), $imageName);
+            $data['gambar'] = $imageName;
+        }
+
+        Guru::create($data);
         return redirect()->route('guru.index')->with('success', 'Data guru berhasil ditambahkan.');
     }
 
@@ -58,16 +81,40 @@ class GuruController extends Controller
         $guru = Guru::findOrFail($id);
 
         $request->validate([
-            'nama' => 'required',
-            'nip' => 'required|unique:tblguru,nip,' . $id,
-            'alamat' => 'required',
-            'no_hp' => 'nullable',
-            'email' => 'nullable|email',
-            'pendidikan_terakhir' => 'nullable',
+            'nama' => 'required|max:100',
+            'nip' => 'required|max:20|unique:tblguru,nip,' . $id,
+            'jabatan' => 'required|max:50',
             'mata_pelajaran' => 'required',
+            'pengalaman' => 'required|integer',
+            'pendidikan_terakhir' => 'required|max:100',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        ], [
+            'nama.required' => 'Nama wajib diisi.',
+            'nama.max' => 'Nama maksimal 100 karakter.',
+            'nip.required' => 'NIP wajib diisi.',
+            'nip.max' => 'NIP maksimal 20 karakter.',
+            'nip.unique' => 'NIP sudah digunakan.',
+            'jabatan.required' => 'Jabatan wajib diisi.',
+            'jabatan.max' => 'Jabatan maksimal 50 karakter.',
+            'mata_pelajaran.required' => 'Mata pelajaran wajib diisi.',
+            'pengalaman.required' => 'Pengalaman wajib diisi.',
+            'pengalaman.integer' => 'Pengalaman harus berupa angka.',
+            'pendidikan_terakhir.required' => 'Pendidikan terakhir wajib diisi.',
+            'pendidikan_terakhir.max' => 'Pendidikan terakhir maksimal 100 karakter.',
+            'gambar.image' => 'File harus berupa gambar.',
+            'gambar.mimes' => 'Format gambar harus jpeg, png, atau jpg.',
+            'gambar.max' => 'Ukuran gambar maksimal 2MB.',
         ]);
 
-        $guru->update($request->all());
+        $data = $request->all();
+
+        if ($request->hasFile('gambar')) {
+            $imageName = time() . '.' . $request->gambar->extension();
+            $request->gambar->move(public_path('gambar'), $imageName);
+            $data['gambar'] = $imageName;
+        }
+
+        $guru->update($data);
         return redirect()->route('guru.index')->with('success', 'Data guru berhasil diperbarui.');
     }
 
