@@ -32,6 +32,8 @@ Route::get('/pendaftaran', function () {
 Route::get('/akademik', [GuruController::class, 'index'])->name('akademik');
 Route::resource('guru', GuruController::class);
 
+Route::resource('galeri', GaleriController::class); 
+
 Route::get('/aduan', function () {
     return view('ADMIN-SI.aduan');
 })->name('aduan');
@@ -44,9 +46,9 @@ Route::get('/search', function () {
     return view('search');
 })->name('search');
 
-Route::get('/fotokegiatan', function () {
-    return view('ADMIN-SI.fotokegiatan');
-})->name('fotokegiatan');
+use App\Http\Controllers\GaleriController;
+
+Route::get('/fotokegiatan', [GaleriController::class, 'fotokegiatan'])->name('fotokegiatan');
 
 Route::get('/spp', function () {
     return view('ADMIN-SI.spp');

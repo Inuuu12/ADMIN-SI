@@ -43,13 +43,15 @@
     <h1 class="text-2xl font-bold text-[#2B3674]">Guru</h1>
     <div class="flex items-center gap-4">
       <div class="relative w-full max-w-xs">
-        <input type="text" x-model="searchQuery" placeholder="Mencari guru..."
-          class="w-full pl-10 pr-4 py-2 text-gray-500 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500">
-        <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg"
-          fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M21 21l-4.35-4.35M17 10a7 7 0 1 0-7 7 7 7 0 0 0 7-7z" />
-        </svg>
+        <form method="GET" action="{{ route('guru.index') }}" class="relative w-full max-w-xs">
+          <input type="text" name="q" value="{{ isset($search) ? $search : '' }}" placeholder="Mencari guru..."
+            class="w-full pl-10 pr-4 py-2 text-gray-500 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg"
+            fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M21 21l-4.35-4.35M17 10a7 7 0 1 0-7 7 7 7 0 0 0 7-7z" />
+          </svg>
+        </form>
       </div>
     </div>
   </div>
@@ -66,36 +68,35 @@
 
   <!-- Guru Grid -->
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-    <template x-for="guru in filteredgurus()" :key="guru.id">
+    @foreach ($gurus as $guru)
       <div class="guru-card">
         <!-- Gambar -->
         <div class="w-full flex justify-center mb-4">
-          <img :src="guru.gambar ? gambarBaseUrl + guru.gambar : defaultImageUrl" alt="guru Picture"
+          <img src="{{ $guru->gambar ? asset('gambar/' . $guru->gambar) : asset('img/dashboard/teacher.png') }}" alt="guru Picture"
             class="w-24 h-24 rounded-full object-cover border-4 border-emerald-500">
         </div>
 
         <!-- Nama -->
         <div class="mt-4 flex gap-3 justify-center">
-          <h3 x-text="guru.nama" class="text-left"></h3>
+          <h3 class="text-left">{{ $guru->nama }}</h3>
         </div>
 
         <!-- Konten align left -->
         <div class="w-full text-left px-2">
-          <p><strong>NIP:</strong> <span x-text="guru.nip"></span></p>
-          <p><strong>Jabatan:</strong> <span x-text="guru.jabatan"></span></p>
-          <p><strong>Pengalaman:</strong> <span x-text="guru.pengalaman + ' tahun'"></span></p>
-          <p><strong>Pendidikan:</strong> <span x-text="guru.pendidikan_terakhir"></span></p>
-          <p><strong>Mata Pelajaran:</strong> <span x-text="guru.mata_pelajaran"></span></p>
+          <p><strong>NIP:</strong> {{ $guru->nip }}</p>
+          <p><strong>Jabatan:</strong> {{ $guru->jabatan }}</p>
+          <p><strong>Pengalaman:</strong> {{ $guru->pengalaman }} tahun</p>
+          <p><strong>Pendidikan:</strong> {{ $guru->pendidikan_terakhir }}</p>
+          <p><strong>Mata Pelajaran:</strong> {{ $guru->mata_pelajaran }}</p>
         </div>
 
         <!-- Tombol di tengah -->
         <div class="mt-4 flex gap-3 justify-center">
-          <button @click="openModal('edit', guru)" class="px-5 py-2 bg-yellow-400 text-white rounded-md text-sm">Edit</button>
-          <button type="button" @click="openDeleteModal(guru)"
-            class="px-5 py-2 bg-red-500 text-white rounded-md text-sm">Delete</button>
+          <button @click="openModal('edit', {{ json_encode($guru) }})" class="px-5 py-2 bg-yellow-400 text-white rounded-md text-sm">Edit</button>
+          <button @click="openDeleteModal({ id: {{ $guru->id }}, nama: '{{ $guru->nama }}' })" class="px-5 py-2 bg-red-500 text-white rounded-md text-sm">Delete</button>
         </div>
       </div>
-    </template>
+    @endforeach
   </div>
 
   <!-- Modal -->
@@ -213,7 +214,16 @@
       openModal(mode, guru = null) {
         if (mode === 'edit') {
           this.modalTitle = 'Edit Guru';
-          this.form = { ...guru }; // Salin data guru ke form
+          this.form = { 
+            id: guru.id,
+            nama: guru.nama,
+            nip: guru.nip,
+            jabatan: guru.jabatan,
+            pengalaman: guru.pengalaman,
+            pendidikan_terakhir: guru.pendidikan_terakhir,
+            mata_pelajaran: guru.mata_pelajaran,
+            gambar: null
+          }; // Salin data guru ke form
         } else {
           this.modalTitle = 'Tambah Guru';
           this.form = { id: null, nama: '', nip: '', jabatan: '', pengalaman: '', pendidikan_terakhir: '', mata_pelajaran: '', gambar: null };
@@ -229,6 +239,11 @@
         // Hide validation error messages by removing error divs
         const errorDivs = document.querySelectorAll('.text-red-500.text-sm.mt-0\\.5.mb-4');
         errorDivs.forEach(div => div.style.display = 'none');
+        // Reset file input value
+        const fileInput = this.$refs.modalForm.querySelector('input[type="file"][name="gambar"]');
+        if (fileInput) {
+          fileInput.value = null;
+        }
         // Hide modal
         this.showModal = false;
       },

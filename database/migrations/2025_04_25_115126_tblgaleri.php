@@ -11,15 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tblguru', function (Blueprint $table) {
+        Schema::create('tblgaleri', function (Blueprint $table) {
             $table->id();
-            $table->string('nama', 100);
-            $table->string('nip', 20);
-            $table->string('jabatan', 50);
-            $table->text('mata_pelajaran');
-            $table->integer('pengalaman');
+            $table->string('judul', 30);
+            $table->string('deskripsi', 75);
+            $table->date('tanggal');
             $table->string('gambar')->nullable();
-            $table->string('pendidikan_terakhir', 100);
             $table->timestamps();
         });
     }

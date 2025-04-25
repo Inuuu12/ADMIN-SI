@@ -8,10 +8,15 @@ use App\Models\Guru;
 class GuruController extends Controller
 {
     // Tampilkan semua data guru
-    public function index()
+    public function index(Request $request)
     {
-        $gurus = Guru::all(); // ambil semua data dari tabel tblguru
-        return view('ADMIN-SI.akademik', compact('gurus'));
+        $search = $request->query('q');
+        if ($search) {
+            $gurus = Guru::where('nama', 'like', '%' . $search . '%')->get();
+        } else {
+            $gurus = Guru::all();
+        }
+        return view('ADMIN-SI.akademik', compact('gurus', 'search'));
     }
 
     // Tampilkan form tambah guru
