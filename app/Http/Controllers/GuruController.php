@@ -7,8 +7,8 @@ use App\Models\Guru;
 
 class GuruController extends Controller
 {
-    // Tampilkan semua data guru
-    public function index(Request $request)
+    // Web methods
+    public function webIndex(Request $request)
     {
         $search = $request->query('q');
         if ($search) {
@@ -19,14 +19,24 @@ class GuruController extends Controller
         return view('ADMIN-SI.akademik', compact('gurus', 'search'));
     }
 
-    // Tampilkan form tambah guru
-    public function create()
+    public function webCreate()
     {
         return view('guru.create');
     }
 
-    // Simpan data guru baru
-    public function store(Request $request)
+    public function webShow($id)
+    {
+        $guru = Guru::findOrFail($id);
+        return view('guru.show', compact('guru'));
+    }
+
+    public function webEdit($id)
+    {
+        $guru = Guru::findOrFail($id);
+        return view('guru.edit', compact('guru'));
+    }
+
+    public function webStore(Request $request)
     {
         $request->validate([
             'nama' => 'required|max:100',
@@ -66,22 +76,7 @@ class GuruController extends Controller
         return redirect()->route('guru.index')->with('success', 'Data guru berhasil ditambahkan.');
     }
 
-    // Tampilkan detail satu guru
-    public function show($id)
-    {
-        $guru = Guru::findOrFail($id);
-        return view('guru.show', compact('guru'));
-    }
-
-    // Tampilkan form edit guru
-    public function edit($id)
-    {
-        $guru = Guru::findOrFail($id);
-        return view('guru.edit', compact('guru'));
-    }
-
-    // Update data guru
-    public function update(Request $request, $id)
+    public function webUpdate(Request $request, $id)
     {
         $guru = Guru::findOrFail($id);
 
@@ -123,12 +118,82 @@ class GuruController extends Controller
         return redirect()->route('guru.index')->with('success', 'Data guru berhasil diperbarui.');
     }
 
-    // Hapus guru
-    public function destroy($id)
+    public function webDestroy($id)
     {
         $guru = Guru::findOrFail($id);
         $guru->delete();
 
         return redirect()->route('guru.index')->with('success', 'Data guru berhasil dihapus.');
+    }
+
+    // API methods
+    public function index(Request $request)
+    {
+        $search = $request->query('q');
+        if ($search) {
+            $gurus = Guru::where('nama', 'like', '%' . $search . '%')->get();
+        } else {
+            $gurus = Guru::all();
+        }
+        return response()->json($gurus);
+    }
+
+    public function show($id)
+    {
+        $guru = Guru::findOrFail($id);
+        return response()->json($guru);
+    }
+
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'nama' => 'required|max:100',
+            'nip' => 'required|max:20|unique:tblguru,nip',
+            'jabatan' => 'required|max:50',
+            'mata_pelajaran' => 'required',
+            'pengalaman' => 'required|integer',
+            'pendidikan_terakhir' => 'required|max:100',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
+
+        if ($request->hasFile('gambar')) {
+            $imageName = time() . '.' . $request->gambar->extension();
+            $request->gambar->move(public_path('gambar'), $imageName);
+            $validated['gambar'] = $imageName;
+        }
+
+        $guru = Guru::create($validated);
+        return response()->json(['message' => 'Data guru berhasil ditambahkan.', 'guru' => $guru]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $guru = Guru::findOrFail($id);
+
+        $validated = $request->validate([
+            'nama' => 'required|max:100',
+            'nip' => 'required|max:20|unique:tblguru,nip,' . $id,
+            'jabatan' => 'required|max:50',
+            'mata_pelajaran' => 'required',
+            'pengalaman' => 'required|integer',
+            'pendidikan_terakhir' => 'required|max:100',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
+
+        if ($request->hasFile('gambar')) {
+            $imageName = time() . '.' . $request->gambar->extension();
+            $request->gambar->move(public_path('gambar'), $imageName);
+            $validated['gambar'] = $imageName;
+        }
+
+        $guru->update($validated);
+        return response()->json(['message' => 'Data guru berhasil diperbarui.', 'guru' => $guru]);
+    }
+
+    public function destroy($id)
+    {
+        $guru = Guru::findOrFail($id);
+        $guru->delete();
+        return response()->json(['message' => 'Data guru berhasil dihapus.']);
     }
 }

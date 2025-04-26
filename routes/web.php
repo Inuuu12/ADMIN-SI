@@ -29,8 +29,19 @@ Route::get('/pendaftaran', function () {
     return view('ADMIN-SI.pendaftaran');
 })->name('pendaftaran');
 
-Route::get('/akademik', [GuruController::class, 'index'])->name('akademik');
-Route::resource('guru', GuruController::class);
+use App\Http\Controllers\GuruController;
+
+Route::get('/akademik', [GuruController::class, 'webIndex'])->name('akademik');
+Route::get('/guru/create', [GuruController::class, 'webCreate'])->name('guru.create');
+Route::post('/guru', [GuruController::class, 'webStore'])->name('guru.store');
+Route::get('/guru/{guru}', [GuruController::class, 'webShow'])->name('guru.show');
+Route::get('/guru/{guru}/edit', [GuruController::class, 'webEdit'])->name('guru.edit');
+Route::put('/guru/{guru}', [GuruController::class, 'webUpdate'])->name('guru.update');
+Route::delete('/guru/{guru}', [GuruController::class, 'webDestroy'])->name('guru.destroy');
+
+Route::resource('galeri', GaleriController::class);
+
+Route::get('/fotokegiatan', [GaleriController::class, 'fotokegiatan'])->name('fotokegiatan');
 
 Route::resource('galeri', GaleriController::class); 
 

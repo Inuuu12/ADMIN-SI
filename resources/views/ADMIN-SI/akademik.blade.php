@@ -43,15 +43,12 @@
     <h1 class="text-2xl font-bold text-[#2B3674]">Guru</h1>
     <div class="flex items-center gap-4">
       <div class="relative w-full max-w-xs">
-        <form method="GET" action="{{ route('guru.index') }}" class="relative w-full max-w-xs">
-          <input type="text" name="q" value="{{ isset($search) ? $search : '' }}" placeholder="Mencari guru..."
-            class="w-full pl-10 pr-4 py-2 text-gray-500 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500" />
-          <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg"
-            fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M21 21l-4.35-4.35M17 10a7 7 0 1 0-7 7 7 7 0 0 0 7-7z" />
-          </svg>
-        </form>
+        <input type="text" placeholder="Mencari guru..." x-model="searchQuery" @input="fetchGurus" class="w-full pl-10 pr-4 py-2 text-gray-500 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg"
+          fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M21 21l-4.35-4.35M17 10a7 7 0 1 0-7 7 7 7 0 0 0 7-7z" />
+        </svg>
       </div>
     </div>
   </div>
@@ -68,107 +65,97 @@
 
   <!-- Guru Grid -->
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-    @foreach ($gurus as $guru)
-      <div class="guru-card">
+    <template x-for="(guru, index) in filteredGurus()" :key="guru.id">
+      <div class="guru-card animate-scaleIn" x-show="guru">
         <!-- Gambar -->
         <div class="w-full flex justify-center mb-4">
-          <img src="{{ $guru->gambar ? asset('gambar/' . $guru->gambar) : asset('img/dashboard/teacher.png') }}" alt="guru Picture"
-            class="w-24 h-24 rounded-full object-cover border-4 border-emerald-500">
+          <img :src="guru.gambar ? gambarBaseUrl + guru.gambar : defaultImageUrl" alt="guru Picture"
+            class="w-24 h-24 rounded-full object-cover border-4 border-emerald-500" />
         </div>
 
         <!-- Nama -->
         <div class="mt-4 flex gap-3 justify-center">
-          <h3 class="text-left">{{ $guru->nama }}</h3>
+          <h3 class="text-left" x-text="guru.nama"></h3>
         </div>
 
         <!-- Konten align left -->
         <div class="w-full text-left px-2">
-          <p><strong>NIP:</strong> {{ $guru->nip }}</p>
-          <p><strong>Jabatan:</strong> {{ $guru->jabatan }}</p>
-          <p><strong>Pengalaman:</strong> {{ $guru->pengalaman }} tahun</p>
-          <p><strong>Pendidikan:</strong> {{ $guru->pendidikan_terakhir }}</p>
-          <p><strong>Mata Pelajaran:</strong> {{ $guru->mata_pelajaran }}</p>
+          <p><strong>NIP:</strong> <span x-text="guru.nip"></span></p>
+          <p><strong>Jabatan:</strong> <span x-text="guru.jabatan"></span></p>
+          <p><strong>Pengalaman:</strong> <span x-text="guru.pengalaman"></span> tahun</p>
+          <p><strong>Pendidikan:</strong> <span x-text="guru.pendidikan_terakhir"></span></p>
+          <p><strong>Mata Pelajaran:</strong> <span x-text="guru.mata_pelajaran"></span></p>
         </div>
 
         <!-- Tombol di tengah -->
         <div class="mt-4 flex gap-3 justify-center">
-          <button @click="openModal('edit', {{ json_encode($guru) }})" class="px-5 py-2 bg-yellow-400 text-white rounded-md text-sm">Edit</button>
-          <button @click="openDeleteModal({ id: {{ $guru->id }}, nama: '{{ $guru->nama }}' })" class="px-5 py-2 bg-red-500 text-white rounded-md text-sm">Delete</button>
+          <button @click="openModal('edit', guru)" class="px-5 py-2 bg-yellow-400 text-white rounded-md text-sm">Edit</button>
+          <button @click="openDeleteModal(guru)" class="px-5 py-2 bg-red-500 text-white rounded-md text-sm">Delete</button>
         </div>
       </div>
-    @endforeach
+    </template>
   </div>
 
   <!-- Modal -->
-  <div x-show="showModal" x-transition.opacity class="fixed inset-0 z-50 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center p-4">
+  <div x-show="showModal" x-transition.opacity class="fixed inset-0 z-50 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center p-4" style="display: none;">
     <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md animate-scaleIn max-h-[80vh] overflow-y-auto">
       <h2 class="text-xl font-bold mb-4 text-gray-700" x-text="modalTitle"></h2>
 
-      <form :action="form.id ? `/guru/${form.id}` : '{{ route('guru.store') }}'" method="POST" enctype="multipart/form-data" x-ref="modalForm" novalidate>
-        @csrf
+      <form @submit.prevent="submitForm" enctype="multipart/form-data" x-ref="modalForm" novalidate>
         <template x-if="form.id">
           <input type="hidden" name="_method" value="PUT" />
         </template>
+        <input type="hidden" name="id" x-model="form.id" />
 
         <!-- Nama -->
         <label class="block text-sm font-medium">Nama</label>
-        <input type="text" name="nama" x-model="form.nama" :class="{'mb-4': !showModal || !errors.nama, 'mb-1': showModal && errors.nama}" class="border p-2 w-full rounded-lg">
-        @error('nama')
-          <div class="text-red-500 text-sm mt-0.5 mb-4">{{ $message }}</div>
-        @enderror
+        <input type="text" name="nama" x-model="form.nama" :class="{'mb-4': !errors.nama, 'mb-1': errors.nama}" class="border p-2 w-full rounded-lg" />
+        <template x-if="errors.nama"><div class="text-red-500 text-sm mt-0.5 mb-4" x-text="errors.nama"></div></template>
 
         <!-- NIP -->
         <label class="block text-sm font-medium">NIP</label>
-        <input type="text" name="nip" x-model="form.nip" :class="{'mb-4': !showModal || !errors.nip, 'mb-1': showModal && errors.nip}" class="border p-2 w-full rounded-lg" >
-        @error('nip')
-          <div class="text-red-500 text-sm mt-0.5 mb-4">{{ $message }}</div>
-        @enderror
+        <input type="text" name="nip" x-model="form.nip" :class="{'mb-4': !errors.nip, 'mb-1': errors.nip}" class="border p-2 w-full rounded-lg" />
+        <template x-if="errors.nip"><div class="text-red-500 text-sm mt-0.5 mb-4" x-text="errors.nip"></div></template>
 
         <!-- Jabatan -->
         <label class="block text-sm font-medium">Jabatan</label>
-        <input type="text" name="jabatan" x-model="form.jabatan" :class="{'mb-4': !showModal || !errors.jabatan, 'mb-1': showModal && errors.jabatan}" class="border p-2 w-full rounded-lg" >
-        @error('jabatan')
-          <div class="text-red-500 text-sm mt-0.5 mb-4">{{ $message }}</div>
-        @enderror
+        <input type="text" name="jabatan" x-model="form.jabatan" :class="{'mb-4': !errors.jabatan, 'mb-1': errors.jabatan}" class="border p-2 w-full rounded-lg" />
+        <template x-if="errors.jabatan"><div class="text-red-500 text-sm mt-0.5 mb-4" x-text="errors.jabatan"></div></template>
 
         <!-- Pengalaman -->
         <label class="block text-sm font-medium">Pengalaman (tahun)</label>
-        <input type="number" name="pengalaman" x-model="form.pengalaman" min="0" step="1" @input="sanitizePengalamanInput()" :class="{'mb-4': !showModal || !errors.pengalaman, 'mb-1': showModal && errors.pengalaman}" class="border p-2 w-full rounded-lg" >
-        @error('pengalaman')
-          <div class="text-red-500 text-sm mt-0.5 mb-4">{{ $message }}</div>
-        @enderror
+        <input type="number" name="pengalaman" x-model="form.pengalaman" min="0" step="1" @input="sanitizePengalamanInput()" :class="{'mb-4': !errors.pengalaman, 'mb-1': errors.pengalaman}" class="border p-2 w-full rounded-lg" />
+        <template x-if="errors.pengalaman"><div class="text-red-500 text-sm mt-0.5 mb-4" x-text="errors.pengalaman"></div></template>
 
         <!-- Pendidikan Terakhir -->
         <label class="block text-sm font-medium">Pendidikan Terakhir</label>
-        <input type="text" name="pendidikan_terakhir" x-model="form.pendidikan_terakhir" :class="{'mb-4': !showModal || !errors.pendidikan_terakhir, 'mb-1': showModal && errors.pendidikan_terakhir}" class="border p-2 w-full rounded-lg">
-        @error('pendidikan_terakhir')
-          <div class="text-red-500 text-sm mt-0.5 mb-4">{{ $message }}</div>
-        @enderror
+        <input type="text" name="pendidikan_terakhir" x-model="form.pendidikan_terakhir" :class="{'mb-4': !errors.pendidikan_terakhir, 'mb-1': errors.pendidikan_terakhir}" class="border p-2 w-full rounded-lg" />
+        <template x-if="errors.pendidikan_terakhir"><div class="text-red-500 text-sm mt-0.5 mb-4" x-text="errors.pendidikan_terakhir"></div></template>
 
         <!-- Mata Pelajaran -->
         <label class="block text-sm font-medium">Mata Pelajaran</label>
-        <input type="text" name="mata_pelajaran" x-model="form.mata_pelajaran" :class="{'mb-4': !showModal || !errors.mata_pelajaran, 'mb-1': showModal && errors.mata_pelajaran}" class="border p-2 w-full rounded-lg" required>
-        @error('mata_pelajaran')
-          <div class="text-red-500 text-sm mt-0.5 mb-4">{{ $message }}</div>
-        @enderror
+        <input type="text" name="mata_pelajaran" x-model="form.mata_pelajaran" :class="{'mb-4': !errors.mata_pelajaran, 'mb-1': errors.mata_pelajaran}" class="border p-2 w-full rounded-lg" />
+        <template x-if="errors.mata_pelajaran"><div class="text-red-500 text-sm mt-0.5 mb-4" x-text="errors.mata_pelajaran"></div></template>
 
         <!-- Gambar -->
         <label class="block text-sm font-medium">Gambar</label>
-        <input type="file" name="gambar" accept="image/*" class="border p-2 w-full mb-0.5 rounded-lg">
-        @error('gambar')
-          <div class="text-red-500 text-sm mt-0.5 mb-4">{{ $message }}</div>
-        @enderror
+        <input type="file" name="gambar" accept="image/*" @change="handleFileUpload" class="border p-2 w-full mb-0.5 rounded-lg" />
+        <template x-if="errors.gambar"><div class="text-red-500 text-sm mt-0.5 mb-4" x-text="errors.gambar"></div></template>
+
+        <template x-if="form.gambarPreview">
+          <img :src="form.gambarPreview" class="max-w-full max-h-48 object-contain rounded-lg shadow-md mt-2 mx-auto block" />
+        </template>
 
         <div class="flex justify-end gap-2 mt-4">
           <button type="button" @click="closeModal()" class="px-4 py-2 bg-gray-500 text-white rounded-lg">Cancel</button>
-          <button type="submit" class="px-4 py-2 bg-emerald-500 text-white rounded-lg">Save</button>
+          <button type="submit" class="px-4 py-2 bg-emerald-500 text-white rounded-lg" x-text="form.id ? 'Update' : 'Save'"></button>
         </div>
       </form>
     </div>
   </div>
 
   <!-- Delete Confirmation Modal -->
-  <div x-show="showDeleteModal" x-transition.opacity class="fixed inset-0 z-50 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center p-4">
+  <div x-show="showDeleteModal" x-transition.opacity class="fixed inset-0 z-50 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center p-4" style="display: none;">
     <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-sm animate-scaleIn text-center">
       <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 text-red-500 mx-auto mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -178,11 +165,7 @@
 
       <div class="flex justify-center gap-3 mt-4">
         <button @click="showDeleteModal = false" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400">Cancel</button>
-        <form :action="`/guru/${guruToDelete.id}`" method="POST">
-          @csrf
-          @method('DELETE')
-          <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">Delete</button>
-        </form>
+        <button @click="deleteGuru()" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">Delete</button>
       </div>
     </div>
   </div>
@@ -194,27 +177,48 @@
 
   function guruApp() {
     return {
-      showModal: {{ $errors->any() ? 'true' : 'false' }},
+      showModal: false,
       showDeleteModal: false,
-      modalTitle: '{{ $errors->any() ? (old('id') ? "Edit Guru" : "Tambah Guru") : "" }}',
+      modalTitle: '',
       form: {
-        id: {{ old('id') ? old('id') : 'null' }},
-        nama: {!! json_encode(old('nama', '')) !!},
-        nip: {!! json_encode(old('nip', '')) !!},
-        jabatan: {!! json_encode(old('jabatan', '')) !!},
-        pengalaman: {!! json_encode(old('pengalaman', '')) !!},
-        pendidikan_terakhir: {!! json_encode(old('pendidikan_terakhir', '')) !!},
-        mata_pelajaran: {!! json_encode(old('mata_pelajaran', '')) !!},
-        gambar: null
+        id: null,
+        nama: '',
+        nip: '',
+        jabatan: '',
+        pengalaman: '',
+        pendidikan_terakhir: '',
+        mata_pelajaran: '',
+        gambar: null,
+        gambarPreview: null,
       },
-      guruToDelete: {},
+      errors: {},
       searchQuery: '',
-      gurus: @json($gurus), // Menambahkan data gurus ke dalam state
+      gurus: [],
 
-      openModal(mode, guru = null) {
-        if (mode === 'edit') {
-          this.modalTitle = 'Edit Guru';
-          this.form = { 
+      init() {
+        this.fetchGurus();
+      },
+
+      fetchGurus() {
+        fetch(`/api/guru?q=${encodeURIComponent(this.searchQuery)}`)
+          .then(response => response.json())
+          .then(data => {
+            this.gurus = data;
+          });
+      },
+
+      filteredGurus() {
+        if (!this.searchQuery) {
+          return this.gurus;
+        }
+        return this.gurus.filter(guru => guru.nama.toLowerCase().includes(this.searchQuery.toLowerCase()));
+      },
+
+      openModal(type, guru = null) {
+        this.errors = {};
+        this.modalTitle = type === 'tambah' ? 'Tambah Guru' : 'Edit Guru';
+        if (type === 'edit' && guru) {
+          this.form = {
             id: guru.id,
             nama: guru.nama,
             nip: guru.nip,
@@ -222,30 +226,94 @@
             pengalaman: guru.pengalaman,
             pendidikan_terakhir: guru.pendidikan_terakhir,
             mata_pelajaran: guru.mata_pelajaran,
-            gambar: null
-          }; // Salin data guru ke form
+            gambar: null,
+            gambarPreview: guru.gambar ? gambarBaseUrl + guru.gambar : null,
+          };
         } else {
-          this.modalTitle = 'Tambah Guru';
-          this.form = { id: null, nama: '', nip: '', jabatan: '', pengalaman: '', pendidikan_terakhir: '', mata_pelajaran: '', gambar: null };
+          this.form = {
+            id: null,
+            nama: '',
+            nip: '',
+            jabatan: '',
+            pengalaman: '',
+            pendidikan_terakhir: '',
+            mata_pelajaran: '',
+            gambar: null,
+            gambarPreview: null,
+          };
         }
         this.showModal = true;
       },
 
       closeModal() {
-        // Reset form data to initial empty state
-        this.form = { id: null, nama: '', nip: '', jabatan: '', pengalaman: '', pendidikan_terakhir: '', mata_pelajaran: '', gambar: null };
-        // Clear modal title
-        this.modalTitle = '';
-        // Hide validation error messages by removing error divs
-        const errorDivs = document.querySelectorAll('.text-red-500.text-sm.mt-0\\.5.mb-4');
-        errorDivs.forEach(div => div.style.display = 'none');
-        // Reset file input value
-        const fileInput = this.$refs.modalForm.querySelector('input[type="file"][name="gambar"]');
-        if (fileInput) {
-          fileInput.value = null;
-        }
-        // Hide modal
         this.showModal = false;
+        this.errors = {};
+        this.form = {
+          id: null,
+          nama: '',
+          nip: '',
+          jabatan: '',
+          pengalaman: '',
+          pendidikan_terakhir: '',
+          mata_pelajaran: '',
+          gambar: null,
+          gambarPreview: null,
+        };
+        if (this.$refs.modalForm) {
+          const fileInput = this.$refs.modalForm.querySelector('input[type="file"]');
+          if (fileInput) {
+            fileInput.value = '';
+          }
+        }
+      },
+
+      handleFileUpload(event) {
+        const file = event.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = e => {
+            this.form.gambarPreview = e.target.result;
+          };
+          reader.readAsDataURL(file);
+          this.form.gambar = file;
+        }
+      },
+
+      submitForm() {
+        this.errors = {};
+        const formData = new FormData(this.$refs.modalForm);
+        let url = '/api/guru';
+        let method = 'POST';
+
+        if (this.form.id) {
+          url = `/api/guru/${this.form.id}`;
+          method = 'POST';
+          formData.append('_method', 'PUT');
+        }
+
+        fetch(url, {
+          method: method,
+          headers: {
+            'Accept': 'application/json',
+            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+          },
+          body: formData,
+        })
+          .then(async response => {
+            if (!response.ok) {
+              const errorData = await response.json();
+              this.errors = errorData.errors || {};
+              throw new Error('Validation failed');
+            }
+            return response.json();
+          })
+          .then(() => {
+            this.closeModal();
+            this.fetchGurus();
+          })
+          .catch(error => {
+            console.error(error);
+          });
       },
 
       openDeleteModal(guru) {
@@ -253,21 +321,35 @@
         this.showDeleteModal = true;
       },
 
-      filteredgurus() {
-        return this.gurus.filter(guru => guru.nama.toLowerCase().includes(this.searchQuery.toLowerCase()));
+      deleteGuru() {
+        if (!this.guruToDelete || !this.guruToDelete.id) return;
+
+        fetch(`/api/guru/${this.guruToDelete.id}`, {
+          method: 'DELETE',
+          headers: {
+            'Accept': 'application/json',
+            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+          },
+        })
+          .then(response => response.json())
+          .then(() => {
+            this.showDeleteModal = false;
+            this.fetchGurus();
+          })
+          .catch(error => {
+            console.error(error);
+          });
       },
 
       sanitizePengalamanInput() {
         if (this.form.pengalaman !== null && this.form.pengalaman !== '') {
           let val = this.form.pengalaman.toString();
-          // Remove all non-digit characters
           val = val.replace(/[^0-9]/g, '');
-          // Remove leading zeros except if the value is zero
           val = val.replace(/^0+(?=\d)/, '');
           this.form.pengalaman = val === '' ? '' : Number(val);
         }
       }
-    };
+    }
   }
 </script>
 @endsection

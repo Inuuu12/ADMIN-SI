@@ -7,26 +7,120 @@ use Illuminate\Http\Request;
 
 class GaleriController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    // Web methods
+    public function webIndex(Request $request)
     {
-        $galeris = Galeri::all();
-        return view('galeri', compact('galeris'));
+        $search = $request->query('q');
+        if ($search) {
+            $galeris = Galeri::where('judul', 'like', '%' . $search . '%')->get();
+        } else {
+            $galeris = Galeri::all();
+        }
+        return view('ADMIN-SI.akademik', compact('galeris', 'search'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function webCreate()
     {
         return view('galeri.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    public function webShow($id)
+    {
+        $galeri = Galeri::findOrFail($id);
+        return view('galeri.show', compact('galeri'));
+    }
+
+    public function webEdit($id)
+    {
+        $galeri = Galeri::findOrFail($id);
+        return view('galeri.edit', compact('galeri'));
+    }
+
+    public function webStore(Request $request)
+    {
+        $request->validate([
+            'judul' => 'required|string|max:30',
+            'deskripsi' => 'required|string|max:75',
+            'tanggal' => 'required|date',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ], [
+            'judul.required' => 'Judul wajib diisi.',
+            'judul.max' => 'Judul maksimal 30 karakter.',
+            'deskripsi.required' => 'Deskripsi wajib diisi.',
+            'deskripsi.max' => 'Deskripsi maksimal 75 karakter.',
+            'tanggal.required' => 'Tanggal wajib diisi.',
+            'tanggal.date' => 'Tanggal harus berupa tanggal yang valid.',
+            'gambar.image' => 'File harus berupa gambar.',
+            'gambar.mimes' => 'Format gambar harus jpeg, png, jpg, gif, atau svg.',
+            'gambar.max' => 'Ukuran gambar maksimal 2MB.',
+        ]);
+
+        $data = $request->all();
+
+        if ($request->hasFile('gambar')) {
+            $imageName = time() . '.' . $request->gambar->extension();
+            $request->gambar->move(public_path('gambar'), $imageName);
+            $data['gambar'] = $imageName;
+        }
+
+        Galeri::create($data);
+        return redirect()->route('galeri.index')->with('success', 'Data galeri berhasil ditambahkan.');
+    }
+
+    public function webUpdate(Request $request, $id)
+    {
+        $galeri = Galeri::findOrFail($id);
+
+        $request->validate([
+            'judul' => 'required|string|max:30',
+            'deskripsi' => 'required|string|max:75',
+            'tanggal' => 'required|date',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ], [
+            'judul.required' => 'Judul wajib diisi.',
+            'judul.max' => 'Judul maksimal 30 karakter.',
+            'deskripsi.required' => 'Deskripsi wajib diisi.',
+            'deskripsi.max' => 'Deskripsi maksimal 75 karakter.',
+            'tanggal.required' => 'Tanggal wajib diisi.',
+            'tanggal.date' => 'Tanggal harus berupa tanggal yang valid.',
+            'gambar.image' => 'File harus berupa gambar.',
+            'gambar.mimes' => 'Format gambar harus jpeg, png, jpg, gif, atau svg.',
+            'gambar.max' => 'Ukuran gambar maksimal 2MB.',
+        ]);
+
+        $data = $request->all();
+
+        if ($request->hasFile('gambar')) {
+            $imageName = time() . '.' . $request->gambar->extension();
+            $request->gambar->move(public_path('gambar'), $imageName);
+            $data['gambar'] = $imageName;
+        }
+
+        $galeri->update($data);
+        return redirect()->route('galeri.index')->with('success', 'Data galeri berhasil diperbarui.');
+    }
+
+    public function webDestroy($id)
+    {
+        $galeri = Galeri::findOrFail($id);
+        $galeri->delete();
+
+        return redirect()->route('galeri.index')->with('success', 'Data galeri berhasil dihapus.');
+    }
+
+    // API methods
+    public function index(Request $request)
+    {
+        $search = $request->query('q');
+        if ($search) {
+            $galeris = Galeri::where('judul', 'like', '%' . $search . '%')->get();
+        } else {
+            $galeris = Galeri::all();
+        }
+
+        return response()->json($galeris);
+    }
+
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -47,25 +141,11 @@ class GaleriController extends Controller
         return response()->json(['message' => 'Galeri created successfully.']);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Galeri $galeri)
     {
         return response()->json($galeri);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Galeri $galeri)
-    {
-        return view('galeri.edit', compact('galeri'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Galeri $galeri)
     {
         $validated = $request->validate([
@@ -86,9 +166,6 @@ class GaleriController extends Controller
         return response()->json(['message' => 'Galeri updated successfully.']);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Galeri $galeri)
     {
         $galeri->delete();
@@ -96,9 +173,7 @@ class GaleriController extends Controller
         return response()->json(['message' => 'Galeri deleted successfully.']);
     }
 
-    /**
-     * Display the foto kegiatan page with galeri data.
-     */
+    // Custom method fotokegiatan remains unchanged
     public function fotokegiatan(Request $request)
     {
         $sort = $request->query('sort');
