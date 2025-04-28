@@ -32,6 +32,20 @@
         </div>
     </div>
 
+    <!-- Validation Errors -->
+    <!-- Menghilangkan tampilan error validasi di atas tabel -->
+    <!--
+    <template x-if="Object.keys(errors).length > 0">
+        <div class="mb-4 p-4 bg-red-100 text-red-700 rounded">
+            <ul>
+                <template x-for="(message, field) in errors" :key="field">
+                    <li x-text="message"></li>
+                </template>
+            </ul>
+        </div>
+    </template>
+    -->
+
     <!-- Kategori dan Tambah Button -->
     <div class="flex flex-col sm:flex-row justify-between items-center mb-4 gap-4">
         <div class="w-full sm:w-auto">
@@ -116,16 +130,19 @@
                 <template x-if="modalType !== 'hapus'">
                     <div>
                         <label class="block text-sm font-medium">Judul</label>
-                        <input type="text" name="judul" x-model="form.judul" required maxlength="30" class="border p-2 w-full mb-2 rounded-lg" :readonly="modalType === 'detail'">
+                        <input type="text" name="judul" x-model="form.judul" :class="{'mb-4': !errors.judul, 'mb-1': errors.jabatan}" class="border p-2 w-full mb-2 rounded-lg" :readonly="modalType === 'detail'">
+                        <template x-if="errors.judul"><div class="text-red-500 text-sm mt-0.5 mb-4" x-text="errors.judul"></div></template>
 
                         <label class="block text-sm font-medium">Deskripsi Singkat</label>
-                        <textarea name="deskripsi" x-model="form.deskripsi" required maxlength="75" class="border p-2 w-full mb-2 rounded-lg" :readonly="modalType === 'detail'"></textarea>
+                        <textarea name="deskripsi" x-model="form.deskripsi" :class="{'mb-4': !errors.deskripsi, 'mb-1': errors.deskripsi}" class="border p-2 w-full mb-2 rounded-lg" :readonly="modalType === 'detail'"></textarea>
+                        <template x-if="errors.deskripsi"><div class="text-red-500 text-sm mt-0.5 mb-4" x-text="errors.deskripsi"></div></template>
 
                         <label class="block text-sm font-medium">Tanggal</label>
-                        <input type="date" name="tanggal" x-model="form.tanggal" required class="border p-2 w-full mb-2 rounded-lg" :readonly="modalType === 'detail'">
+                        <input type="date" name="tanggal" x-model="form.tanggal" :class="{'mb-4': !errors.tanggal, 'mb-1': errors.tanggal}" class="border p-2 w-full mb-2 rounded-lg" :readonly="modalType === 'detail'">
+                        <template x-if="errors.tanggal"><div class="text-red-500 text-sm mt-0.5 mb-4" x-text="errors.tanggal"></div></template>
 
                         <label class="block text-sm font-medium">Gambar</label>
-                        <input type="file" name="gambar" @change="handleFileUpload" class="border p-2 w-full mb-2 rounded-lg" :disabled="modalType === 'detail'">
+                        <input type="file" name="gambar" accept=".jpg,.jpeg,.png" @change="handleFileUpload" class="border p-2 w-full mb-2 rounded-lg" :disabled="modalType === 'detail'">
 
 <template x-if="form.gambarPreview">
     <img :src="form.gambarPreview" class="max-w-full max-h-48 object-contain rounded-lg shadow-md mt-2 mx-auto block">
@@ -196,6 +213,7 @@ function fotokegiatanApp() {
         },
         closeModal() {
             this.form = { id: null, judul: '', deskripsi: '', tanggal: '', gambar: null, gambarPreview: null };
+            this.errors = {}; // Clear validation errors on cancel
             this.modalType = '';
             this.modalTitle = '';
             this.formAction = '';
@@ -210,6 +228,13 @@ function fotokegiatanApp() {
         handleFileUpload(event) {
             const file = event.target.files[0];
             if (file) {
+                const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+                if (!allowedTypes.includes(file.type)) {
+                    alert('Format file harus JPG, JPEG, atau PNG.');
+                    event.target.value = '';
+                    this.form.gambarPreview = null;
+                    return;
+                }
                 const reader = new FileReader();
                 reader.onload = e => {
                     this.form.gambarPreview = e.target.result;
@@ -217,7 +242,9 @@ function fotokegiatanApp() {
                 reader.readAsDataURL(file);
             }
         },
+        errors: {},
         submitForm() {
+            this.errors = {};
             if (this.modalType === 'hapus') {
                 // Submit delete form using fetch
                 fetch(`/galeri/${this.form.id}`, {
@@ -243,10 +270,18 @@ function fotokegiatanApp() {
                         'Accept': 'application/json',
                     },
                     body: formData,
-                }).then(response => response.json())
-                  .then(() => {
-                      window.location.reload();
-                  });
+                }).then(async response => {
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        this.errors = errorData.errors || {};
+                        throw new Error('Validation failed');
+                    }
+                    return response.json();
+                }).then(() => {
+                    window.location.reload();
+                }).catch(error => {
+                    console.error(error);
+                });
             }
         }
     }

@@ -42,7 +42,7 @@ class GaleriController extends Controller
             'judul' => 'required|string|max:30',
             'deskripsi' => 'required|string|max:75',
             'tanggal' => 'required|date',
-            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ], [
             'judul.required' => 'Judul wajib diisi.',
             'judul.max' => 'Judul maksimal 30 karakter.',
@@ -51,7 +51,7 @@ class GaleriController extends Controller
             'tanggal.required' => 'Tanggal wajib diisi.',
             'tanggal.date' => 'Tanggal harus berupa tanggal yang valid.',
             'gambar.image' => 'File harus berupa gambar.',
-            'gambar.mimes' => 'Format gambar harus jpeg, png, jpg, gif, atau svg.',
+            'gambar.mimes' => 'Format gambar harus jpeg, png, atau jpg.',
             'gambar.max' => 'Ukuran gambar maksimal 2MB.',
         ]);
 
@@ -75,7 +75,7 @@ class GaleriController extends Controller
             'judul' => 'required|string|max:30',
             'deskripsi' => 'required|string|max:75',
             'tanggal' => 'required|date',
-            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ], [
             'judul.required' => 'Judul wajib diisi.',
             'judul.max' => 'Judul maksimal 30 karakter.',
@@ -84,7 +84,7 @@ class GaleriController extends Controller
             'tanggal.required' => 'Tanggal wajib diisi.',
             'tanggal.date' => 'Tanggal harus berupa tanggal yang valid.',
             'gambar.image' => 'File harus berupa gambar.',
-            'gambar.mimes' => 'Format gambar harus jpeg, png, jpg, gif, atau svg.',
+            'gambar.mimes' => 'Format gambar harus jpeg, png, atau jpg.',
             'gambar.max' => 'Ukuran gambar maksimal 2MB.',
         ]);
 
@@ -127,7 +127,17 @@ class GaleriController extends Controller
             'judul' => 'required|string|max:30',
             'deskripsi' => 'required|string|max:75',
             'tanggal' => 'required|date',
-            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        ], [
+            'judul.required' => 'Judul wajib diisi.',
+            'judul.max' => 'Judul maksimal 30 karakter.',
+            'deskripsi.required' => 'Deskripsi wajib diisi.',
+            'deskripsi.max' => 'Deskripsi maksimal 75 karakter.',
+            'tanggal.required' => 'Tanggal wajib diisi.',
+            'tanggal.date' => 'Tanggal harus berupa tanggal yang valid.',
+            'gambar.image' => 'File harus berupa gambar.',
+            'gambar.mimes' => 'Format gambar harus jpeg, png, atau jpg.',
+            'gambar.max' => 'Ukuran gambar maksimal 2MB.',
         ]);
 
         if ($request->hasFile('gambar')) {
@@ -152,7 +162,17 @@ class GaleriController extends Controller
             'judul' => 'required|string|max:30',
             'deskripsi' => 'required|string|max:75',
             'tanggal' => 'required|date',
-            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        ], [
+            'judul.required' => 'Judul wajib diisi.',
+            'judul.max' => 'Judul maksimal 30 karakter.',
+            'deskripsi.required' => 'Deskripsi wajib diisi.',
+            'deskripsi.max' => 'Deskripsi maksimal 75 karakter.',
+            'tanggal.required' => 'Tanggal wajib diisi.',
+            'tanggal.date' => 'Tanggal harus berupa tanggal yang valid.',
+            'gambar.image' => 'File harus berupa gambar.',
+            'gambar.mimes' => 'Format gambar harus jpeg, png, atau jpg.',
+            'gambar.max' => 'Ukuran gambar maksimal 2MB.',
         ]);
 
         if ($request->hasFile('gambar')) {
