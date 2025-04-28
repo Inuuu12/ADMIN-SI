@@ -69,9 +69,21 @@ Route::get('/pendaftaran', function () {
     return view('ADMIN-SI.pendaftaran');
 })->name('pendaftaran');
 
-Route::get('/akademik', function () {
-    return view('ADMIN-SI.akademik');
-})->name('akademik');
+use App\Http\Controllers\GuruController;
+
+Route::get('/akademik', [GuruController::class, 'webIndex'])->name('akademik');
+Route::get('/guru/create', [GuruController::class, 'webCreate'])->name('guru.create');
+Route::post('/guru', [GuruController::class, 'webStore'])->name('guru.store');
+Route::get('/guru/{guru}', [GuruController::class, 'webShow'])->name('guru.show');
+Route::get('/guru/{guru}/edit', [GuruController::class, 'webEdit'])->name('guru.edit');
+Route::put('/guru/{guru}', [GuruController::class, 'webUpdate'])->name('guru.update');
+Route::delete('/guru/{guru}', [GuruController::class, 'webDestroy'])->name('guru.destroy');
+
+Route::resource('galeri', GaleriController::class);
+
+Route::get('/fotokegiatan', [GaleriController::class, 'fotokegiatan'])->name('fotokegiatan');
+
+Route::resource('galeri', GaleriController::class); 
 
 Route::get('/aduan', function () {
     return view('ADMIN-SI.aduan');
@@ -85,9 +97,9 @@ Route::get('/search', function () {
     return view('search');
 })->name('search');
 
-Route::get('/fotokegiatan', function () {
-    return view('ADMIN-SI.fotokegiatan');
-})->name('fotokegiatan');
+use App\Http\Controllers\GaleriController;
+
+Route::get('/fotokegiatan', [GaleriController::class, 'fotokegiatan'])->name('fotokegiatan');
 
 Route::get('/spp', function () {
     return view('ADMIN-SI.spp');
