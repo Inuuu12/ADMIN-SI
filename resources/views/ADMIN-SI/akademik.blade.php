@@ -17,7 +17,7 @@
     padding: 2rem;
     border-radius: 1.25rem;
     background-color: white;
-    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 8px 10px rgba(0, 0, 0, 0.03);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -64,7 +64,7 @@
   </div>
 
   <!-- Guru Grid -->
-  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
     <template x-for="(guru, index) in filteredGurus()" :key="guru.id">
       <div class="guru-card animate-scaleIn" x-show="guru">
         <!-- Gambar -->

@@ -154,6 +154,22 @@ class GuruController extends Controller
             'pengalaman' => 'required|integer',
             'pendidikan_terakhir' => 'required|max:100',
             'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        ], [
+            'nama.required' => 'Nama wajib diisi.',
+            'nama.max' => 'Nama maksimal 100 karakter.',
+            'nip.required' => 'NIP wajib diisi.',
+            'nip.max' => 'NIP maksimal 20 karakter.',
+            'nip.unique' => 'NIP sudah digunakan.',
+            'jabatan.required' => 'Jabatan wajib diisi.',
+            'jabatan.max' => 'Jabatan maksimal 50 karakter.',
+            'mata_pelajaran.required' => 'Mata pelajaran wajib diisi.',
+            'pengalaman.required' => 'Pengalaman wajib diisi.',
+            'pengalaman.integer' => 'Pengalaman harus berupa angka.',
+            'pendidikan_terakhir.required' => 'Pendidikan terakhir wajib diisi.',
+            'pendidikan_terakhir.max' => 'Pendidikan terakhir maksimal 100 karakter.',
+            'gambar.image' => 'File harus berupa gambar.',
+            'gambar.mimes' => 'Format gambar harus jpeg, png, atau jpg.',
+            'gambar.max' => 'Ukuran gambar maksimal 2MB.',
         ]);
 
         if ($request->hasFile('gambar')) {
@@ -178,6 +194,22 @@ class GuruController extends Controller
             'pengalaman' => 'required|integer',
             'pendidikan_terakhir' => 'required|max:100',
             'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        ], [
+            'nama.required' => 'Nama wajib diisi.',
+            'nama.max' => 'Nama maksimal 100 karakter.',
+            'nip.required' => 'NIP wajib diisi.',
+            'nip.max' => 'NIP maksimal 20 karakter.',
+            'nip.unique' => 'NIP sudah digunakan.',
+            'jabatan.required' => 'Jabatan wajib diisi.',
+            'jabatan.max' => 'Jabatan maksimal 50 karakter.',
+            'mata_pelajaran.required' => 'Mata pelajaran wajib diisi.',
+            'pengalaman.required' => 'Pengalaman wajib diisi.',
+            'pengalaman.integer' => 'Pengalaman harus berupa angka.',
+            'pendidikan_terakhir.required' => 'Pendidikan terakhir wajib diisi.',
+            'pendidikan_terakhir.max' => 'Pendidikan terakhir maksimal 100 karakter.',
+            'gambar.image' => 'File harus berupa gambar.',
+            'gambar.mimes' => 'Format gambar harus jpeg, png, atau jpg.',
+            'gambar.max' => 'Ukuran gambar maksimal 2MB.',
         ]);
 
         if ($request->hasFile('gambar')) {
