@@ -66,7 +66,7 @@ Route::get('/dashboard', function () {
 })->name('dashboard');
 
 Route::get('/pendaftaran', function () {
-    return view('ADMIN-SI.pendaftaran');
+    return view('pendaftaran');
 })->name('pendaftaran');
 
 use App\Http\Controllers\GuruController;
@@ -79,11 +79,14 @@ Route::get('/guru/{guru}/edit', [GuruController::class, 'webEdit'])->name('guru.
 Route::put('/guru/{guru}', [GuruController::class, 'webUpdate'])->name('guru.update');
 Route::delete('/guru/{guru}', [GuruController::class, 'webDestroy'])->name('guru.destroy');
 
-Route::resource('galeri', GaleriController::class);
-
 Route::get('/fotokegiatan', [GaleriController::class, 'fotokegiatan'])->name('fotokegiatan');
 
-Route::resource('galeri', GaleriController::class); 
+Route::get('/galeri/create', [GaleriController::class, 'webCreate'])->name('guru.create');
+Route::post('/galeri', [GaleriController::class, 'webStore'])->name('galeri.store');
+Route::get('/galeri/{galeri}', [GaleriController::class, 'webShow'])->name('galeri.show');
+Route::get('/galeri/{galeri}/edit', [GaleriController::class, 'webEdit'])->name('galero.edit');
+Route::put('/galeri/{galeri}', [GaleriController::class, 'webUpdate'])->name('galeri.update');
+Route::delete('/galeri/{galeri}', [GaleriController::class, 'webDestroy'])->name('galeri.destroy');
 
 Route::get('/aduan', function () {
     return view('ADMIN-SI.aduan');
