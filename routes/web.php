@@ -83,7 +83,7 @@ Route::resource('galeri', GaleriController::class);
 
 Route::get('/fotokegiatan', [GaleriController::class, 'fotokegiatan'])->name('fotokegiatan');
 
-Route::resource('galeri', GaleriController::class); 
+Route::resource('galeri', GaleriController::class);
 
 Route::get('/aduan', function () {
     return view('ADMIN-SI.aduan');
@@ -105,6 +105,10 @@ Route::get('/spp', function () {
     return view('ADMIN-SI.spp');
 })->name('spp');
 
+Route::get('/kelas', function () {
+    return view('ADMIN-SI.kelas');
+})->name('kelas');
+
 Route::get('/profil', function () {
     return view('ADMIN-SI.profil');
 })->name('profil');
@@ -112,6 +116,24 @@ Route::get('/profil', function () {
 Route::get('/login', function () {
     return view('layouts.login');
 })->name('login');
+
+Route::get('/register', function () {
+    return view('layouts.register');
+})->name('register');
+
+Route::get('/kelas/{kelas}', function ($kelas) {
+    $guru = 'Moh. Rofi Julian, S. T.';
+    $siswa = [
+        'Siswa 1',
+        'Siswa 2',
+        'Siswa 3',
+        'Siswa 4',
+    ];
+
+    // Mengirim data kelas, guru, dan siswa ke view kelasa
+    return view('ADMIN-SI.kelasa', compact('kelas', 'guru', 'siswa'));
+});
+
 
 
 
