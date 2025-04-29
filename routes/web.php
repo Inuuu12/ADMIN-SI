@@ -86,8 +86,6 @@ Route::get('/galeri/{galeri}/edit', [GaleriController::class, 'webEdit'])->name(
 Route::put('/galeri/{galeri}', [GaleriController::class, 'webUpdate'])->name('galeri.update');
 Route::delete('/galeri/{galeri}', [GaleriController::class, 'webDestroy'])->name('galeri.destroy');
 
-Route::resource('galeri', GaleriController::class);
-
 Route::get('/aduan', function () {
     return view('ADMIN-SI.aduan');
 })->name('aduan');
@@ -114,10 +112,12 @@ Route::get('/profil', function () {
     return view('ADMIN-SI.profil');
 })->name('profil');
 
+//login
 Route::get('/login', function () {
     return view('layouts.login');
 })->name('login');
 
+//register
 Route::get('/register', function () {
     return view('layouts.register');
 })->name('register');
