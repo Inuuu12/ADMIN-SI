@@ -22,7 +22,11 @@
             <div class="container mx-auto flex justify-between items-center px-32">
 
                 <!-- Logo -->
-                <a href="{{ route('beranda') }}" class="text-xl font-bold text-gray-800">Logo</a>
+                <!-- Logo -->
+                <a href="{{ route('beranda') }}" class="flex items-center space-x-3 text-xl font-bold text-gray-700">
+                    <img src="img/logotpanurul.png"Logo TPQ" class="h-12 w-auto">
+                    <span>TPQ Nurul Iman</span>
+                </a>
 
                 <!-- Menu Tengah -->
                 <ul class="hidden md:flex space-x-10">
@@ -142,20 +146,21 @@
 
     <div class="w-3/4 mb-[100px] mx-auto drop-shadow">
         <a href="">
-            <img src="img/photo2.jpg" alt="">
+            <img src="img/bannerpendaftaran1.png" alt="">
         </a>
+        
         <div class="flex flex-col p-10 bg-white">
-            <div class="text-2xl font-bold text-center mb-4 text-gray-800">Pendaftaran Santri Baru TPA Nurul Iman</div>
+            <div class="text-2xl font-bold text-center mb-4 text-gray-800">Pendaftaran Santri Baru TPQ Nurul Iman</div>
             <div class="flex flex-wrap justify-center gap-6">
                 <div class="container mx-auto ">
                     <h1 class="text-sm font-sm text-center mb-10 text-gray-600">Tingkatkan Iman dan Ilmu Anak Anda di
-                        TPA Nurul Iman - Daftar Sekarang dan Tumbuhkan Generasi Cinta Al-Qur'an.</h1>
+                        TPQ Nurul Iman - Daftar Sekarang dan Tumbuhkan Generasi Cinta Al-Qur'an.</h1>
                     <div class="flex flex-wrap justify-center gap-8">
 
                         <div class="flex flex-col items-center border-2 p-5">
                             <div class="text-2xl font-bold text-center mb-8  text-gray-800">Formulir Pendaftaran Online
                             </div>
-                            <form action="{{ route('pembayaran') }}" class="flex flex-col items-center">
+                            <form action="pembayaran.html" class="flex flex-col items-center">
                                 <div class="w-full mb-7">
                                     <label for="tempat-lahir" class="block text-sm font-medium mb-4">A. DATA SANTRI
                                     </label>
@@ -268,11 +273,11 @@
     <footer class="bg-gradient-to-br from-green-600 to-green-700 text-white py-6">
         <div class="container mx-auto px-6 lg:px-20">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Tentang TPA -->
+                <!-- Tentang TPQ -->
                 <div>
-                    <h2 class="text-lg font-bold mb-4">Tentang TPA Nurul Iman</h2>
+                    <h2 class="text-lg font-bold mb-4">Tentang TPQ Nurul Iman</h2>
                     <p class="text-sm">
-                        TPA Nurul Iman adalah lembaga pendidikan Al-Qur'an yang bertujuan mencetak generasi muda
+                        TPQ Nurul Iman adalah lembaga pendidikan Al-Qur'an yang bertujuan mencetak generasi muda
                         berakhlakul karimah
                         dengan pendekatan islami yang menyenangkan dan edukatif.
                     </p>
@@ -293,8 +298,8 @@
                     <h2 class="text-lg font-bold mb-4">Kontak Kami</h2>
                     <ul class="text-sm space-y-2">
                         <li><strong>Alamat:</strong> Jl. Pisangan Baru, Jakarta Timur</li>
-                        <li><strong>Email:</strong> <a href="mailto:info@tpanuruliman.com"
-                                class="hover:underline">info@tpanuruliman.com</a></li>
+                        <li><strong>Email:</strong> <a href="mailto:info@TPQnuruliman.com"
+                                class="hover:underline">info@TPQnuruliman.com</a></li>
                         <li><strong>Telepon:</strong> +62 812-3456-7890</li>
                         <li><strong>Jam Operasional:</strong> Senin - Jum'at, 08.00 - 16.00 WIB</li>
                     </ul>
@@ -306,7 +311,7 @@
 
             <!-- Footer Bottom -->
             <div class="mt-4 text-center text-sm">
-                <p>&copy; 2025 TPA Nurul Iman. Semua Hak Dilindungi.</p>
+                <p>&copy; 2025 TPQ Nurul Iman. Semua Hak Dilindungi.</p>
             </div>
         </div>
     </footer>
