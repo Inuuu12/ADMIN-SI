@@ -28,9 +28,7 @@ Route::get('/beranda', function () {
     return view('beranda');
 })->name('beranda');
 
-Route::get('/galeri', function () {
-    return view('galeri');
-})->name('galeri');
+Route::get('/galeri', [GaleriController::class, 'webGaleri'])->name('galeri');
 
 Route::get('/informasi_pendaftaran', function () {
     return view('informasi_pendaftaran1');
@@ -80,7 +78,7 @@ Route::delete('/guru/{guru}', [GuruController::class, 'webDestroy'])->name('guru
 Route::get('/galeri/create', [GaleriController::class, 'webCreate'])->name('guru.create');
 Route::post('/galeri', [GaleriController::class, 'webStore'])->name('galeri.store');
 Route::get('/galeri/{galeri}', [GaleriController::class, 'webShow'])->name('galeri.show');
-Route::get('/galeri/{galeri}/edit', [GaleriController::class, 'webEdit'])->name('galero.edit');
+Route::get('/galeri/{galeri}/edit', [GaleriController::class, 'webEdit'])->name('galeri.edit');
 Route::put('/galeri/{galeri}', [GaleriController::class, 'webUpdate'])->name('galeri.update');
 Route::delete('/galeri/{galeri}', [GaleriController::class, 'webDestroy'])->name('galeri.destroy');
 Route::get('/fotokegiatan', [GaleriController::class, 'fotokegiatan'])->name('fotokegiatan');

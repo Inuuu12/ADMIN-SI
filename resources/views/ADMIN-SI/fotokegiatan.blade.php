@@ -190,7 +190,7 @@ function fotokegiatanApp() {
                 this.form = { id: null, judul: '', deskripsi: '', tanggal: '', gambar: null, gambarPreview: null };
                 this.showModal = true;
             } else if (type === 'edit' || type === 'detail') {
-                        fetch(`/galeri/${id}`)
+fetch(`/api/galeri/${id}`)
                             .then(response => response.json())
                             .then(data => {
                                 this.form = {
@@ -202,7 +202,7 @@ function fotokegiatanApp() {
                                     gambarPreview: data.gambar ? `/gambar/${data.gambar}` : null,
                                 };
                                 this.modalTitle = type === 'edit' ? 'Edit Kegiatan' : 'Detail Kegiatan';
-                                this.formAction = type === 'edit' ? `/galeri/${id}` : '';
+                                this.formAction = type === 'edit' ? `/api/galeri/${id}` : '';
                                 this.showModal = true;
                             });
             } else if (type === 'hapus') {
@@ -247,7 +247,7 @@ function fotokegiatanApp() {
             this.errors = {};
             if (this.modalType === 'hapus') {
                 // Submit delete form using fetch
-                fetch(`/galeri/${this.form.id}`, {
+fetch(`/api/galeri/${this.form.id}`, {
                     method: 'DELETE',
                     headers: {
                         'X-CSRF-TOKEN': '{{ csrf_token() }}',

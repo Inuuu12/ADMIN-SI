@@ -161,7 +161,7 @@
                     <div
                         class="card flex bg-white shadow-sm rounded-lg overflow-hidden w-full md:w-5/12 transform transition-all duration-300 hover:scale-105 hover:shadow-lg border border-gray-300 {{ $index === count($gurus) - 1 && count($gurus) % 2 !== 0 ? 'flex-row-reverse' : '' }}">
                         <div class="flex-1 p-6">
-                            <h2 class="text-lg font-semibold text-gray-800">{{ $guru->nama }}</h2>
+                            <h2 class="text-lg font-semibold text-gray-800">Ustadzah {{ $guru->nama }}</h2>
                             <p class="text-sm text-gray-600 mt-2">{{ $guru->jabatan }} di TPQ Nurul Iman</p>
                             <p class="text-sm text-gray-600">Mengajar {{ $guru->mata_pelajaran }}</p>
                             <p class="text-sm text-gray-600">Pengalaman Mengajar {{ $guru->pengalaman }} Tahun</p>

@@ -2,8 +2,8 @@
 <html lang="id">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Galeri</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
@@ -17,108 +17,63 @@
 
 <body>
     <nav class="fixed top-0 left-0 w-full bg-white shadow-md py-6 text-sm z-50">
+        <div class="container mx-auto flex justify-between items-center px-32">
+            <a href="{{ route('beranda') }}" class="flex items-center space-x-3 text-xl font-bold text-gray-700">
+                <img src="img/logotpanurul.png" alt="Logo TPQ" class="h-12 w-auto" />
+                <span>TPQ Nurul Iman</span>
+            </a>
 
-        <body class="pt-20">
-            <div class="container mx-auto flex justify-between items-center px-32">
+            <ul class="hidden md:flex space-x-10">
+                <li><a href="{{ route('beranda') }}" class="text-gray-600 hover:text-green-500 transition">Beranda</a></li>
+                <li><a href="{{ route('tentang') }}" class="text-gray-600 hover:text-green-500 transition">Tentang Kami</a></li>
+                <li><a href="{{ route('program') }}" class="text-gray-600 hover:text-green-500 transition">Program Belajar</a></li>
+                <li><a href="{{ route('pendaftaran') }}" class="text-gray-600 hover:text-green-500 transition">Pendaftaran</a></li>
+                <li><a href="{{ route('kontak') }}" class="text-gray-600 hover:text-green-500 transition">Kontak</a></li>
+                <li><a href="{{ route('galeri') }}" class="text-gray-600 hover:text-green-500 transition">Galeri</a></li>
+            </ul>
 
-                <!-- Logo -->
-                <!-- Logo -->
-                <a href="{{ route('beranda') }}" class="flex items-center space-x-3 text-xl font-bold text-gray-700">
-                    <img src="img/logotpanurul.png"Logo TPQ" class="h-12 w-auto">
-                    <span>TPQ Nurul Iman</span>
-                </a>
+            <a href="#" onclick="document.getElementById('modal_login').showModal();"
+                class="hidden md:flex items-center px-4 py-1 text-gray-600 border border-transparent rounded-lg hover:border-green-500 hover:text-green-500 transition">
+                <i class="ph ph-user-circle text-lg mr-2"></i>
+                Login
+            </a>
 
-                <!-- Menu Tengah -->
-                <ul class="hidden md:flex space-x-10">
-                    <li><a href="{{ route('beranda') }}" class="text-gray-600 hover:text-green-500 transition">Beranda</a></li>
+            <button id="menuToggle" class="md:hidden text-gray-600 focus:outline-none">☰</button>
+        </div>
 
-                    <!-- Dropdown Profil -->
-                    <li class="relative group">
-                        <button class="flex items-center text-gray-600 hover:text-green-500 transition"
-                            onclick="toggleDropdown('profilDropdown')">
-                            Profil <i class="ph ph-caret-down ml-1"></i>
-                        </button>
-                        <ul id="profilDropdown" class="absolute hidden bg-white shadow-md mt-2 py-2 w-40">
-                            <li><a href="{{ route('tentang') }}"
-                                    class="block px-4 py-2 text-gray-600 hover:bg-green-100">Tentang</a>
-                            </li>
-                            <li><a href="{{ route('pengajar') }}"
-                                    class="block px-4 py-2 text-gray-600 hover:bg-green-100">Guru</a>
-                            </li>
-                            <li><a href="{{ route('program') }}"
-                                    class="block px-4 py-2 text-gray-600 hover:bg-green-100">Program</a>
-                            </li>
-                        </ul>
-                    </li>
-
-                    <li><a href="{{ route('galeri') }}" class="text-gray-600 hover:text-green-500 transition">Galeri</a></li>
-
-                    <!-- Dropdown Layanan -->
-                    <li class="relative group">
-                        <button class="flex items-center text-gray-600 hover:text-green-500 transition"
-                            onclick="toggleDropdown('layananDropdown')">
-                            Layanan <i class="ph ph-caret-down ml-1"></i>
-                        </button>
-                        <ul id="layananDropdown" class="absolute hidden bg-white shadow-md mt-2 py-2 w-48">
-                            <li><a href="{{ route('informasi_pendaftaran') }}"
-                                    class="block px-4 py-2 text-gray-600 hover:bg-green-100">Informasi
-                                    Pendaftaran</a></li>
-                            <li><a href="{{ route('pendaftaran') }}"
-                                    class="block px-4 py-2 text-gray-600 hover:bg-green-100">Pendaftaran Online</a>
-                            </li>
-                        </ul>
-                    </li>
-
-                    <li><a href="{{ route('kontak') }}" class="text-gray-600 hover:text-green-500 transition">Kontak</a></li>
-                </ul>
-
-                <!-- Tombol Login -->
-                <a href="#" onclick="document.getElementById('modal_login').showModal();"
-                    class="hidden md:flex items-center px-4 py-1 text-gray-600 border border-transparent rounded-lg hover:border-green-500 hover:text-green-500 transition">
-                    <i class="ph ph-user-circle text-lg mr-2"></i>
-                    Login
-                </a>
-
-                <!-- Burger Menu untuk Mobile -->
-                <button id="menuToggle" class="md:hidden text-gray-600 focus:outline-none">
-                    ☰
-                </button>
+        <div id="mobileMenu" class="hidden md:hidden bg-white shadow-md py-3 px-6">
+            <a href="#" class="block text-gray-600 hover:text-green-500 transition py-2">Beranda</a>
+            <button class="w-full flex justify-between text-gray-600 hover:text-green-500 transition py-2"
+                onclick="toggleDropdown('profilDropdownMobile')">
+                Profil <i class="ph ph-caret-down"></i>
+            </button>
+            <div id="profilDropdownMobile" class="hidden pl-4">
+                <a href="{{ route('tentang') }}" class="block text-gray-600 hover:bg-green-100 py-1">Tentang</a>
+                <a href="{{ route('pengajar') }}" class="block text-gray-600 hover:bg-green-100 py-1">Guru</a>
+                <a href="{{ route('program') }}" class="block text-gray-600 hover:bg-green-100 py-1">Program</a>
             </div>
 
-            <!-- Menu Mobile -->
-            <div id="mobileMenu" class="hidden md:hidden bg-white shadow-md py-3 px-6">
-                <a href="#" class="block text-gray-600 hover:text-green-500 transition py-2">Beranda</a>
-                <button class="w-full flex justify-between text-gray-600 hover:text-green-500 transition py-2"
-                    onclick="toggleDropdown('profilDropdownMobile')">
-                    Profil <i class="ph ph-caret-down"></i>
-                </button>
-                <div id="profilDropdownMobile" class="hidden pl-4">
-                    <a href="{{ route('tentang') }}" class="block text-gray-600 hover:bg-green-100 py-1">Tentang</a>
-                    <a href="{{ route('pengajar') }}" class="block text-gray-600 hover:bg-green-100 py-1">Guru</a>
-                    <a href="{{ route('program') }}" class="block text-gray-600 hover:bg-green-100 py-1">Program</a>
-                </div>
+            <a href="{{ route('galeri') }}" class="block text-gray-600 hover:text-green-500 transition py-2">Galeri</a>
 
-                <a href="{{ route('galeri') }}" class="block text-gray-600 hover:text-green-500 transition py-2">Galeri</a>
-
-                <button class="w-full flex justify-between text-gray-600 hover:text-green-500 transition py-2"
-                    onclick="toggleDropdown('layananDropdownMobile')">
-                    Layanan <i class="ph ph-caret-down"></i>
-                </button>
-                <div id="layananDropdownMobile" class="hidden pl-4">
-                    <a href="{{ route('informasi_pendaftaran') }}" class="block text-gray-600 hover:bg-green-100 py-1">Informasi
-                        Pendaftaran</a>
-                    <a href="{{ route('pendaftaran') }}" class="block text-gray-600 hover:bg-green-100 py-1">Pendaftaran</a>
-                </div>
-
-                <a href="{{ route('kontak') }}" class="block text-gray-600 hover:text-green-500 transition py-2">Kontak</a>
-
-                <a href="#"
-                    class="block text-gray-600 border border-gray-300 rounded-lg text-center mt-2 py-2 hover:border-green-500 hover:text-green-500 transition">
-                    <i class="ph ph-user-circle text-lg mr-2"></i> Login
-                </a>
+            <button class="w-full flex justify-between text-gray-600 hover:text-green-500 transition py-2"
+                onclick="toggleDropdown('layananDropdownMobile')">
+                Layanan <i class="ph ph-caret-down"></i>
+            </button>
+            <div id="layananDropdownMobile" class="hidden pl-4">
+                <a href="{{ route('informasi_pendaftaran') }}" class="block text-gray-600 hover:bg-green-100 py-1">Informasi
+                    Pendaftaran</a>
+                <a href="{{ route('pendaftaran') }}" class="block text-gray-600 hover:bg-green-100 py-1">Pendaftaran</a>
             </div>
+
+            <a href="{{ route('kontak') }}" class="block text-gray-600 hover:text-green-500 transition py-2">Kontak</a>
+
+            <a href="#"
+                class="block text-gray-600 border border-gray-300 rounded-lg text-center mt-2 py-2 hover:border-green-500 hover:text-green-500 transition">
+                <i class="ph ph-user-circle text-lg mr-2"></i> Login
+            </a>
+        </div>
     </nav>
-    
+
     <script>
         // Toggle menu untuk tampilan mobile
         document.getElementById('menuToggle').addEventListener('click', function () {
@@ -142,154 +97,27 @@
         });
     </script>
 
-
-    <div class="container mx-auto py-10">
+    <div class="container mx-auto py-10 pt-28">
         <h1 class="text-2xl font-bold text-center mb-4 text-gray-800">Dokumentasi Kegiatan</h1>
-        <div class="flex flex-wrap justify-center gap-6">
-
-
-            <div class="container mx-auto ">
-                <h1 class="text-sm font-sm text-center mb-10 text-gray-600">Dokumentasi berbagai kegiatan dan program
-                    unggulan yang telah kami selenggarakan.</h1>
-                <div class="flex flex-wrap justify-center gap-10">
-
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <!-- Card 1 -->
-                        <div class="border border-gray-300 shadow-md rounded-lg overflow-hidden w-80 min-h-[360px] flex flex-col transition-shadow hover:shadow-lg">
-                            <img src="img/foto2.png" alt="Gambar 1" class="w-full h-2/3 object-cover">
-                            <div class="p-4 flex flex-col flex-1">
-                                <h2 class="text-lg font-semibold text-gray-800 text-center mt-3">Kegiatan Manasik Haji</h2>
-                                <p class="text-sm text-gray-600 mt-2 flex-grow text-center">
-                                    Dalam rangka mengisi kegiatan Ramadhan, anak-anak TPA Nurul Iman mengikuti Manasik Haji untuk mengenal lebih dekat makna perjalanan spiritual menuju Baitullah. 
-                                </p>
-                                <div class="w-full">
-                                    
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Card 2 -->
-                        <div class="border border-gray-300 shadow-md rounded-lg overflow-hidden w-80 min-h-[360px] flex flex-col transition-shadow hover:shadow-lg">
-                            <img src="img/foto3.png" alt="Gambar 2" class="w-full h-2/3 object-cover">
-                            <div class="p-4 flex flex-col flex-1">
-                                <h2 class="text-lg font-semibold text-gray-800 text-center mt-3">Kegiatan Manasik Haji</h2>
-                                <p class="text-sm text-gray-600 mt-2 flex-grow text-center">
-                                    Dalam rangka mengisi kegiatan Ramadhan, anak-anak TPA Nurul Iman mengikuti Manasik Haji untuk mengenal lebih dekat makna perjalanan spiritual menuju Baitullah. 
-                                </p>
-                                <div class="w-full">
-                                    
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Card 3 -->
-                        <div class="border border-gray-300 shadow-md rounded-lg overflow-hidden w-80 min-h-[360px] flex flex-col transition-shadow hover:shadow-lg">
-                            <img src="img/foto1.png" alt="Gambar 3" class="w-full h-2/3 object-cover">
-                            <div class="p-4 flex flex-col flex-1">
-                                <h2 class="text-lg font-semibold text-gray-800 text-center mt-3">Kegiatan Manasik Haji</h2>
-                                <p class="text-sm text-gray-600 mt-2 flex-grow text-center">
-                                    Dalam rangka mengisi kegiatan Ramadhan, anak-anak TPA Nurul Iman mengikuti Manasik Haji untuk mengenal lebih dekat makna perjalanan spiritual menuju Baitullah. 
-                                </p>
-                                <div class="w-full">
-                                    
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Card 4 -->
-                        <div class="border border-gray-300 shadow-md rounded-lg overflow-hidden w-80 min-h-[360px] flex flex-col transition-shadow hover:shadow-lg">
-                            <img src="img/foto5.png" alt="Gambar 4" class="w-full h-2/3 object-cover">
-                            <div class="p-4 flex flex-col flex-1">
-                                <h2 class="text-lg font-semibold text-gray-800 text-center">Pawai Menyambut Bulan Ramadhan</h2>
-                                <p class="text-sm text-gray-600 mt-2 flex-grow text-center">
-                                    Sambut Ramadhan penuh suka cita! Anak-anak TPQ Nurul Iman mengikuti pawai Ramadhan dengan semangat, membawa doa dan harapan untuk bulan penuh berkah ini. 
-                                </p>
-                                <div class="w-full">
-                                    
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Card 5 -->
-                        <div class="border border-gray-300 shadow-md rounded-lg overflow-hidden w-80 min-h-[360px] flex flex-col transition-shadow hover:shadow-lg">
-                            <img src="img/foto4.png" alt="Gambar 5" class="w-full h-2/3 object-cover">
-                            <div class="p-4 flex flex-col flex-1">
-                                <h2 class="text-lg font-semibold text-gray-800 text-center">Pawai Menyambut Bulan Ramadhan</h2>
-                                <p class="text-sm text-gray-600 mt-2 flex-grow text-center">
-                                    Sambut Ramadhan penuh suka cita! Anak-anak TPQ Nurul Iman mengikuti pawai Ramadhan dengan semangat, membawa doa dan harapan untuk bulan penuh berkah ini. 
-                                </p>
-                                <div class="w-full">
-                                    
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Card 6 -->
-                        <div class="border border-gray-300 shadow-md rounded-lg overflow-hidden w-80 min-h-[360px] flex flex-col transition-shadow hover:shadow-lg">
-                            <img src="img/foto6.png" alt="Gambar 6" class="w-full h-2/3 object-cover">
-                            <div class="p-4 flex flex-col flex-1">
-                                <h2 class="text-lg font-semibold text-gray-800 text-center">Pawai Menyambut Bulan Ramadhan</h2>
-                                <p class="text-sm text-gray-600 mt-2 flex-grow text-center">
-                                    Sambut Ramadhan penuh suka cita! Anak-anak TPQ Nurul Iman mengikuti pawai Ramadhan dengan semangat, membawa doa dan harapan untuk bulan penuh berkah ini. 
-                                </p>
-                                <div class="w-full">
-                                    
-                                </div>
-                            </div>
-                        </div>
-
- <!-- Card 4 -->
- <div class="border border-gray-300 shadow-md rounded-lg overflow-hidden w-80 min-h-[360px] flex flex-col transition-shadow hover:shadow-lg">
-    <img src="img/foto7.png" alt="Gambar 4" class="w-full h-2/3 object-cover">
-    <div class="p-4 flex flex-col flex-1">
-        <h2 class="text-lg font-semibold text-gray-800 text-center">Kegiatan Praktek Sholat </h2>
-        <p class="text-sm text-gray-600 mt-2 flex-grow text-center">
-            Kegiatan praktek sholat di TPA Nurul Iman membimbing anak-anak memahami gerakan dan bacaan sholat dengan benar. 
-        </p>
-        <div class="w-full">
-            
-        </div>
-    </div>
-</div>
-
-<!-- Card 5 -->
-<div class="border border-gray-300 shadow-md rounded-lg overflow-hidden w-80 min-h-[360px] flex flex-col transition-shadow hover:shadow-lg">
-    <img src="img/foto8.png" alt="Gambar 5" class="w-full h-2/3 object-cover">
-    <div class="p-4 flex flex-col flex-1">
-        <h2 class="text-lg font-semibold text-gray-800 text-center">Kegiatan Latihan Menulis Arab</h2>
-        <p class="text-sm text-gray-600 mt-2 flex-grow text-center">
-            Kegiatan praktek sholat di TPA Nurul Iman membimbing anak-anak memahami gerakan dan bacaan sholat dengan benar. 
-        </p>
-        <div class="w-full">
-            
-        </div>
-    </div>
-</div>
-
-<!-- Card 6 -->
-<div class="border border-gray-300 shadow-md rounded-lg overflow-hidden w-80 min-h-[360px] flex flex-col transition-shadow hover:shadow-lg">
-    <img src="img/foto9.png" alt="Gambar 6" class="w-full h-2/3 object-cover">
-    <div class="p-4 flex flex-col flex-1">
-        <h2 class="text-lg font-semibold text-gray-800 text-center">Kegiatan Praktek Sholat</h2>
-        <p class="text-sm text-gray-600 mt-2 flex-grow text-center">
-            Kegiatan praktek sholat di TPA Nurul Iman membimbing anak-anak memahami gerakan dan bacaan sholat dengan benar. 
-        </p>
-        <div class="w-full">
-            
-        </div>
-    </div>
-</div>
-
+        <div class="container mx-auto ">
+            <h1 class="text-sm font-sm text-center mb-10 text-gray-600">Dokumentasi berbagai kegiatan dan program unggulan yang telah kami selenggarakan.</h1>
+            <div class="flex flex-wrap justify-center gap-6">
+                @foreach ($galeris as $galeri)
+                <div class="border border-gray-300 shadow-md rounded-lg overflow-hidden w-80 min-h-[360px] flex flex-col transition-shadow hover:shadow-lg">
+                    <img src="{{ asset('gambar/' . $galeri->gambar) }}" alt="{{ $galeri->judul }}" class="w-full h-2/3 object-cover" />
+                    <div class="p-4 flex flex-col flex-1">
+                        <h2 class="text-lg font-semibold text-gray-800 text-center mt-3">{{ $galeri->judul }}</h2>
+                        <p class="text-sm text-gray-600 mt-2 flex-grow text-center">{{ $galeri->deskripsi }}</p>
                     </div>
                 </div>
+                @endforeach
             </div>
         </div>
     </div>
-    <!-- Footer -->
+
     <footer class="bg-gradient-to-br from-green-600 to-green-700 text-white py-6">
         <div class="container mx-auto px-6 lg:px-20">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Tentang TPQ -->
                 <div>
                     <h2 class="text-lg font-bold mb-4">Tentang TPQ Nurul Iman</h2>
                     <p class="text-sm">
@@ -298,7 +126,6 @@
                         dengan pendekatan islami yang menyenangkan dan edukatif.
                     </p>
                 </div>
-                <!-- Tautan Cepat -->
                 <div>
                     <h2 class="text-lg font-bold mb-4">Tautan Cepat</h2>
                     <ul class="text-sm space-y-2">
@@ -309,7 +136,6 @@
                         <li><a href="{{ route('kontak') }}" class="hover:underline">Kontak</a></li>
                     </ul>
                 </div>
-                <!-- Kontak -->
                 <div>
                     <h2 class="text-lg font-bold mb-4">Kontak Kami</h2>
                     <ul class="text-sm space-y-2">
@@ -322,18 +148,13 @@
                 </div>
             </div>
 
-            <!-- Divider -->
             <div class="border-t border-gray-400 mt-6"></div>
 
-            <!-- Footer Bottom -->
             <div class="mt-4 text-center text-sm">
                 <p>&copy; 2025 TPQ Nurul Iman. Semua Hak Dilindungi.</p>
             </div>
         </div>
     </footer>
-
-
-
 </body>
 
 </html>

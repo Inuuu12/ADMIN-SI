@@ -19,6 +19,12 @@ class GaleriController extends Controller
         return view('ADMIN-SI.akademik', compact('galeris', 'search'));
     }
 
+    public function webGaleri()
+    {
+        $galeris = Galeri::select('gambar', 'judul', 'deskripsi')->get();
+        return view('galeri', compact('galeris'));
+    }
+
     public function webCreate()
     {
         return view('galeri.create');
@@ -40,19 +46,18 @@ class GaleriController extends Controller
     {
         $request->validate([
             'judul' => 'required|string|max:30',
-            'deskripsi' => 'required|string|max:75',
+            'deskripsi' => 'required|string|max:255',
             'tanggal' => 'required|date',
-            'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg',
         ], [
             'judul.required' => 'Judul wajib diisi.',
             'judul.max' => 'Judul maksimal 30 karakter.',
             'deskripsi.required' => 'Deskripsi wajib diisi.',
-            'deskripsi.max' => 'Deskripsi maksimal 75 karakter.',
+            'deskripsi.max' => 'Deskripsi maksimal 255 karakter.',
             'tanggal.required' => 'Tanggal wajib diisi.',
             'tanggal.date' => 'Tanggal harus berupa tanggal yang valid.',
             'gambar.image' => 'File harus berupa gambar.',
             'gambar.mimes' => 'Format gambar harus jpeg, png, atau jpg.',
-            'gambar.max' => 'Ukuran gambar maksimal 2MB.',
         ]);
 
         $data = $request->all();
@@ -73,19 +78,18 @@ class GaleriController extends Controller
 
         $request->validate([
             'judul' => 'required|string|max:30',
-            'deskripsi' => 'required|string|max:75',
+            'deskripsi' => 'required|string|max:255',
             'tanggal' => 'required|date',
-            'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg',
         ], [
             'judul.required' => 'Judul wajib diisi.',
             'judul.max' => 'Judul maksimal 30 karakter.',
             'deskripsi.required' => 'Deskripsi wajib diisi.',
-            'deskripsi.max' => 'Deskripsi maksimal 75 karakter.',
+            'deskripsi.max' => 'Deskripsi maksimal 255 karakter.',
             'tanggal.required' => 'Tanggal wajib diisi.',
             'tanggal.date' => 'Tanggal harus berupa tanggal yang valid.',
             'gambar.image' => 'File harus berupa gambar.',
             'gambar.mimes' => 'Format gambar harus jpeg, png, atau jpg.',
-            'gambar.max' => 'Ukuran gambar maksimal 2MB.',
         ]);
 
         $data = $request->all();
@@ -125,19 +129,18 @@ class GaleriController extends Controller
     {
         $validated = $request->validate([
             'judul' => 'required|string|max:30',
-            'deskripsi' => 'required|string|max:75',
+            'deskripsi' => 'required|string|max:255',
             'tanggal' => 'required|date',
-            'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg',
         ], [
             'judul.required' => 'Judul wajib diisi.',
             'judul.max' => 'Judul maksimal 30 karakter.',
             'deskripsi.required' => 'Deskripsi wajib diisi.',
-            'deskripsi.max' => 'Deskripsi maksimal 75 karakter.',
+            'deskripsi.max' => 'Deskripsi maksimal 255 karakter.',
             'tanggal.required' => 'Tanggal wajib diisi.',
             'tanggal.date' => 'Tanggal harus berupa tanggal yang valid.',
             'gambar.image' => 'File harus berupa gambar.',
             'gambar.mimes' => 'Format gambar harus jpeg, png, atau jpg.',
-            'gambar.max' => 'Ukuran gambar maksimal 2MB.',
         ]);
 
         if ($request->hasFile('gambar')) {
@@ -160,19 +163,18 @@ class GaleriController extends Controller
     {
         $validated = $request->validate([
             'judul' => 'required|string|max:30',
-            'deskripsi' => 'required|string|max:75',
+            'deskripsi' => 'required|string|max:255',
             'tanggal' => 'required|date',
-            'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg',
         ], [
             'judul.required' => 'Judul wajib diisi.',
             'judul.max' => 'Judul maksimal 30 karakter.',
             'deskripsi.required' => 'Deskripsi wajib diisi.',
-            'deskripsi.max' => 'Deskripsi maksimal 75 karakter.',
+            'deskripsi.max' => 'Deskripsi maksimal 255 karakter.',
             'tanggal.required' => 'Tanggal wajib diisi.',
             'tanggal.date' => 'Tanggal harus berupa tanggal yang valid.',
             'gambar.image' => 'File harus berupa gambar.',
             'gambar.mimes' => 'Format gambar harus jpeg, png, atau jpg.',
-            'gambar.max' => 'Ukuran gambar maksimal 2MB.',
         ]);
 
         if ($request->hasFile('gambar')) {
