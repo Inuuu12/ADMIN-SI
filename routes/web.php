@@ -75,15 +75,14 @@ Route::get('/guru/{guru}/edit', [GuruController::class, 'webEdit'])->name('guru.
 Route::put('/guru/{guru}', [GuruController::class, 'webUpdate'])->name('guru.update');
 Route::delete('/guru/{guru}', [GuruController::class, 'webDestroy'])->name('guru.destroy');
 
-Route::get('/galeri/create', [GaleriController::class, 'webCreate'])->name('guru.create');
+Route::get('/fotokegiatan', [GaleriController::class, 'fotokegiatan'])->name('fotokegiatan');
+
+Route::get('/galeri/create', [GaleriController::class, 'webCreate'])->name('galeri.create');
 Route::post('/galeri', [GaleriController::class, 'webStore'])->name('galeri.store');
 Route::get('/galeri/{galeri}', [GaleriController::class, 'webShow'])->name('galeri.show');
 Route::get('/galeri/{galeri}/edit', [GaleriController::class, 'webEdit'])->name('galeri.edit');
 Route::put('/galeri/{galeri}', [GaleriController::class, 'webUpdate'])->name('galeri.update');
 Route::delete('/galeri/{galeri}', [GaleriController::class, 'webDestroy'])->name('galeri.destroy');
-Route::get('/fotokegiatan', [GaleriController::class, 'fotokegiatan'])->name('fotokegiatan');
-Route::get('/fotokegiatan', [GaleriController::class, 'fotokegiatan'])->name('fotokegiatan');
-
 
 Route::get('/aduan', function () {
     return view('ADMIN-SI.aduan');
@@ -103,13 +102,37 @@ Route::get('/spp', function () {
     return view('ADMIN-SI.spp');
 })->name('spp');
 
+Route::get('/kelas', function () {
+    return view('ADMIN-SI.kelas');
+})->name('kelas');
+
 Route::get('/profil', function () {
     return view('ADMIN-SI.profil');
 })->name('profil');
 
+//login
 Route::get('/login', function () {
     return view('layouts.login');
 })->name('login');
+
+//register
+Route::get('/register', function () {
+    return view('layouts.register');
+})->name('register');
+
+Route::get('/kelas/{kelas}', function ($kelas) {
+    $guru = 'Moh. Rofi Julian, S. T.';
+    $siswa = [
+        'Siswa 1',
+        'Siswa 2',
+        'Siswa 3',
+        'Siswa 4',
+    ];
+
+    // Mengirim data kelas, guru, dan siswa ke view kelasa
+    return view('ADMIN-SI.kelasa', compact('kelas', 'guru', 'siswa'));
+});
+
 
 
 
