@@ -22,7 +22,11 @@
             <div class="container mx-auto flex justify-between items-center px-32">
 
                 <!-- Logo -->
-                <a href="{{ route('beranda') }}" class="text-xl font-bold text-gray-800">Logo</a>
+                <!-- Logo -->
+                <a href="{{ route('beranda') }}" class="flex items-center space-x-3 text-xl font-bold text-gray-700">
+                    <img src="img/logotpanurul.png"Logo TPQ" class="h-12 w-auto">
+                    <span>TPQ Nurul Iman</span>
+                </a>
 
                 <!-- Menu Tengah -->
                 <ul class="hidden md:flex space-x-10">
@@ -151,117 +155,131 @@
 
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <!-- Card 1 -->
-                        <div
-                            class="border border-gray-300 shadow-md rounded-lg overflow-hidden w-80 min-h-[360px] flex flex-col">
-                            <img src="img/photo1.png" alt="Gambar 1" class="w-full h-2/3 object-cover">
+                        <div class="border border-gray-300 shadow-md rounded-lg overflow-hidden w-80 min-h-[360px] flex flex-col transition-shadow hover:shadow-lg">
+                            <img src="img/foto2.png" alt="Gambar 1" class="w-full h-2/3 object-cover">
                             <div class="p-4 flex flex-col flex-1">
-                                <h2 class="text-lg font-semibold text-gray-800 text-center">Pesantren Kilat</h2>
+                                <h2 class="text-lg font-semibold text-gray-800 text-center mt-3">Kegiatan Manasik Haji</h2>
                                 <p class="text-sm text-gray-600 mt-2 flex-grow text-center">
-                                    Pesantren Kilat di TPA Nurul Iman bertujuan meningkatkan pemahaman dan pengamalan
-                                    nilai-nilai Islam selama bulan Ramadhan.
+                                    Dalam rangka mengisi kegiatan Ramadhan, anak-anak TPA Nurul Iman mengikuti Manasik Haji untuk mengenal lebih dekat makna perjalanan spiritual menuju Baitullah. 
                                 </p>
                                 <div class="w-full">
-                                    <button type="submit"
-                                        class="bg-gradient-to-r from-green-700 to-green-500 text-white text-sm font-medium px-4 py-2 w-full rounded-lg mt-4 shadow-md transition-all hover:opacity-90">
-                                        Selengkapnya
-                                    </button>
+                                    
                                 </div>
                             </div>
                         </div>
 
                         <!-- Card 2 -->
-                        <div
-                            class="border border-gray-300 shadow-md rounded-lg overflow-hidden w-80 min-h-[360px] flex flex-col">
-                            <img src="img/photo1.png" alt="Gambar 2" class="w-full h-2/3 object-cover">
+                        <div class="border border-gray-300 shadow-md rounded-lg overflow-hidden w-80 min-h-[360px] flex flex-col transition-shadow hover:shadow-lg">
+                            <img src="img/foto3.png" alt="Gambar 2" class="w-full h-2/3 object-cover">
                             <div class="p-4 flex flex-col flex-1">
-                                <h2 class="text-lg font-semibold text-gray-800 text-center">Kajian Islami</h2>
+                                <h2 class="text-lg font-semibold text-gray-800 text-center mt-3">Kegiatan Manasik Haji</h2>
                                 <p class="text-sm text-gray-600 mt-2 flex-grow text-center">
-                                    Program kajian Islam yang membahas berbagai topik keagamaan dengan pendekatan yang
-                                    interaktif dan mendalam.
+                                    Dalam rangka mengisi kegiatan Ramadhan, anak-anak TPA Nurul Iman mengikuti Manasik Haji untuk mengenal lebih dekat makna perjalanan spiritual menuju Baitullah. 
                                 </p>
                                 <div class="w-full">
-                                    <button type="submit"
-                                        class="bg-gradient-to-r from-green-700 to-green-500 text-white text-sm font-medium px-4 py-2 w-full rounded-lg mt-4 shadow-md transition-all hover:opacity-90">
-                                        Selengkapnya
-                                    </button>
+                                    
                                 </div>
                             </div>
                         </div>
 
                         <!-- Card 3 -->
-                        <div
-                            class="border border-gray-300 shadow-md rounded-lg overflow-hidden w-80 min-h-[360px] flex flex-col">
-                            <img src="img/photo1.png" alt="Gambar 3" class="w-full h-2/3 object-cover">
+                        <div class="border border-gray-300 shadow-md rounded-lg overflow-hidden w-80 min-h-[360px] flex flex-col transition-shadow hover:shadow-lg">
+                            <img src="img/foto1.png" alt="Gambar 3" class="w-full h-2/3 object-cover">
                             <div class="p-4 flex flex-col flex-1">
-                                <h2 class="text-lg font-semibold text-gray-800 text-center">Buka Puasa Bersama</h2>
+                                <h2 class="text-lg font-semibold text-gray-800 text-center mt-3">Kegiatan Manasik Haji</h2>
                                 <p class="text-sm text-gray-600 mt-2 flex-grow text-center">
-                                    Acara buka puasa bersama yang mempererat tali silaturahmi dan berbagi kebahagiaan
-                                    dalam suasana Ramadhan.
+                                    Dalam rangka mengisi kegiatan Ramadhan, anak-anak TPA Nurul Iman mengikuti Manasik Haji untuk mengenal lebih dekat makna perjalanan spiritual menuju Baitullah. 
                                 </p>
                                 <div class="w-full">
-                                    <button type="submit"
-                                        class="bg-gradient-to-r from-green-700 to-green-500 text-white text-sm font-medium px-4 py-2 w-full rounded-lg mt-4 shadow-md transition-all hover:opacity-90">
-                                        Selengkapnya
-                                    </button>
+                                    
                                 </div>
                             </div>
                         </div>
 
                         <!-- Card 4 -->
-                        <div
-                            class="border border-gray-300 shadow-md rounded-lg overflow-hidden w-80 min-h-[360px] flex flex-col">
-                            <img src="img/photo1.png" alt="Gambar 4" class="w-full h-2/3 object-cover">
+                        <div class="border border-gray-300 shadow-md rounded-lg overflow-hidden w-80 min-h-[360px] flex flex-col transition-shadow hover:shadow-lg">
+                            <img src="img/foto5.png" alt="Gambar 4" class="w-full h-2/3 object-cover">
                             <div class="p-4 flex flex-col flex-1">
-                                <h2 class="text-lg font-semibold text-gray-800 text-center">Tadarus Al-Quran</h2>
+                                <h2 class="text-lg font-semibold text-gray-800 text-center">Pawai Menyambut Bulan Ramadhan</h2>
                                 <p class="text-sm text-gray-600 mt-2 flex-grow text-center">
-                                    Program membaca dan memahami Al-Quran bersama dalam suasana yang khidmat dan penuh
-                                    hikmah.
+                                    Sambut Ramadhan penuh suka cita! Anak-anak TPQ Nurul Iman mengikuti pawai Ramadhan dengan semangat, membawa doa dan harapan untuk bulan penuh berkah ini. 
                                 </p>
                                 <div class="w-full">
-                                    <button type="submit"
-                                        class="bg-gradient-to-r from-green-700 to-green-500 text-white text-sm font-medium px-4 py-2 w-full rounded-lg mt-4 shadow-md transition-all hover:opacity-90">
-                                        Selengkapnya
-                                    </button>
+                                    
                                 </div>
                             </div>
                         </div>
 
                         <!-- Card 5 -->
-                        <div
-                            class="border border-gray-300 shadow-md rounded-lg overflow-hidden w-80 min-h-[360px] flex flex-col">
-                            <img src="img/photo1.png" alt="Gambar 5" class="w-full h-2/3 object-cover">
+                        <div class="border border-gray-300 shadow-md rounded-lg overflow-hidden w-80 min-h-[360px] flex flex-col transition-shadow hover:shadow-lg">
+                            <img src="img/foto4.png" alt="Gambar 5" class="w-full h-2/3 object-cover">
                             <div class="p-4 flex flex-col flex-1">
-                                <h2 class="text-lg font-semibold text-gray-800 text-center">Santunan Yatim</h2>
+                                <h2 class="text-lg font-semibold text-gray-800 text-center">Pawai Menyambut Bulan Ramadhan</h2>
                                 <p class="text-sm text-gray-600 mt-2 flex-grow text-center">
-                                    Kegiatan berbagi kebahagiaan dengan anak-anak yatim dalam bentuk santunan dan
-                                    donasi.
+                                    Sambut Ramadhan penuh suka cita! Anak-anak TPQ Nurul Iman mengikuti pawai Ramadhan dengan semangat, membawa doa dan harapan untuk bulan penuh berkah ini. 
                                 </p>
                                 <div class="w-full">
-                                    <button type="submit"
-                                        class="bg-gradient-to-r from-green-700 to-green-500 text-white text-sm font-medium px-4 py-2 w-full rounded-lg mt-4 shadow-md transition-all hover:opacity-90">
-                                        Selengkapnya
-                                    </button>
+                                    
                                 </div>
                             </div>
                         </div>
 
                         <!-- Card 6 -->
-                        <div
-                            class="border border-gray-300 shadow-md rounded-lg overflow-hidden w-80 min-h-[360px] flex flex-col">
-                            <img src="img/photo1.png" alt="Gambar 6" class="w-full h-2/3 object-cover">
+                        <div class="border border-gray-300 shadow-md rounded-lg overflow-hidden w-80 min-h-[360px] flex flex-col transition-shadow hover:shadow-lg">
+                            <img src="img/foto6.png" alt="Gambar 6" class="w-full h-2/3 object-cover">
                             <div class="p-4 flex flex-col flex-1">
-                                <h2 class="text-lg font-semibold text-gray-800 text-center">Pelatihan Dai</h2>
+                                <h2 class="text-lg font-semibold text-gray-800 text-center">Pawai Menyambut Bulan Ramadhan</h2>
                                 <p class="text-sm text-gray-600 mt-2 flex-grow text-center">
-                                    Program pelatihan dai muda untuk meningkatkan keterampilan berdakwah secara efektif.
+                                    Sambut Ramadhan penuh suka cita! Anak-anak TPQ Nurul Iman mengikuti pawai Ramadhan dengan semangat, membawa doa dan harapan untuk bulan penuh berkah ini. 
                                 </p>
                                 <div class="w-full">
-                                    <button type="submit"
-                                        class="bg-gradient-to-r from-green-700 to-green-500 text-white text-sm font-medium px-4 py-2 w-full rounded-lg mt-4 shadow-md transition-all hover:opacity-90">
-                                        Selengkapnya
-                                    </button>
+                                    
                                 </div>
                             </div>
                         </div>
+
+ <!-- Card 4 -->
+ <div class="border border-gray-300 shadow-md rounded-lg overflow-hidden w-80 min-h-[360px] flex flex-col transition-shadow hover:shadow-lg">
+    <img src="img/foto7.png" alt="Gambar 4" class="w-full h-2/3 object-cover">
+    <div class="p-4 flex flex-col flex-1">
+        <h2 class="text-lg font-semibold text-gray-800 text-center">Kegiatan Praktek Sholat </h2>
+        <p class="text-sm text-gray-600 mt-2 flex-grow text-center">
+            Kegiatan praktek sholat di TPA Nurul Iman membimbing anak-anak memahami gerakan dan bacaan sholat dengan benar. 
+        </p>
+        <div class="w-full">
+            
+        </div>
+    </div>
+</div>
+
+<!-- Card 5 -->
+<div class="border border-gray-300 shadow-md rounded-lg overflow-hidden w-80 min-h-[360px] flex flex-col transition-shadow hover:shadow-lg">
+    <img src="img/foto8.png" alt="Gambar 5" class="w-full h-2/3 object-cover">
+    <div class="p-4 flex flex-col flex-1">
+        <h2 class="text-lg font-semibold text-gray-800 text-center">Kegiatan Latihan Menulis Arab</h2>
+        <p class="text-sm text-gray-600 mt-2 flex-grow text-center">
+            Kegiatan praktek sholat di TPA Nurul Iman membimbing anak-anak memahami gerakan dan bacaan sholat dengan benar. 
+        </p>
+        <div class="w-full">
+            
+        </div>
+    </div>
+</div>
+
+<!-- Card 6 -->
+<div class="border border-gray-300 shadow-md rounded-lg overflow-hidden w-80 min-h-[360px] flex flex-col transition-shadow hover:shadow-lg">
+    <img src="img/foto9.png" alt="Gambar 6" class="w-full h-2/3 object-cover">
+    <div class="p-4 flex flex-col flex-1">
+        <h2 class="text-lg font-semibold text-gray-800 text-center">Kegiatan Praktek Sholat</h2>
+        <p class="text-sm text-gray-600 mt-2 flex-grow text-center">
+            Kegiatan praktek sholat di TPA Nurul Iman membimbing anak-anak memahami gerakan dan bacaan sholat dengan benar. 
+        </p>
+        <div class="w-full">
+            
+        </div>
+    </div>
+</div>
+
                     </div>
                 </div>
             </div>
@@ -271,11 +289,11 @@
     <footer class="bg-gradient-to-br from-green-600 to-green-700 text-white py-6">
         <div class="container mx-auto px-6 lg:px-20">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Tentang TPA -->
+                <!-- Tentang TPQ -->
                 <div>
-                    <h2 class="text-lg font-bold mb-4">Tentang TPA Nurul Iman</h2>
+                    <h2 class="text-lg font-bold mb-4">Tentang TPQ Nurul Iman</h2>
                     <p class="text-sm">
-                        TPA Nurul Iman adalah lembaga pendidikan Al-Qur'an yang bertujuan mencetak generasi muda
+                        TPQ Nurul Iman adalah lembaga pendidikan Al-Qur'an yang bertujuan mencetak generasi muda
                         berakhlakul karimah
                         dengan pendekatan islami yang menyenangkan dan edukatif.
                     </p>
@@ -296,8 +314,8 @@
                     <h2 class="text-lg font-bold mb-4">Kontak Kami</h2>
                     <ul class="text-sm space-y-2">
                         <li><strong>Alamat:</strong> Jl. Pisangan Baru, Jakarta Timur</li>
-                        <li><strong>Email:</strong> <a href="mailto:info@tpanuruliman.com"
-                                class="hover:underline">info@tpanuruliman.com</a></li>
+                        <li><strong>Email:</strong> <a href="mailto:info@TPQnuruliman.com"
+                                class="hover:underline">info@TPQnuruliman.com</a></li>
                         <li><strong>Telepon:</strong> +62 812-3456-7890</li>
                         <li><strong>Jam Operasional:</strong> Senin - Jum'at, 08.00 - 16.00 WIB</li>
                     </ul>
@@ -309,7 +327,7 @@
 
             <!-- Footer Bottom -->
             <div class="mt-4 text-center text-sm">
-                <p>&copy; 2025 TPA Nurul Iman. Semua Hak Dilindungi.</p>
+                <p>&copy; 2025 TPQ Nurul Iman. Semua Hak Dilindungi.</p>
             </div>
         </div>
     </footer>

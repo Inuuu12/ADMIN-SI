@@ -22,7 +22,11 @@
             <div class="container mx-auto flex justify-between items-center px-32">
 
                 <!-- Logo -->
-                <a href="{{ route('beranda') }}" class="text-xl font-bold text-gray-800">Logo</a>
+               <!-- Logo -->
+               <a href="{{ route('beranda') }}" class="flex items-center space-x-3 text-xl font-bold text-gray-700">
+                <img src="img/logotpanurul.png"Logo TPA" class="h-12 w-auto">
+                <span>TPA Nurul Iman</span>
+                </a>
 
                 <!-- Menu Tengah -->
                 <ul class="hidden md:flex space-x-10">
@@ -274,7 +278,7 @@
 
     <div class="w-3/4 mb-[100px] mx-auto drop-shadow">
         <a href="">
-            <img src="img/photo2.jpg" alt="">
+            <img src="img/bannerpendaftaran.png" alt="">
         </a>
         <div class="flex flex-col p-10 bg-white">
             <div

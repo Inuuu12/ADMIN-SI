@@ -19,6 +19,12 @@ class GuruController extends Controller
         return view('ADMIN-SI.akademik', compact('gurus', 'search'));
     }
 
+    public function webPengajar()
+    {
+        $gurus = Guru::all();
+        return view('pengajar', compact('gurus'));
+    }
+
     public function webCreate()
     {
         return view('guru.create');
@@ -45,7 +51,7 @@ class GuruController extends Controller
             'mata_pelajaran' => 'required',
             'pengalaman' => 'required|integer',
             'pendidikan_terakhir' => 'required|max:100',
-            'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:10000',
         ], [
             'nama.required' => 'Nama wajib diisi.',
             'nama.max' => 'Nama maksimal 100 karakter.',
@@ -61,7 +67,7 @@ class GuruController extends Controller
             'pendidikan_terakhir.max' => 'Pendidikan terakhir maksimal 100 karakter.',
             'gambar.image' => 'File harus berupa gambar.',
             'gambar.mimes' => 'Format gambar harus jpeg, png, atau jpg.',
-            'gambar.max' => 'Ukuran gambar maksimal 2MB.',
+            'gambar.max' => 'Ukuran gambar maksimal 10MB.',
         ]);
 
         $data = $request->all();
@@ -87,7 +93,7 @@ class GuruController extends Controller
             'mata_pelajaran' => 'required',
             'pengalaman' => 'required|integer',
             'pendidikan_terakhir' => 'required|max:100',
-            'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:10000',
         ], [
             'nama.required' => 'Nama wajib diisi.',
             'nama.max' => 'Nama maksimal 100 karakter.',
@@ -103,7 +109,7 @@ class GuruController extends Controller
             'pendidikan_terakhir.max' => 'Pendidikan terakhir maksimal 100 karakter.',
             'gambar.image' => 'File harus berupa gambar.',
             'gambar.mimes' => 'Format gambar harus jpeg, png, atau jpg.',
-            'gambar.max' => 'Ukuran gambar maksimal 2MB.',
+            'gambar.max' => 'Ukuran gambar maksimal 10MB.',
         ]);
 
         $data = $request->all();
@@ -153,7 +159,7 @@ class GuruController extends Controller
             'mata_pelajaran' => 'required',
             'pengalaman' => 'required|integer',
             'pendidikan_terakhir' => 'required|max:100',
-            'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:10000',
         ], [
             'nama.required' => 'Nama wajib diisi.',
             'nama.max' => 'Nama maksimal 100 karakter.',
@@ -169,7 +175,7 @@ class GuruController extends Controller
             'pendidikan_terakhir.max' => 'Pendidikan terakhir maksimal 100 karakter.',
             'gambar.image' => 'File harus berupa gambar.',
             'gambar.mimes' => 'Format gambar harus jpeg, png, atau jpg.',
-            'gambar.max' => 'Ukuran gambar maksimal 2MB.',
+            'gambar.max' => 'Ukuran gambar maksimal 10MB.',
         ]);
 
         if ($request->hasFile('gambar')) {
@@ -193,7 +199,7 @@ class GuruController extends Controller
             'mata_pelajaran' => 'required',
             'pengalaman' => 'required|integer',
             'pendidikan_terakhir' => 'required|max:100',
-            'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:10000',
         ], [
             'nama.required' => 'Nama wajib diisi.',
             'nama.max' => 'Nama maksimal 100 karakter.',
@@ -209,7 +215,7 @@ class GuruController extends Controller
             'pendidikan_terakhir.max' => 'Pendidikan terakhir maksimal 100 karakter.',
             'gambar.image' => 'File harus berupa gambar.',
             'gambar.mimes' => 'Format gambar harus jpeg, png, atau jpg.',
-            'gambar.max' => 'Ukuran gambar maksimal 2MB.',
+            'gambar.max' => 'Ukuran gambar maksimal 10MB.',
         ]);
 
         if ($request->hasFile('gambar')) {

@@ -22,7 +22,11 @@
             <div class="container mx-auto flex justify-between items-center px-32">
 
                 <!-- Logo -->
-                <a href="{{ route('beranda') }}" class="text-xl font-bold text-gray-800">Logo</a>
+                <!-- Logo -->
+                <a href="{{ route('beranda') }}" class="flex items-center space-x-3 text-xl font-bold text-gray-700">
+                    <img src="img/logotpanurul.png"Logo TPQ" class="h-12 w-auto">
+                    <span>TPQ Nurul Iman</span>
+                </a>
 
                 <!-- Menu Tengah -->
                 <ul class="hidden md:flex space-x-10">
@@ -143,35 +147,35 @@
     <div class="container mx-auto py-10 max-w-3xl">
         <h1 class="text-2xl font-bold text-center mb-4 text-gray-800">Tentang Kami</h1>
         <p class="text-sm text-gray-600 text-justify leading-relaxed">
-            TPA Nurul Iman (Taman Pendidikan Al-Qur'an Nurul Iman) adalah lembaga pendidikan non-formal yang berfokus
+            TPQ Nurul Iman (Taman Pendidikan Al-Qur'an Nurul Iman) adalah lembaga pendidikan non-formal yang berfokus
             pada pendidikan Al-Qur'an dan nilai-nilai keislaman. Lembaga ini didirikan pada tahun 1990 di bawah naungan
             Yayasan Wakaf Nurul Iman Pondok Bambu, dengan tujuan utama untuk memberikan pendidikan agama Islam yang
-            berkualitas kepada anak-anak sejak usia dini. Pada awal pendiriannya, TPA ini beroperasi di lingkungan
+            berkualitas kepada anak-anak sejak usia dini. Pada awal pendiriannya, TPQ ini beroperasi di lingkungan
             masjid dengan jumlah santri lebih dari 200 orang. Hal ini menunjukkan antusiasme masyarakat terhadap
-            pendidikan agama, terutama karena pada saat itu masih sedikit TPA yang tersedia di Jakarta.
+            pendidikan agama, terutama karena pada saat itu masih sedikit TPQ yang tersedia di Jakarta.
         </p>
         <p class="text-sm text-gray-600 text-justify leading-relaxed mt-4">
-            Seiring berjalannya waktu, TPA Nurul Iman terus berkembang, baik dari segi jumlah santri, tenaga pendidik,
+            Seiring berjalannya waktu, TPQ Nurul Iman terus berkembang, baik dari segi jumlah santri, tenaga pendidik,
             maupun metode pembelajaran yang diterapkan. Saat ini, lembaga ini menawarkan program pendidikan yang
             mencakup berbagai aspek keislaman, di antaranya Aqidah Akhlak, Fiqih, serta Al-Qur'an Hadits. Dalam upaya
-            memberikan pengalaman belajar yang efektif dan menyenangkan, TPA Nurul Iman menggunakan metode Wafa dalam
+            memberikan pengalaman belajar yang efektif dan menyenangkan, TPQ Nurul Iman menggunakan metode Wafa dalam
             pembelajaran Al-Qur'an. Metode ini didesain dengan pendekatan otak kanan, yang memungkinkan anak-anak untuk
             belajar membaca dan menghafal Al-Qur’an dengan lebih cepat, menyenangkan, serta sesuai dengan perkembangan
             kognitif mereka.
         </p>
         <p class="text-sm text-gray-600 text-justify leading-relaxed mt-4">
-            Selain fokus pada pembelajaran agama, TPA Nurul Iman juga menanamkan nilai-nilai akhlakul karimah dan
+            Selain fokus pada pembelajaran agama, TPQ Nurul Iman juga menanamkan nilai-nilai akhlakul karimah dan
             pembiasaan ibadah dalam kehidupan sehari-hari santri. Para santri didorong untuk menerapkan ilmu yang mereka
             pelajari dalam kehidupan nyata, seperti membiasakan diri membaca Al-Qur’an, melaksanakan shalat tepat waktu,
-            serta berperilaku sopan terhadap sesama. Para ustadz dan ustadzah yang mengajar di TPA ini adalah tenaga
+            serta berperilaku sopan terhadap sesama. Para ustadz dan ustadzah yang mengajar di TPQ ini adalah tenaga
             pendidik yang berpengalaman dan memiliki kompetensi dalam bidangnya, sehingga pembelajaran berlangsung
             dengan baik dan terarah.
         </p>
         <p class="text-sm text-gray-600 text-justify leading-relaxed mt-4">
             Dengan fasilitas yang terus dikembangkan, tenaga pendidik yang kompeten, serta metode pembelajaran yang
-            inovatif, TPA Nurul Iman berkomitmen untuk mencetak generasi Qur’ani yang tidak hanya cerdas secara
+            inovatif, TPQ Nurul Iman berkomitmen untuk mencetak generasi Qur’ani yang tidak hanya cerdas secara
             akademik, tetapi juga memiliki akhlak mulia. Sebagai lembaga pendidikan yang telah berdiri lebih dari tiga
-            dekade, TPA Nurul Iman terus berusaha memberikan kontribusi terbaik dalam dunia pendidikan Islam, membimbing
+            dekade, TPQ Nurul Iman terus berusaha memberikan kontribusi terbaik dalam dunia pendidikan Islam, membimbing
             anak-anak agar tumbuh menjadi individu yang beriman, bertakwa, dan berkarakter islami yang kuat.
         </p>
     </div>
@@ -184,7 +188,7 @@
             <div class="relative z-10">
                 <!-- Judul -->
                 <h2 class="text-lg font-bold text-white text-center drop-shadow-lg">
-                    TPA Nurul Iman
+                    TPQ Nurul Iman
                 </h2>
                 <h3 class="text-sm font-semibold text-white text-center mt-2 drop-shadow-lg">
                     Siap Mencetak Generasi Qur'ani, Cerdas, dan Berakhlakul Karimah
@@ -219,11 +223,11 @@
     <footer class="bg-gradient-to-br from-green-600 to-green-700 text-white py-6">
         <div class="container mx-auto px-6 lg:px-20">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Tentang TPA -->
+                <!-- Tentang TPQ -->
                 <div>
-                    <h2 class="text-lg font-bold mb-4">Tentang TPA Nurul Iman</h2>
+                    <h2 class="text-lg font-bold mb-4">Tentang TPQ Nurul Iman</h2>
                     <p class="text-sm">
-                        TPA Nurul Iman adalah lembaga pendidikan Al-Qur'an yang bertujuan mencetak generasi muda
+                        TPQ Nurul Iman adalah lembaga pendidikan Al-Qur'an yang bertujuan mencetak generasi muda
                         berakhlakul karimah
                         dengan pendekatan islami yang menyenangkan dan edukatif.
                     </p>
@@ -244,8 +248,8 @@
                     <h2 class="text-lg font-bold mb-4">Kontak Kami</h2>
                     <ul class="text-sm space-y-2">
                         <li><strong>Alamat:</strong> Jl. Pisangan Baru, Jakarta Timur</li>
-                        <li><strong>Email:</strong> <a href="mailto:info@tpanuruliman.com"
-                                class="hover:underline">info@tpanuruliman.com</a></li>
+                        <li><strong>Email:</strong> <a href="mailto:info@TPQnuruliman.com"
+                                class="hover:underline">info@TPQnuruliman.com</a></li>
                         <li><strong>Telepon:</strong> +62 812-3456-7890</li>
                         <li><strong>Jam Operasional:</strong> Senin - Jum'at, 08.00 - 16.00 WIB</li>
                     </ul>
@@ -257,7 +261,7 @@
 
             <!-- Footer Bottom -->
             <div class="mt-4 text-center text-sm">
-                <p>&copy; 2025 TPA Nurul Iman. Semua Hak Dilindungi.</p>
+                <p>&copy; 2025 TPQ Nurul Iman. Semua Hak Dilindungi.</p>
             </div>
         </div>
     </footer>

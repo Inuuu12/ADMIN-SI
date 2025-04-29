@@ -14,7 +14,7 @@
         }
     </style>
 </head>
-<!-- tes push -->
+
 <body>
     <nav class="fixed top-0 left-0 w-full bg-white shadow-md py-6 text-sm z-50">
 
@@ -22,7 +22,11 @@
             <div class="container mx-auto flex justify-between items-center px-32">
 
                 <!-- Logo -->
-                <a href="{{ route('beranda') }}" class="text-xl font-bold text-gray-800">Logo</a>
+                <!-- Logo -->
+                <a href="{{ route('beranda') }}" class="flex items-center space-x-3 text-xl font-bold text-gray-700">
+                    <img src="img/logotpanurul.png"Logo TPQ" class="h-12 w-auto">
+                    <span>TPQ Nurul Iman</span>
+                </a>
 
                 <!-- Menu Tengah -->
                 <ul class="hidden md:flex space-x-10">
@@ -47,7 +51,8 @@
                         </ul>
                     </li>
 
-                    <li><a href="{{ route('galeri') }}" class="text-gray-600 hover:text-green-500 transition">Galeri</a></li>
+                    <li><a href="{{ route('galeri') }}
+" class="text-gray-600 hover:text-green-500 transition">Galeri</a></li>
 
                     <!-- Dropdown Layanan -->
                     <li class="relative group">
@@ -83,7 +88,7 @@
 
             <!-- Menu Mobile -->
             <div id="mobileMenu" class="hidden md:hidden bg-white shadow-md py-3 px-6">
-                <a href="{{ route('beranda') }}" class="block text-gray-600 hover:text-green-500 transition py-2">Beranda</a>
+                <a href="#" class="block text-gray-600 hover:text-green-500 transition py-2">Beranda</a>
                 <button class="w-full flex justify-between text-gray-600 hover:text-green-500 transition py-2"
                     onclick="toggleDropdown('profilDropdownMobile')">
                     Profil <i class="ph ph-caret-down"></i>
@@ -343,7 +348,7 @@
             <div class="absolute inset-0 flex flex-col justify-center items-center text-center px-10">
                 <h1 class="text-white text-2xl lg:text-5xl font-poppins font-bold mb-1"
                     style="text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.5);">
-                    Selamat Datang di TPA Nurul Iman
+                    Selamat Datang di TPQ Nurul Iman
                 </h1>
                 <h1 class="text-white text-lg lg:text-l font-poppins mt-3 mb-6 drop-shadow-2xl"
                     style="text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.5);">
@@ -357,20 +362,17 @@
     <div class="mt-20 px-48">
         <div class="flex gap-8">
 
-            <img class="w-60 aspect-square rounded-md" src="img/photo1.jpg" alt="">
+            <img class="w-60 aspect-square rounded-md" src="img/ustendang.png" alt="">
 
             <div class="flex flex-col bg-green-600 p-8 rounded-lg shadow-md gap-4">
-                <h1 class="text-2xl font-semibold text-white">Sambutan Kepala Sekolah</h1>
-                <p class="text-white text-justify text-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit
-                    molestias nesciunt debitis magni
-                    distinctio placeat. Excepturi sapiente adipisci aut doloremque sint. Fugiat eveniet blanditiis
-                    dolore rerum quas sed delectus saepe hic, voluptatum accusamus labore possimus quo, dolorem, tempora
-                    ex libero omnis nihil placeat. Nihil consequatur mollitia ullam expedita eos perspiciatis labore
-                    earum. Temporibus iure asperiores voluptatum ullam ipsa accusantium minima, dolorum, ad enim sunt
-                    atque? Aperiam est itaque quibusdam et consequuntur libero eveniet asperiores totam recusandae non
-                    explicabo doloremque laboriosam nihil tempora, sit dolorum amet repellendus impedit atque minus?
-                    Tenetur incidunt laudantium vel sequi nemo, culpa soluta aperiam unde beatae!
-                </p>
+                <h1 class="text-2xl font-semibold text-white">Sambutan Kepala TPQ Nurul Iman</h1>
+                <p class="text-white text-justify text-sm"> Puji syukur kehadirat Allah SWT yang telah melimpahkan rahmat dan hidayah-Nya, 
+                    sehingga kita semua masih diberi kesempatan untuk terus berkontribusi dalam mendidik generasi penerus bangsa. 
+                    Selamat datang di website resmi TPQ Nurul Iman. Website ini kami hadirkan sebagai media informasi, komunikasi, 
+                    dan silaturahmi antara pihak TPQ, orang tua, dan masyarakat. TPQ Nurul Iman hadir sebagai lembaga pendidikan yang tidak 
+                    hanya mengajarkan huruf-huruf hijaiyah dan bacaan Al-Qur’an, tetapi juga menanamkan nilai-nilai kebaikan, kejujuran, 
+                    kepedulian, serta kecintaan terhadap ibadah dan akhlak Islami sejak usia dini. Melalui website ini, kami berharap masyarakat dapat 
+                    mengenal lebih dekat visi, misi, serta program-program unggulan yang kami jalankan di TPQ Nurul Iman.
             </div>
         </div>
     </div>
@@ -388,58 +390,43 @@
 
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <!-- Card 1 -->
-                        <div
-                            class="border border-gray-300 shadow-md rounded-lg overflow-hidden w-80 min-h-[360px] flex flex-col">
-                            <img src="img/photo1.png" alt="Gambar 1" class="w-full h-2/3 object-cover">
+                        <div class="border border-gray-300 shadow-md rounded-lg overflow-hidden w-80 min-h-[360px] flex flex-col transition-shadow hover:shadow-lg">
+                            <img src="img/foto2.png" alt="Gambar 1" class="w-full h-2/3 object-cover">
                             <div class="p-4 flex flex-col flex-1">
-                                <h2 class="text-lg font-semibold text-gray-800 text-center">Pesantren Kilat</h2>
+                                <h2 class="text-lg font-semibold text-gray-800 text-center mt-3">Kegiatan Manasik Haji</h2>
                                 <p class="text-sm text-gray-600 mt-2 flex-grow text-center">
-                                    Pesantren Kilat di TPA Nurul Iman bertujuan meningkatkan pemahaman dan pengamalan
-                                    nilai-nilai Islam selama bulan Ramadhan.
+                                    Dalam rangka mengisi kegiatan Ramadhan, anak-anak TPA Nurul Iman mengikuti Manasik Haji untuk mengenal lebih dekat makna perjalanan spiritual menuju Baitullah. 
                                 </p>
                                 <div class="w-full">
-                                    <button type="submit"
-                                        class="bg-gradient-to-r from-green-700 to-green-500 text-white text-sm font-medium px-4 py-2 w-full rounded-lg mt-4 shadow-md transition-all hover:opacity-90">
-                                        Selengkapnya
-                                    </button>
+                                    
                                 </div>
                             </div>
                         </div>
 
                         <!-- Card 2 -->
-                        <div
-                            class="border border-gray-300 shadow-md rounded-lg overflow-hidden w-80 min-h-[360px] flex flex-col">
-                            <img src="img/photo1.png" alt="Gambar 2" class="w-full h-2/3 object-cover">
+                        <div class="border border-gray-300 shadow-md rounded-lg overflow-hidden w-80 min-h-[360px] flex flex-col transition-shadow hover:shadow-lg">
+                            <img src="img/foto3.png" alt="Gambar 2" class="w-full h-2/3 object-cover">
                             <div class="p-4 flex flex-col flex-1">
-                                <h2 class="text-lg font-semibold text-gray-800 text-center">Kajian Islami</h2>
+                                <h2 class="text-lg font-semibold text-gray-800 text-center mt-3">Kegiatan Manasik Haji</h2>
                                 <p class="text-sm text-gray-600 mt-2 flex-grow text-center">
-                                    Program kajian Islam yang membahas berbagai topik keagamaan dengan pendekatan yang
-                                    interaktif dan mendalam.
+                                    Dalam rangka mengisi kegiatan Ramadhan, anak-anak TPA Nurul Iman mengikuti Manasik Haji untuk mengenal lebih dekat makna perjalanan spiritual menuju Baitullah. 
                                 </p>
                                 <div class="w-full">
-                                    <button type="submit"
-                                        class="bg-gradient-to-r from-green-700 to-green-500 text-white text-sm font-medium px-4 py-2 w-full rounded-lg mt-4 shadow-md transition-all hover:opacity-90">
-                                        Selengkapnya
-                                    </button>
+                                    
                                 </div>
                             </div>
                         </div>
 
                         <!-- Card 3 -->
-                        <div
-                            class="border border-gray-300 shadow-md rounded-lg overflow-hidden w-80 min-h-[360px] flex flex-col">
-                            <img src="img/photo1.png" alt="Gambar 3" class="w-full h-2/3 object-cover">
+                        <div class="border border-gray-300 shadow-md rounded-lg overflow-hidden w-80 min-h-[360px] flex flex-col transition-shadow hover:shadow-lg">
+                            <img src="img/foto1.png" alt="Gambar 3" class="w-full h-2/3 object-cover">
                             <div class="p-4 flex flex-col flex-1">
-                                <h2 class="text-lg font-semibold text-gray-800 text-center">Buka Puasa Bersama</h2>
+                                <h2 class="text-lg font-semibold text-gray-800 text-center mt-3">Kegiatan Manasik Haji</h2>
                                 <p class="text-sm text-gray-600 mt-2 flex-grow text-center">
-                                    Acara buka puasa bersama yang mempererat tali silaturahmi dan berbagi kebahagiaan
-                                    dalam suasana Ramadhan.
+                                    Dalam rangka mengisi kegiatan Ramadhan, anak-anak TPA Nurul Iman mengikuti Manasik Haji untuk mengenal lebih dekat makna perjalanan spiritual menuju Baitullah. 
                                 </p>
                                 <div class="w-full">
-                                    <button type="submit"
-                                        class="bg-gradient-to-r from-green-700 to-green-500 text-white text-sm font-medium px-4 py-2 w-full rounded-lg mt-4 shadow-md transition-all hover:opacity-90">
-                                        Selengkapnya
-                                    </button>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -454,11 +441,11 @@
     <footer class="bg-gradient-to-br from-green-600 to-green-700 text-white py-6">
         <div class="container mx-auto px-6 lg:px-20">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Tentang TPA -->
+                <!-- Tentang TPQ -->
                 <div>
-                    <h2 class="text-lg font-bold mb-4">Tentang TPA Nurul Iman</h2>
+                    <h2 class="text-lg font-bold mb-4">Tentang TPQ Nurul Iman</h2>
                     <p class="text-sm">
-                        TPA Nurul Iman adalah lembaga pendidikan Al-Qur'an yang bertujuan mencetak
+                        TPQ Nurul Iman adalah lembaga pendidikan Al-Qur'an yang bertujuan mencetak
                         generasi muda
                         berakhlakul karimah
                         dengan pendekatan islami yang menyenangkan dan edukatif.
@@ -468,7 +455,7 @@
                 <div>
                     <h2 class="text-lg font-bold mb-4">Tautan Cepat</h2>
                     <ul class="text-sm space-y-2">
-                        <li><a href="{{ route('beranda') }}" class="hover:underline">Beranda</a></li>
+                        <li><a href="/{{ route('beranda') }}" class="hover:underline">Beranda</a></li>
                         <li><a href="{{ route('tentang') }}" class="hover:underline">Tentang Kami</a></li>
                         <li><a href="{{ route('program') }}" class="hover:underline">Program Belajar</a></li>
                         <li><a href="{{ route('pendaftaran') }}" class="hover:underline">Pendaftaran</a></li>
@@ -480,8 +467,8 @@
                     <h2 class="text-lg font-bold mb-4">Kontak Kami</h2>
                     <ul class="text-sm space-y-2">
                         <li><strong>Alamat:</strong> Jl. Pisangan Baru, Jakarta Timur</li>
-                        <li><strong>Email:</strong> <a href="mailto:info@tpanuruliman.com"
-                                class="hover:underline">info@tpanuruliman.com</a></li>
+                        <li><strong>Email:</strong> <a href="mailto:info@TPQnuruliman.com"
+                                class="hover:underline">info@TPQnuruliman.com</a></li>
                         <li><strong>Telepon:</strong> +62 812-3456-7890</li>
                         <li><strong>Jam Operasional:</strong> Senin - Jum'at, 08.00 - 16.00 WIB</li>
                     </ul>
@@ -493,7 +480,7 @@
 
             <!-- Footer Bottom -->
             <div class="mt-4 text-center text-sm">
-                <p>&copy; 2025 TPA Nurul Iman. Semua Hak Dilindungi.</p>
+                <p>&copy; 2025 TPQ Nurul Iman. Semua Hak Dilindungi.</p>
             </div>
         </div>
     </footer>

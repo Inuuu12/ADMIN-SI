@@ -22,7 +22,11 @@
             <div class="container mx-auto flex justify-between items-center px-32">
 
                 <!-- Logo -->
-                <a href="{{ route('beranda') }}" class="text-xl font-bold text-gray-800">Logo</a>
+                <!-- Logo -->
+                <a href="{{ route('beranda') }}" class="flex items-center space-x-3 text-xl font-bold text-gray-700">
+                    <img src="img/logotpanurul.png"Logo TPQ" class="h-12 w-auto">
+                    <span>TPQ Nurul Iman</span>
+                </a>
 
                 <!-- Menu Tengah -->
                 <ul class="hidden md:flex space-x-10">
@@ -145,7 +149,7 @@
 
 
             <div class="container mx-auto ">
-                <h1 class="text-sm font-sm text-center mb-10 text-gray-600">Staf pengajar TPA Nurul Iman siap
+                <h1 class="text-sm font-sm text-center mb-10 text-gray-600">Staf pengajar TPQ Nurul Iman siap
                     mendampingi anak Anda dalam meraih kecintaan terhadap Al-Qur'an dan tumbuh menjadi generasi Qur'ani.
                 </h1>
                 <div class="flex flex-wrap justify-center gap-8">
@@ -153,285 +157,24 @@
 
 
 
-                    <!-- Card 1 -->
+                @foreach ($gurus as $index => $guru)
                     <div
-                        class="card flex bg-white shadow-sm rounded-lg overflow-hidden w-full md:w-5/12 transform transition-all duration-300 hover:scale-105 hover:shadow-lg border border-gray-300">
+                        class="card flex bg-white shadow-sm rounded-lg overflow-hidden w-full md:w-5/12 transform transition-all duration-300 hover:scale-105 hover:shadow-lg border border-gray-300 {{ $index === count($gurus) - 1 && count($gurus) % 2 !== 0 ? 'flex-row-reverse' : '' }}">
                         <div class="flex-1 p-6">
-                            <h2 class="text-lg font-semibold text-gray-800">Agus Buono</h2> <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600 mt-2">Ir Institut Pertanian Bogor</p>
-                            <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600">M.Si Institut Pertanian Bogor</p>
-                            <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600">M.Kom Universitas Indonesia</p> <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600">Dr Universitas Indonesia</p> <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600">Prof Institut Pertanian Bogor</p>
-                            <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600 mt-2">Email: agusbuono@apps.ipb.ac.id</p>
-                            <!-- Reduced size here -->
-                            <div class="mt-4 flex gap-4">
-                                <a href="#" class="text-blue-500 hover:underline text-sm">Google Scholar</a>
-                                <!-- Reduced size here -->
-                                <a href="#" class="text-blue-500 hover:underline text-sm">Scopus</a>
-                                <!-- Reduced size here -->
-                            </div>
+                            <h2 class="text-lg font-semibold text-gray-800">{{ $guru->nama }}</h2>
+                            <p class="text-sm text-gray-600 mt-2">{{ $guru->jabatan }} di TPQ Nurul Iman</p>
+                            <p class="text-sm text-gray-600">Mengajar {{ $guru->mata_pelajaran }}</p>
+                            <p class="text-sm text-gray-600">Pengalaman Mengajar {{ $guru->pengalaman }} Tahun</p>
+                            <p class="text-sm text-gray-600">Pendidikan {{ $guru->pendidikan_terakhir }}</p>
                         </div>
                         <div class="w-40 h-40 m-6">
-                            <img class="w-full h-full object-cover rounded-full" src="img/photo1.jpg"
-                                alt="Foto Agus Buono">
+                            <img class="w-full h-full object-cover rounded-full" src="{{ asset('gambar/' . $guru->gambar) }}"
+                                alt="Foto {{ $guru->nama }}">
                         </div>
                     </div>
+                @endforeach
 
-                    <!-- Card 2 -->
-                    <div
-                        class="card flex bg-white shadow-sm rounded-lg overflow-hidden w-full md:w-5/12 transform transition-all duration-300 hover:scale-105 hover:shadow-lg border border-gray-300">
-                        <div class="flex-1 p-6">
-                            <h2 class="text-lg font-semibold text-gray-800">Agus Buono</h2> <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600 mt-2">Ir Institut Pertanian Bogor</p>
-                            <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600">M.Si Institut Pertanian Bogor</p>
-                            <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600">M.Kom Universitas Indonesia</p> <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600">Dr Universitas Indonesia</p> <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600">Prof Institut Pertanian Bogor</p>
-                            <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600 mt-2">Email: agusbuono@apps.ipb.ac.id</p>
-                            <!-- Reduced size here -->
-                            <div class="mt-4 flex gap-4">
-                                <a href="#" class="text-blue-500 hover:underline text-sm">Google Scholar</a>
-                                <!-- Reduced size here -->
-                                <a href="#" class="text-blue-500 hover:underline text-sm">Scopus</a>
-                                <!-- Reduced size here -->
-                            </div>
-                        </div>
-                        <div class="w-40 h-40 m-6">
-                            <img class="w-full h-full object-cover rounded-full" src="img/photo1.jpg"
-                                alt="Foto Agus Buono">
-                        </div>
-                    </div>
-
-                    <!-- Card 1 -->
-                    <div
-                        class="card flex bg-white shadow-sm rounded-lg overflow-hidden w-full md:w-5/12 transform transition-all duration-300 hover:scale-105 hover:shadow-lg border border-gray-300">
-                        <div class="flex-1 p-6">
-                            <h2 class="text-lg font-semibold text-gray-800">Agus Buono</h2> <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600 mt-2">Ir Institut Pertanian Bogor</p>
-                            <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600">M.Si Institut Pertanian Bogor</p>
-                            <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600">M.Kom Universitas Indonesia</p> <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600">Dr Universitas Indonesia</p> <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600">Prof Institut Pertanian Bogor</p>
-                            <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600 mt-2">Email: agusbuono@apps.ipb.ac.id</p>
-                            <!-- Reduced size here -->
-                            <div class="mt-4 flex gap-4">
-                                <a href="#" class="text-blue-500 hover:underline text-sm">Google Scholar</a>
-                                <!-- Reduced size here -->
-                                <a href="#" class="text-blue-500 hover:underline text-sm">Scopus</a>
-                                <!-- Reduced size here -->
-                            </div>
-                        </div>
-                        <div class="w-40 h-40 m-6">
-                            <img class="w-full h-full object-cover rounded-full" src="img/photo1.jpg"
-                                alt="Foto Agus Buono">
-                        </div>
-                    </div>
-
-                    <!-- Card 2 -->
-                    <div
-                        class="card flex bg-white shadow-sm rounded-lg overflow-hidden w-full md:w-5/12 transform transition-all duration-300 hover:scale-105 hover:shadow-lg border border-gray-300">
-                        <div class="flex-1 p-6">
-                            <h2 class="text-lg font-semibold text-gray-800">Agus Buono</h2> <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600 mt-2">Ir Institut Pertanian Bogor</p>
-                            <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600">M.Si Institut Pertanian Bogor</p>
-                            <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600">M.Kom Universitas Indonesia</p> <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600">Dr Universitas Indonesia</p> <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600">Prof Institut Pertanian Bogor</p>
-                            <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600 mt-2">Email: agusbuono@apps.ipb.ac.id</p>
-                            <!-- Reduced size here -->
-                            <div class="mt-4 flex gap-4">
-                                <a href="#" class="text-blue-500 hover:underline text-sm">Google Scholar</a>
-                                <!-- Reduced size here -->
-                                <a href="#" class="text-blue-500 hover:underline text-sm">Scopus</a>
-                                <!-- Reduced size here -->
-                            </div>
-                        </div>
-                        <div class="w-40 h-40 m-6">
-                            <img class="w-full h-full object-cover rounded-full" src="img/photo1.jpg"
-                                alt="Foto Agus Buono">
-                        </div>
-                    </div>
-
-                    <!-- Card 1 -->
-                    <div
-                        class="card flex bg-white shadow-sm rounded-lg overflow-hidden w-full md:w-5/12 transform transition-all duration-300 hover:scale-105 hover:shadow-lg border border-gray-300">
-                        <div class="flex-1 p-6">
-                            <h2 class="text-lg font-semibold text-gray-800">Agus Buono</h2> <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600 mt-2">Ir Institut Pertanian Bogor</p>
-                            <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600">M.Si Institut Pertanian Bogor</p>
-                            <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600">M.Kom Universitas Indonesia</p> <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600">Dr Universitas Indonesia</p> <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600">Prof Institut Pertanian Bogor</p>
-                            <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600 mt-2">Email: agusbuono@apps.ipb.ac.id</p>
-                            <!-- Reduced size here -->
-                            <div class="mt-4 flex gap-4">
-                                <a href="#" class="text-blue-500 hover:underline text-sm">Google Scholar</a>
-                                <!-- Reduced size here -->
-                                <a href="#" class="text-blue-500 hover:underline text-sm">Scopus</a>
-                                <!-- Reduced size here -->
-                            </div>
-                        </div>
-                        <div class="w-40 h-40 m-6">
-                            <img class="w-full h-full object-cover rounded-full" src="img/photo1.jpg"
-                                alt="Foto Agus Buono">
-                        </div>
-                    </div>
-
-                    <!-- Card 2 -->
-                    <div
-                        class="card flex bg-white shadow-sm rounded-lg overflow-hidden w-full md:w-5/12 transform transition-all duration-300 hover:scale-105 hover:shadow-lg border border-gray-300">
-                        <div class="flex-1 p-6">
-                            <h2 class="text-lg font-semibold text-gray-800">Agus Buono</h2> <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600 mt-2">Ir Institut Pertanian Bogor</p>
-                            <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600">M.Si Institut Pertanian Bogor</p>
-                            <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600">M.Kom Universitas Indonesia</p> <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600">Dr Universitas Indonesia</p> <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600">Prof Institut Pertanian Bogor</p>
-                            <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600 mt-2">Email: agusbuono@apps.ipb.ac.id</p>
-                            <!-- Reduced size here -->
-                            <div class="mt-4 flex gap-4">
-                                <a href="#" class="text-blue-500 hover:underline text-sm">Google Scholar</a>
-                                <!-- Reduced size here -->
-                                <a href="#" class="text-blue-500 hover:underline text-sm">Scopus</a>
-                                <!-- Reduced size here -->
-                            </div>
-                        </div>
-                        <div class="w-40 h-40 m-6">
-                            <img class="w-full h-full object-cover rounded-full" src="img/photo1.jpg"
-                                alt="Foto Agus Buono">
-                        </div>
-                    </div>
-
-                    <!-- Card 1 -->
-                    <div
-                        class="card flex bg-white shadow-sm rounded-lg overflow-hidden w-full md:w-5/12 transform transition-all duration-300 hover:scale-105 hover:shadow-lg border border-gray-300">
-                        <div class="flex-1 p-6">
-                            <h2 class="text-lg font-semibold text-gray-800">Agus Buono</h2> <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600 mt-2">Ir Institut Pertanian Bogor</p>
-                            <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600">M.Si Institut Pertanian Bogor</p>
-                            <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600">M.Kom Universitas Indonesia</p> <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600">Dr Universitas Indonesia</p> <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600">Prof Institut Pertanian Bogor</p>
-                            <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600 mt-2">Email: agusbuono@apps.ipb.ac.id</p>
-                            <!-- Reduced size here -->
-                            <div class="mt-4 flex gap-4">
-                                <a href="#" class="text-blue-500 hover:underline text-sm">Google Scholar</a>
-                                <!-- Reduced size here -->
-                                <a href="#" class="text-blue-500 hover:underline text-sm">Scopus</a>
-                                <!-- Reduced size here -->
-                            </div>
-                        </div>
-                        <div class="w-40 h-40 m-6">
-                            <img class="w-full h-full object-cover rounded-full" src="img/photo1.jpg"
-                                alt="Foto Agus Buono">
-                        </div>
-                    </div>
-
-                    <!-- Card 2 -->
-                    <div
-                        class="card flex bg-white shadow-sm rounded-lg overflow-hidden w-full md:w-5/12 transform transition-all duration-300 hover:scale-105 hover:shadow-lg border border-gray-300">
-                        <div class="flex-1 p-6">
-                            <h2 class="text-lg font-semibold text-gray-800">Agus Buono</h2> <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600 mt-2">Ir Institut Pertanian Bogor</p>
-                            <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600">M.Si Institut Pertanian Bogor</p>
-                            <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600">M.Kom Universitas Indonesia</p> <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600">Dr Universitas Indonesia</p> <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600">Prof Institut Pertanian Bogor</p>
-                            <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600 mt-2">Email: agusbuono@apps.ipb.ac.id</p>
-                            <!-- Reduced size here -->
-                            <div class="mt-4 flex gap-4">
-                                <a href="#" class="text-blue-500 hover:underline text-sm">Google Scholar</a>
-                                <!-- Reduced size here -->
-                                <a href="#" class="text-blue-500 hover:underline text-sm">Scopus</a>
-                                <!-- Reduced size here -->
-                            </div>
-                        </div>
-                        <div class="w-40 h-40 m-6">
-                            <img class="w-full h-full object-cover rounded-full" src="img/photo1.jpg"
-                                alt="Foto Agus Buono">
-                        </div>
-                    </div>
-
-                    <!-- Card 1 -->
-                    <div
-                        class="card flex bg-white shadow-sm rounded-lg overflow-hidden w-full md:w-5/12 transform transition-all duration-300 hover:scale-105 hover:shadow-lg border border-gray-300">
-                        <div class="flex-1 p-6">
-                            <h2 class="text-lg font-semibold text-gray-800">Agus Buono</h2> <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600 mt-2">Ir Institut Pertanian Bogor</p>
-                            <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600">M.Si Institut Pertanian Bogor</p>
-                            <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600">M.Kom Universitas Indonesia</p> <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600">Dr Universitas Indonesia</p> <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600">Prof Institut Pertanian Bogor</p>
-                            <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600 mt-2">Email: agusbuono@apps.ipb.ac.id</p>
-                            <!-- Reduced size here -->
-                            <div class="mt-4 flex gap-4">
-                                <a href="#" class="text-blue-500 hover:underline text-sm">Google Scholar</a>
-                                <!-- Reduced size here -->
-                                <a href="#" class="text-blue-500 hover:underline text-sm">Scopus</a>
-                                <!-- Reduced size here -->
-                            </div>
-                        </div>
-                        <div class="w-40 h-40 m-6">
-                            <img class="w-full h-full object-cover rounded-full" src="img/photo1.jpg"
-                                alt="Foto Agus Buono">
-                        </div>
-                    </div>
-
-                    <!-- Card 2 -->
-                    <div
-                        class="card flex bg-white shadow-sm rounded-lg overflow-hidden w-full md:w-5/12 transform transition-all duration-300 hover:scale-105 hover:shadow-lg border border-gray-300">
-                        <div class="flex-1 p-6">
-                            <h2 class="text-lg font-semibold text-gray-800">Agus Buono</h2> <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600 mt-2">Ir Institut Pertanian Bogor</p>
-                            <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600">M.Si Institut Pertanian Bogor</p>
-                            <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600">M.Kom Universitas Indonesia</p> <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600">Dr Universitas Indonesia</p> <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600">Prof Institut Pertanian Bogor</p>
-                            <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600 mt-2">Email: agusbuono@apps.ipb.ac.id</p>
-                            <!-- Reduced size here -->
-                            <div class="mt-4 flex gap-4">
-                                <a href="#" class="text-blue-500 hover:underline text-sm">Google Scholar</a>
-                                <!-- Reduced size here -->
-                                <a href="#" class="text-blue-500 hover:underline text-sm">Scopus</a>
-                                <!-- Reduced size here -->
-                            </div>
-                        </div>
-                        <div class="w-40 h-40 m-6">
-                            <img class="w-full h-full object-cover rounded-full" src="img/photo1.jpg"
-                                alt="Foto Agus Buono">
-                        </div>
-                    </div>
+                   
                 </div>
             </div>
         </div>
@@ -440,11 +183,11 @@
     <footer class="bg-gradient-to-br from-green-600 to-green-700 text-white py-6">
         <div class="container mx-auto px-6 lg:px-20">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Tentang TPA -->
+                <!-- Tentang TPQ -->
                 <div>
-                    <h2 class="text-lg font-bold mb-4">Tentang TPA Nurul Iman</h2>
+                    <h2 class="text-lg font-bold mb-4">Tentang TPQ Nurul Iman</h2>
                     <p class="text-sm">
-                        TPA Nurul Iman adalah lembaga pendidikan Al-Qur'an yang bertujuan mencetak
+                        TPQ Nurul Iman adalah lembaga pendidikan Al-Qur'an yang bertujuan mencetak
                         generasi muda
                         berakhlakul karimah
                         dengan pendekatan islami yang menyenangkan dan edukatif.
@@ -466,8 +209,8 @@
                     <h2 class="text-lg font-bold mb-4">Kontak Kami</h2>
                     <ul class="text-sm space-y-2">
                         <li><strong>Alamat:</strong> Jl. Pisangan Baru, Jakarta Timur</li>
-                        <li><strong>Email:</strong> <a href="mailto:info@tpanuruliman.com"
-                                class="hover:underline">info@tpanuruliman.com</a></li>
+                        <li><strong>Email:</strong> <a href="mailto:info@TPQnuruliman.com"
+                                class="hover:underline">info@TPQnuruliman.com</a></li>
                         <li><strong>Telepon:</strong> +62 812-3456-7890</li>
                         <li><strong>Jam Operasional:</strong> Senin - Jum'at, 08.00 - 16.00 WIB</li>
                     </ul>
@@ -479,7 +222,7 @@
 
             <!-- Footer Bottom -->
             <div class="mt-4 text-center text-sm">
-                <p>&copy; 2025 TPA Nurul Iman. Semua Hak Dilindungi.</p>
+                <p>&copy; 2025 TPQ Nurul Iman. Semua Hak Dilindungi.</p>
             </div>
         </div>
     </footer>

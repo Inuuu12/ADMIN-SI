@@ -22,7 +22,11 @@
             <div class="container mx-auto flex justify-between items-center px-32">
 
                 <!-- Logo -->
-                <a href="{{ route('beranda') }}" class="text-xl font-bold text-gray-800">Logo</a>
+                <!-- Logo -->
+                <a href="{{ route('beranda') }}" class="flex items-center space-x-3 text-xl font-bold text-gray-700">
+                    <img src="img/logotpanurul.png"Logo TPQ" class="h-12 w-auto">
+                    <span>TPQ Nurul Iman</span>
+                </a>
 
                 <!-- Menu Tengah -->
                 <ul class="hidden md:flex space-x-10">
@@ -56,7 +60,7 @@
                             Layanan <i class="ph ph-caret-down ml-1"></i>
                         </button>
                         <ul id="layananDropdown" class="absolute hidden bg-white shadow-md mt-2 py-2 w-48">
-                            <li><a href="/informasi_pendaftaran1.blade.php"
+                            <li><a href="{{ route('informasi_pendaftaran') }}"
                                     class="block px-4 py-2 text-gray-600 hover:bg-green-100">Informasi
                                     Pendaftaran</a></li>
                             <li><a href="{{ route('pendaftaran') }}"
@@ -140,7 +144,7 @@
 
     <div class="container mx-auto py-10 px-6 mb-10">
         <h1 class="text-2xl font-bold text-center mb-6 text-gray-800">Informasi Pendaftaran</h1>
-        <p class="text-sm text-center mb-10 text-gray-600">Staf pengajar TPA Nurul Iman siap mendampingi anak Anda dalam
+        <p class="text-sm text-center mb-10 text-gray-600">Staf pengajar TPQ Nurul Iman siap mendampingi anak Anda dalam
             meraih kecintaan terhadap Al-Qur'an dan tumbuh menjadi generasi Qur'ani.</p>
 
         <div class="flex flex-wrap justify-center gap-8">
@@ -152,11 +156,12 @@
                         class="card bg-white shadow-sm rounded-lg overflow-hidden w-full md:w-5/12 transform transition-all duration-300 hover:scale-105 hover:shadow-lg border border-gray-300 p-6">
                         <h2 class="text-xl font-bold text-center mb-6 text-gray-800">Syarat Pendaftaran</h2>
                         <ul class="list-disc list-inside text-sm text-gray-600 space-y-2">
-                            <li>Fotokopi akta kelahiran.</li>
-                            <li>Fotokopi kartu keluarga (KK).</li>
-                            <li>Pas foto ukuran 3x4 (3 lembar).</li>
-                            <li>Surat keterangan sehat dari dokter.</li>
-                            <li>Ijazah terakhir (untuk pendaftar SMP/SMA).</li>
+                            <li>Mengisi Formulir Pendaftaran Santri</li>
+                            <li>Mengupload Fotokopi kartu keluarga (KK).</li>
+                            <li>Mengupload Fotokopi Akte Kelahiran </li>
+                            <li>Mengisi Formulir Pendaftaran SWali Santri</li>
+                            <li>Melakukan Pembayaran</li>
+                
                         </ul>
                     </div>
 
@@ -241,11 +246,11 @@
     <footer class="bg-gradient-to-br from-green-600 to-green-700 text-white py-6">
         <div class="container mx-auto px-6 lg:px-20">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Tentang TPA -->
+                <!-- Tentang TPQ -->
                 <div>
-                    <h2 class="text-lg font-bold mb-4">Tentang TPA Nurul Iman</h2>
+                    <h2 class="text-lg font-bold mb-4">Tentang TPQ Nurul Iman</h2>
                     <p class="text-sm">
-                        TPA Nurul Iman adalah lembaga pendidikan Al-Qur'an yang bertujuan mencetak generasi muda
+                        TPQ Nurul Iman adalah lembaga pendidikan Al-Qur'an yang bertujuan mencetak generasi muda
                         berakhlakul karimah
                         dengan pendekatan islami yang menyenangkan dan edukatif.
                     </p>
@@ -266,8 +271,8 @@
                     <h2 class="text-lg font-bold mb-4">Kontak Kami</h2>
                     <ul class="text-sm space-y-2">
                         <li><strong>Alamat:</strong> Jl. Pisangan Baru, Jakarta Timur</li>
-                        <li><strong>Email:</strong> <a href="mailto:info@tpanuruliman.com"
-                                class="hover:underline">info@tpanuruliman.com</a></li>
+                        <li><strong>Email:</strong> <a href="mailto:info@TPQnuruliman.com"
+                                class="hover:underline">info@TPQnuruliman.com</a></li>
                         <li><strong>Telepon:</strong> +62 812-3456-7890</li>
                         <li><strong>Jam Operasional:</strong> Senin - Jum'at, 08.00 - 16.00 WIB</li>
                     </ul>
@@ -279,7 +284,7 @@
 
             <!-- Footer Bottom -->
             <div class="mt-4 text-center text-sm">
-                <p>&copy; 2025 TPA Nurul Iman. Semua Hak Dilindungi.</p>
+                <p>&copy; 2025 TPQ Nurul Iman. Semua Hak Dilindungi.</p>
             </div>
         </div>
     </footer>

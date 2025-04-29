@@ -22,7 +22,11 @@
             <div class="container mx-auto flex justify-between items-center px-32">
 
                 <!-- Logo -->
-                <a href="{{ route('beranda') }}" class="text-xl font-bold text-gray-800">Logo</a>
+                <!-- Logo -->
+                <a href="{{ route('beranda') }}" class="flex items-center space-x-3 text-xl font-bold text-gray-700">
+                    <img src="img/logotpanurul.png"Logo TPQ" class="h-12 w-auto">
+                    <span>TPQ Nurul Iman</span>
+                </a>
 
                 <!-- Menu Tengah -->
                 <ul class="hidden md:flex space-x-10">
@@ -145,7 +149,7 @@
 
 
             <div class="container mx-auto ">
-                <h1 class="text-sm font-sm text-center mb-10 text-gray-600">TPA Nurul Iman memiliki berbagai program
+                <h1 class="text-sm font-sm text-center mb-10 text-gray-600">TPQ Nurul Iman memiliki berbagai program
                     unggulan untuk membantu anak-anak dalam memahami, menghafal, dan mencintai Al-Qur’an.</h1>
                 <div class="flex flex-wrap justify-center gap-8">
 
@@ -156,17 +160,17 @@
                     <div
                         class="card flex bg-white shadow-sm rounded-lg overflow-hidden w-full md:w-5/12 transform transition-all duration-300 hover:scale-105 hover:shadow-lg border border-gray-300">
                         <div class="flex-1 p-6">
-                            <h2 class="text-lg font-semibold text-gray-800">Tahsin dan Tahfidz</h2>
+                            <h2 class="text-lg font-semibold text-gray-800">Khataman Al-Qur'an</h2>
                             <!-- Reduced size here -->
                             <p class="text-sm text-gray-600 mt-2">Program untuk meningkatkan kemampuan membaca dan
                                 menghafal Al-Qur'an.</p> <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600 mt-2">Program ini membantu santri dalam memperbaiki tajwid,
-                                meningkatkan hafalan secara bertahap.</p> <!-- Reduced size here -->
+                            <p class="text-sm text-gray-600 mt-2">Program ini membantu santri untuk meningkatkan kecintaan 
+                                terhadap Al-Qur'an, memperkuat hafalan, dan memahami makna ayat-ayatnya.</p> <!-- Reduced size here -->
                             <div class="mt-4 flex gap-4">
                             </div>
                         </div>
                         <div class="w-40 h-40 m-6">
-                            <img class="w-full h-full object-cover rounded-full" src="img/photo1.png"
+                            <img class="w-full h-full object-cover rounded-xl aspect-[4/3]" src="img/photo2.png"
                                 alt="Foto Agus Buono">
                         </div>
                     </div>
@@ -175,17 +179,16 @@
                     <div
                         class="card flex bg-white shadow-sm rounded-lg overflow-hidden w-full md:w-5/12 transform transition-all duration-300 hover:scale-105 hover:shadow-lg border border-gray-300">
                         <div class="flex-1 p-6">
-                            <h2 class="text-lg font-semibold text-gray-800">Tahsin dan Tahfidz</h2>
+                            <h2 class="text-lg font-semibold text-gray-800">Tafsir Al-Qur'an</h2>
                             <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600 mt-2">Program untuk meningkatkan kemampuan membaca dan
-                                menghafal Al-Qur'an.</p> <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600 mt-2">Program ini membantu santri dalam memperbaiki tajwid,
-                                meningkatkan hafalan secara bertahap.</p> <!-- Reduced size here -->
+                            <p class="text-sm text-gray-600 mt-2">Program untuk meningkatkan kemampuan mamahami ayat-ayat Al-Qur'an.</p> <!-- Reduced size here -->
+                            <p class="text-sm text-gray-600 mt-2">Program ini bertujuan untuk membantu santri memahami makna ayat-ayat Al-Qur'an, 
+                                sehingga mereka dapat mengaitkannya dengan kehidupan sehari-hari. </p> <!-- Reduced size here -->
                             <div class="mt-4 flex gap-4">
                             </div>
                         </div>
                         <div class="w-40 h-40 m-6">
-                            <img class="w-full h-full object-cover rounded-full" src="img/photo1.png"
+                            <img class="w-full h-full object-cover rounded-xl aspect-[4/3]" src="img/photo2.png"
                                 alt="Foto Agus Buono">
                         </div>
                     </div>
@@ -194,17 +197,16 @@
                     <div
                         class="card flex bg-white shadow-sm rounded-lg overflow-hidden w-full md:w-5/12 transform transition-all duration-300 hover:scale-105 hover:shadow-lg border border-gray-300">
                         <div class="flex-1 p-6">
-                            <h2 class="text-lg font-semibold text-gray-800">Tahsin dan Tahfidz</h2>
+                            <h2 class="text-lg font-semibold text-gray-800">Hafalan Juz ‘Amma dan Surat Pilihan</h2>
                             <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600 mt-2">Program untuk meningkatkan kemampuan membaca dan
-                                menghafal Al-Qur'an.</p> <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600 mt-2">Program ini membantu santri dalam memperbaiki tajwid,
-                                meningkatkan hafalan secara bertahap.</p> <!-- Reduced size here -->
+                            <p class="text-sm text-gray-600 mt-2">Program untuk meningkatkan kemampuan hafalan dalam membacal Al-Qur'an.</p> <!-- Reduced size here -->
+                            <p class="text-sm text-gray-600 mt-2">Program ini membantu santri memperkuat hafalan ayat-ayat Al-Qur'an, 
+                                melatih ketekunan, dan membiasakan mereka untuk menjaga hafalan. </p> <!-- Reduced size here -->
                             <div class="mt-4 flex gap-4">
                             </div>
                         </div>
                         <div class="w-40 h-40 m-6">
-                            <img class="w-full h-full object-cover rounded-xl aspect-[4/3]" src="img/photo1.png"
+                            <img class="w-full h-full object-cover rounded-xl aspect-[4/3]" src="img/photo2.png"
                                 alt="Foto Agus Buono">
                         </div>
                     </div>
@@ -214,17 +216,16 @@
                     <div
                         class="card flex bg-white shadow-sm rounded-lg overflow-hidden w-full md:w-5/12 transform transition-all duration-300 hover:scale-105 hover:shadow-lg border border-gray-300">
                         <div class="flex-1 p-6">
-                            <h2 class="text-lg font-semibold text-gray-800">Tahsin dan Tahfidz</h2>
+                            <h2 class="text-lg font-semibold text-gray-800">Santunan dan Sedekah</h2>
                             <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600 mt-2">Program untuk meningkatkan kemampuan membaca dan
-                                menghafal Al-Qur'an.</p> <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600 mt-2">Program ini membantu santri dalam memperbaiki tajwid,
-                                meningkatkan hafalan secara bertahap.</p> <!-- Reduced size here -->
+                            <p class="text-sm text-gray-600 mt-2">Program santunan dan sedekah bertujuan untuk membangun kepedulian sosial. </p> <!-- Reduced size here -->
+                            <p class="text-sm text-gray-600 mt-2">Program ini bertujuan untuk menumbuhkan kepedulian sosial di kalangan santri, dengan memberikan bantuan kepada yang membutuhkan. 
+                                </p> <!-- Reduced size here -->
                             <div class="mt-4 flex gap-4">
                             </div>
                         </div>
                         <div class="w-40 h-40 m-6">
-                            <img class="w-full h-full object-cover rounded-xl aspect-[4/3]" src="img/photo1.png"
+                            <img class="w-full h-full object-cover rounded-xl aspect-[4/3]" src="img/photo2.png"
                                 alt="Foto Agus Buono">
                         </div>
                     </div>
@@ -234,19 +235,16 @@
                     <div
                         class="card flex bg-white shadow-sm rounded-lg overflow-hidden w-full md:w-5/12 transform transition-all duration-300 hover:scale-105 hover:shadow-lg border border-gray-300">
                         <div class="flex-1 p-6">
-                            <h2 class="text-lg font-semibold text-gray-800">Tahsin dan Tahfidz</h2>
+                            <h2 class="text-lg font-semibold text-gray-800">Peringatan Hari Besar Islam</h2>
                             <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600 mt-2">Program untuk meningkatkan kemampuan membaca dan
-                                menghafal Al-Qur'an.</p>
+                            <p class="text-sm text-gray-600 mt-2">Program ini bertujuan untuk merayakan momen penting dalam Islam</p>
                             <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600 mt-2">Program ini membantu santri dalam memperbaiki tajwid,
-                                meningkatkan hafalan
-                                secara bertahap.</p> <!-- Reduced size here -->
+                            <p class="text-sm text-gray-600 mt-2">Program peringatan hari besar Islam bertujuan untuk mengenang momen-momen penting dalam Islam, seperti Maulid Nabi atau Isra' Mi'raj.</p> <!-- Reduced size here -->
                             <div class="mt-4 flex gap-4">
                             </div>
                         </div>
                         <div class="w-40 h-40 m-6">
-                            <img class="w-full h-full object-cover rounded-xl aspect-[4/3]" src="img/photo1.png"
+                            <img class="w-full h-full object-cover rounded-xl aspect-[4/3]" src="img/photo2.png"
                                 alt="Foto Agus Buono">
                         </div>
                     </div>
@@ -256,19 +254,16 @@
                     <div
                         class="card flex bg-white shadow-sm rounded-lg overflow-hidden w-full md:w-5/12 transform transition-all duration-300 hover:scale-105 hover:shadow-lg border border-gray-300">
                         <div class="flex-1 p-6">
-                            <h2 class="text-lg font-semibold text-gray-800">Tahsin dan Tahfidz</h2>
+                            <h2 class="text-lg font-semibold text-gray-800">Pesantren Kilat</h2>
                             <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600 mt-2">Program untuk meningkatkan kemampuan membaca dan
-                                menghafal Al-Qur'an.</p>
+                            <p class="text-sm text-gray-600 mt-2">Pesantren kilat program pembelajaran intensif selama bulan Ramadhan. </p>
                             <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600 mt-2">Program ini membantu santri dalam memperbaiki tajwid,
-                                meningkatkan hafalan
-                                secara bertahap.</p> <!-- Reduced size here -->
+                            <p class="text-sm text-gray-600 mt-2">Program ini bertujuan meningkatkan pengetahuan agama dalam waktu singkat, biasanya dilakukan saat bulan Ramadan.</p> <!-- Reduced size here -->
                             <div class="mt-4 flex gap-4">
                             </div>
                         </div>
                         <div class="w-40 h-40 m-6">
-                            <img class="w-full h-full object-cover rounded-xl aspect-[4/3]" src="img/photo1.png"
+                            <img class="w-full h-full object-cover rounded-xl aspect-[4/3]" src="img/photo2.png"
                                 alt="Foto Agus Buono">
                         </div>
                     </div>
@@ -277,19 +272,16 @@
                     <div
                         class="card flex bg-white shadow-sm rounded-lg overflow-hidden w-full md:w-5/12 transform transition-all duration-300 hover:scale-105 hover:shadow-lg border border-gray-300">
                         <div class="flex-1 p-6">
-                            <h2 class="text-lg font-semibold text-gray-800">Tahsin dan Tahfidz</h2>
+                            <h2 class="text-lg font-semibold text-gray-800">Praktek Sholat</h2>
                             <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600 mt-2">Program untuk meningkatkan kemampuan membaca dan
-                                menghafal Al-Qur'an.</p>
+                            <p class="text-sm text-gray-600 mt-2">Program inin untuk melatih santri shalat dengan benar sesuai syariat </p>
                             <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600 mt-2">Program ini membantu santri dalam memperbaiki tajwid,
-                                meningkatkan hafalan
-                                secara bertahap.</p> <!-- Reduced size here -->
+                            <p class="text-sm text-gray-600 mt-2">Program ini bertujuan untuk melatih santri dalam melaksanakan shalat dengan benar sesuai tata cara dan rukun yang diajarkan dalam Islam.</p> <!-- Reduced size here -->
                             <div class="mt-4 flex gap-4">
                             </div>
                         </div>
                         <div class="w-40 h-40 m-6">
-                            <img class="w-full h-full object-cover rounded-xl aspect-[4/3]" src="img/photo1.png"
+                            <img class="w-full h-full object-cover rounded-xl aspect-[4/3]" src="img/photo2.png"
                                 alt="Foto Agus Buono">
                         </div>
                     </div>
@@ -299,19 +291,17 @@
                     <div
                         class="card flex bg-white shadow-sm rounded-lg overflow-hidden w-full md:w-5/12 transform transition-all duration-300 hover:scale-105 hover:shadow-lg border border-gray-300">
                         <div class="flex-1 p-6">
-                            <h2 class="text-lg font-semibold text-gray-800">Tahsin dan Tahfidz</h2>
+                            <h2 class="text-lg font-semibold text-gray-800">Pelatihan Keterampilan Islami</h2>
                             <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600 mt-2">Program untuk meningkatkan kemampuan membaca dan
-                                menghafal Al-Qur'an.</p>
+                            <p class="text-sm text-gray-600 mt-2">Program ini tersedia berbagai pelatihan seperti, kaligrafi, nasyid ,dan marawis.</p>
                             <!-- Reduced size here -->
-                            <p class="text-sm text-gray-600 mt-2">Program ini membantu santri dalam memperbaiki tajwid,
-                                meningkatkan hafalan
-                                secara bertahap.</p> <!-- Reduced size here -->
+                            <p class="text-sm text-gray-600 mt-2">Program ini bertujuan untuk mengembangkan kemampuan praktis santri dalam bidang yang mendukung nilai-nilai Islam.
+                            </p> <!-- Reduced size here -->
                             <div class="mt-4 flex gap-4">
                             </div>
                         </div>
                         <div class="w-40 h-40 m-6">
-                            <img class="w-full h-full object-cover rounded-xl aspect-[4/3]" src="img/photo1.png"
+                            <img class="w-full h-full object-cover rounded-xl aspect-[4/3]" src="img/photo2.png"
                                 alt="Foto Agus Buono">
                         </div>
                     </div>
@@ -324,11 +314,11 @@
     <footer class="bg-gradient-to-br from-green-600 to-green-700 text-white py-6">
         <div class="container mx-auto px-6 lg:px-20">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Tentang TPA -->
+                <!-- Tentang TPQ -->
                 <div>
-                    <h2 class="text-lg font-bold mb-4">Tentang TPA Nurul Iman</h2>
+                    <h2 class="text-lg font-bold mb-4">Tentang TPQ Nurul Iman</h2>
                     <p class="text-sm">
-                        TPA Nurul Iman adalah lembaga pendidikan Al-Qur'an yang bertujuan mencetak
+                        TPQ Nurul Iman adalah lembaga pendidikan Al-Qur'an yang bertujuan mencetak
                         generasi muda
                         berakhlakul karimah
                         dengan pendekatan islami yang menyenangkan dan edukatif.
@@ -350,8 +340,8 @@
                     <h2 class="text-lg font-bold mb-4">Kontak Kami</h2>
                     <ul class="text-sm space-y-2">
                         <li><strong>Alamat:</strong> Jl. Pisangan Baru, Jakarta Timur</li>
-                        <li><strong>Email:</strong> <a href="mailto:info@tpanuruliman.com"
-                                class="hover:underline">info@tpanuruliman.com</a></li>
+                        <li><strong>Email:</strong> <a href="mailto:info@TPQnuruliman.com"
+                                class="hover:underline">info@TPQnuruliman.com</a></li>
                         <li><strong>Telepon:</strong> +62 812-3456-7890</li>
                         <li><strong>Jam Operasional:</strong> Senin - Jum'at, 08.00 - 16.00 WIB</li>
                     </ul>
@@ -363,7 +353,7 @@
 
             <!-- Footer Bottom -->
             <div class="mt-4 text-center text-sm">
-                <p>&copy; 2025 TPA Nurul Iman. Semua Hak Dilindungi.</p>
+                <p>&copy; 2025 TPQ Nurul Iman. Semua Hak Dilindungi.</p>
             </div>
         </div>
     </footer>
