@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login Page</title>
+  <title>Register Page</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
@@ -26,45 +26,50 @@
 
 <div class="flex w-full max-w-6xl bg-white rounded-2xl shadow-xl overflow-hidden">
 
-  <!-- Kiri: Form Login -->
-  <div class="w-1/2 flex items-center justify-center p-8 animate-fadeInUp">
-    <div class="w-full max-w-md">
+  <!-- Kiri: Form -->
+  <div class="w-full md:w-1/2 p-8 opacity-0 translate-y-5 animate-fadeInUp flex items-center">
+    <div class="w-full">
       <div class="text-center mb-8">
         <div class="inline-flex items-center justify-center w-16 h-16 bg-emerald-100 rounded-full mb-4">
-          <i class="fas fa-sign-in-alt text-emerald-500 fa-lg"></i>
+          <i class="fas fa-user-plus text-emerald-500 fa-lg"></i>
         </div>
-        <h2 class="text-2xl font-bold text-gray-800">Yayasan Nurul Iman!</h2>
-        <p class="text-gray-600 mt-2">Silakan masuk untuk melanjutkan</p>
+        <h2 class="text-2xl font-bold text-gray-800">Buat Akun</h2>
+        <p class="text-gray-600 mt-2">Memulai Akun Anda</p>
       </div>
 
-      <form action="{{ route('login') }}" method="POST">
+      <form action="{{ route('register') }}" method="POST">
         @csrf
+        <!-- Full Name -->
+        <div class="mb-6">
+          <label class="block text-sm font-medium text-gray-700 mb-2">Nama Lengkap</label>
+          <input type="text" name="name" required class="w-full px-4 py-3 rounded-lg border border-gray-300" placeholder="John Doe">
+        </div>
 
+        <!-- Email -->
         <div class="mb-6">
           <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
           <input type="email" name="email" required class="w-full px-4 py-3 rounded-lg border border-gray-300" placeholder="you@example.com">
         </div>
 
+        <!-- Password -->
         <div class="mb-6">
-          <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Buat Password</label>
           <input type="password" name="password" required class="w-full px-4 py-3 rounded-lg border border-gray-300" placeholder="••••••••">
         </div>
 
-        <a href ="{{ route('dashboard') }}" class="w-full bg-emerald-500 text-white py-3 rounded-lg font-semibold hover:bg-emerald-600 text-center block">
-          Sign In
-        </a>
+        <a href="{{ route('login') }}" class="w-full bg-emerald-500 text-white py-3 rounded-lg font-semibold hover:bg-emerald-600 text-center block">Buat Akun</a>
 
         <p class="mt-6 text-center text-gray-600">
-          Belum memeiliki akun?
-          <a href="{{ route('register') }}" class="ml-1 text-emerald-500 hover:text-emerald-700 font-semibold">Sign up</a>
+          Sudah punya akun?
+          <a href="{{ route('login') }}" class="ml-1 text-emerald-500 hover:text-emerald-700 font-semibold">Sign in</a>
         </p>
       </form>
     </div>
   </div>
 
   <!-- Kanan: Gambar -->
-  <div class="w-1/2">
-    <img src="{{ asset('img/kegiatan/al-quran.jpg') }}" alt="Login Image" class="object-cover w-full h-full">
+  <div class="w-full md:w-1/2">
+  <img src="{{ asset('img/kegiatan/al-quran.jpg') }}" alt="Sekolah" class="object-cover w-full h-full">
   </div>
 
 </div>
