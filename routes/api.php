@@ -7,3 +7,4 @@ use App\Http\Controllers\GaleriController;
 
 Route::apiResource('guru', GuruController::class);
 Route::apiResource('galeri', GaleriController::class);
+

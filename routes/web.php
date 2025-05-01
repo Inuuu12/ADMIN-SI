@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GuruController;
 use App\Http\Controllers\GaleriController;
+use Illuminate\Auth\Events\Verified;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 class DashboardController extends Controller
 {
@@ -44,7 +46,7 @@ Route::get('/pembayaran', function () {
 
 Route::get('/pendaftaran', function () {
     return view('pendaftaran');
-})->name('pendaftaran');
+})->name('pendaftaran')->middleware("verified");
 
 Route::get('/pengajar', [GuruController::class, 'webPengajar'])->name('pengajar');
 
@@ -63,9 +65,9 @@ Route::get('/dashboard', function () {
     return view('ADMIN-SI.dashboard');
 })->name('dashboard');
 
-Route::get('/pendaftaran', function () {
-    return view('pendaftaran');
-})->name('pendaftaran');
+// Route::get('/pendaftaran', function () {
+//     return view('pendaftaran');
+// })->name('pendaftaran');
 
 Route::get('/akademik', [GuruController::class, 'webIndex'])->name('akademik');
 Route::get('/guru/create', [GuruController::class, 'webCreate'])->name('guru.create');
@@ -111,18 +113,25 @@ Route::get('/profil', function () {
 })->name('profil');
 
 //login
-Route::get('/login', function () {
-    return view('layouts.login');
-})->name('login');
+Route::get('/login', [AuthController::class, 'login'])->name('login');
+Route::post('/login', [AuthController::class, 'authenticating'])->middleware("verified");
+Route::get('/logout', [AuthController::class, 'logout']);
+Route::post('/register', [AuthController::class, 'createUser']);
 
 Route::get('/login-admin', function () {
     return view('layouts.login-admin');
 })->name('login-admin');
 
 //register
-Route::get('/register', function () {
-    return view('layouts.register');
-})->name('register');
+Route::get('/register', [AuthController::class, 'register'])->name('register');
+Route::get('/email/verify', function () {
+    return view('layouts.verify-email');
+})->middleware('auth')->name('verification.notice');
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+ 
+    return redirect('/login');
+})->middleware(['auth', 'signed'])->name('verification.verify');
 
 Route::get('/kelas/{kelas}', function ($kelas) {
     $guru = 'Moh. Rofi Julian, S. T.';

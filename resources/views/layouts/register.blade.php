@@ -57,7 +57,9 @@
           <input type="password" name="password" required class="w-full px-4 py-3 rounded-lg border border-gray-300" placeholder="••••••••">
         </div>
 
-        <a href="{{ route('login') }}" class="w-full bg-emerald-500 text-white py-3 rounded-lg font-semibold hover:bg-emerald-600 text-center block">Buat Akun</a>
+        <div class="w-full bg-emerald-500 text-white py-3 rounded-lg font-semibold hover:bg-emerald-600 text-center block">
+          <button type="submit"> Buat Akun </button>
+        </div>
 
         <p class="mt-6 text-center text-gray-600">
           Sudah punya akun?
