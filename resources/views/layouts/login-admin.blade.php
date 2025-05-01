@@ -28,11 +28,8 @@
 
   <!-- Kiri: Form Login -->
   <div class="w-1/2 flex items-center justify-center p-8 animate-fadeInUp">
-  
     <div class="w-full max-w-md">
-      
       <div class="text-center mb-8">
-  
         <div class="inline-flex items-center justify-center w-16 h-16 bg-emerald-100 rounded-full mb-4">
           <i class="fas fa-sign-in-alt text-emerald-500 fa-lg"></i>
         </div>
@@ -53,14 +50,6 @@
           <input type="password" name="password" required class="w-full px-4 py-3 rounded-lg border border-gray-300" placeholder="••••••••">
         </div>
 
-        <a href ="{{ route('dashboard') }}" class="w-full bg-emerald-500 text-white py-3 rounded-lg font-semibold hover:bg-emerald-600 text-center block">
-          Sign In
-        </a>
-
-        <p class="mt-6 text-center text-gray-600">
-          Belum memeiliki akun?
-          <a href="{{ route('register') }}" class="ml-1 text-emerald-500 hover:text-emerald-700 font-semibold">Sign up</a>
-        </p>
       </form>
     </div>
   </div>

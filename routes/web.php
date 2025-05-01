@@ -115,6 +115,10 @@ Route::get('/login', function () {
     return view('layouts.login');
 })->name('login');
 
+Route::get('/login-admin', function () {
+    return view('layouts.login-admin');
+})->name('login-admin');
+
 //register
 Route::get('/register', function () {
     return view('layouts.register');
