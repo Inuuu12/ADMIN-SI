@@ -8,6 +8,7 @@ use Illuminate\Auth\Events\Registered;
 
 
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rules\Unique;
 
 class AuthController extends Controller
 {
@@ -18,12 +19,18 @@ class AuthController extends Controller
     function authenticating(Request $request) {
         $credentials = $request->validate([
             'email' => ['required', 'email'],
-            'password' => ['required'],
+            'password' => ['required', 'min:8', 'regex:/^(?=.*[a-zA-Z])(?=.*[0-9]).+$/'],
+        ],[
+            'email.required' => 'Email wajib diisi.',
+            'email.email' => 'Format email tidak valid.',
+            'password.required' => 'Kata sandi wajib diisi.',
+            'password.min' => 'Kata sandi minimal 8 karakter.',
+            'password.regex' => 'Kata sandi harus mengandung huruf dan angka.',
         ]);
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
- 
+           
             return redirect()->intended('beranda');
         }
 
@@ -38,9 +45,23 @@ class AuthController extends Controller
 
     function createUser(Request $request){
         $credentials = $request->validate([
-            'name' => ['required'],
-            'email' => ['required', 'email'],
-            'password' => ['required'],
+            'name' => ['required', 'string', 'min:3', 'regex:/^[A-Za-z\s]+$/'],
+            'email' => ['required', 'email', 'unique:users,email'],
+            'password' => ['required', 'min:8', 'regex:/^(?=.*[a-zA-Z])(?=.*[0-9]).+$/'],
+            'password_confirmation' => ['required', 'same:password'],
+        ],[
+            'name.required' => 'Nama wajib diisi.',
+            'name.string' => 'Nama harus berupa huruf.',
+            'name.min' => 'Nama minimal 3 karakter.',
+            'name.regex' => 'Nama hanya boleh berisi huruf dan spasi',
+            'email.required' => 'Email wajib diisi.',
+            'email.email' => 'Format email tidak valid.',
+            'email.unique' => 'Email sudah digunakan.',
+            'password.required' => 'Kata sandi wajib diisi.',
+            'password.min' => 'Kata sandi minimal 8 karakter.',
+            'password.regex' => 'Kata sandi harus mengandung huruf dan angka.',
+            'password_confirmation.required' => 'Konfirmasi kata sandi wajib diisi.',
+            'password_confirmation.same' => 'Konfirmasi kata sandi tidak cocok.',
         ]);
 
         $user = User::create([
@@ -65,4 +86,26 @@ class AuthController extends Controller
         return redirect('/login');
     }
 
+    function login_admin() {
+        return view('layouts.login-admin');
+    }
+
+    function authenticating_admin(Request $request) {
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required', 'min:8', 'regex:/^(?=.*[a-zA-Z])(?=.*[0-9]).+$/'],
+        ],[
+            'email.required' => 'Email wajib diisi.',
+            'email.email' => 'Format email tidak valid.',
+            'password.required' => 'Kata sandi wajib diisi.',
+            'password.min' => 'Kata sandi minimal 8 karakter.',
+            'password.regex' => 'Kata sandi harus mengandung huruf dan angka.',
+        ]);
+
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+ 
+            return redirect()->intended('ADMIN-SI.dashboard');
+        }
+    }
 }

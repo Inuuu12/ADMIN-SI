@@ -43,23 +43,40 @@
         <div class="mb-6">
           <label class="block text-sm font-medium text-gray-700 mb-2">Nama Lengkap</label>
           <input type="text" name="name" required class="w-full px-4 py-3 rounded-lg border border-gray-300" placeholder="John Doe">
+          @error('name')
+            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+          @enderror
         </div>
 
         <!-- Email -->
         <div class="mb-6">
           <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
           <input type="email" name="email" required class="w-full px-4 py-3 rounded-lg border border-gray-300" placeholder="you@example.com">
+          @error('email')
+            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+          @enderror
         </div>
 
         <!-- Password -->
         <div class="mb-6">
           <label class="block text-sm font-medium text-gray-700 mb-2">Buat Password</label>
           <input type="password" name="password" required class="w-full px-4 py-3 rounded-lg border border-gray-300" placeholder="••••••••">
+          @error('password')
+            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+          @enderror
         </div>
 
-        <div class="w-full bg-emerald-500 text-white py-3 rounded-lg font-semibold hover:bg-emerald-600 text-center block">
-          <button type="submit"> Buat Akun </button>
+        <div class="mb-6">
+          <label class="block text-sm font-medium text-gray-700 mb-2">Konfirmasi Password</label>
+          <input type="password" name="password_confirmation" required class="w-full px-4 py-3 rounded-lg border border-gray-300" placeholder="••••••••">
+          @error('password_confirmation')
+            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+          @enderror
         </div>
+
+        <button type="submit" class="w-full bg-emerald-500 text-white py-3 rounded-lg font-semibold hover:bg-emerald-600">
+  Buat Akun
+</button>
 
         <p class="mt-6 text-center text-gray-600">
           Sudah punya akun?
@@ -70,8 +87,8 @@
   </div>
 
   <!-- Kanan: Gambar -->
-  <div class="w-full md:w-1/2">
-  <img src="{{ asset('img/kegiatan/al-quran.jpg') }}" alt="Sekolah" class="object-cover w-full h-full">
+  <div class="w-full md:w-1/2 hidden md:block">
+    <img src="{{ asset('img/kegiatan/al-quran.jpg') }}" alt="Sekolah" class="object-cover w-full h-96 md:h-full">
   </div>
 
 </div>

@@ -29,15 +29,18 @@
   <!-- Kiri: Form Login -->
   <div class="w-1/2 flex items-center justify-center p-8 animate-fadeInUp">
     <div class="w-full max-w-md">
+    <a href="{{ route('login') }}" class="border border-red-500 text-red-500 px-4 py-2 rounded text-center hover:bg-red-50 inline-flex items-center gap-2">
+      <i class="fas fa-arrow-left"></i> Kembali
+    </a>
       <div class="text-center mb-8">
         <div class="inline-flex items-center justify-center w-16 h-16 bg-emerald-100 rounded-full mb-4">
           <i class="fas fa-sign-in-alt text-emerald-500 fa-lg"></i>
         </div>
-        <h2 class="text-2xl font-bold text-gray-800">Yayasan Nurul Iman!</h2>
-        <p class="text-gray-600 mt-2">Silakan masuk untuk melanjutkan</p>
+        <h2 class="text-2xl font-bold text-gray-800">Yayasan Nurul Iman</h2>
+        <p class="text-gray-600 mt-2">Silakan masuk untuk mengelola sistem</p>
       </div>
 
-      <form action="{{ route('login') }}" method="POST">
+      <form action="{{ route('login-admin') }}" method="POST">
         @csrf
 
         <div class="mb-6">
@@ -50,6 +53,9 @@
           <input type="password" name="password" required class="w-full px-4 py-3 rounded-lg border border-gray-300" placeholder="••••••••">
         </div>
 
+        <button type="submit" class="w-full bg-emerald-500 text-white py-3 rounded-lg font-semibold hover:bg-emerald-600">
+  Masuk
+</button>
       </form>
     </div>
   </div>
