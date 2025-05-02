@@ -118,6 +118,9 @@ Route::post('/login', [AuthController::class, 'authenticating']);
 Route::get('/logout', [AuthController::class, 'logout']);
 Route::post('/register', [AuthController::class, 'createUser']);
 
+Route::get('/resend-email', [AuthController::class, 'showResendEmailForm'])->name('resend.email.form');
+Route::post('/resend-email', [AuthController::class, 'handleResendEmail'])->name('resend.email.submit');
+
 Route::get('/login-admin', function () {
     return view('layouts.login-admin');
 })->name('login-admin');

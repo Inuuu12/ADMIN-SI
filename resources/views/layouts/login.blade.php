@@ -60,6 +60,12 @@
   Masuk
 </button>
 
+      <div class="mt-4 text-center">
+        <a href="{{ route('resend.email.form') }}" class="text-sm text-emerald-500 hover:text-emerald-700 font-semibold">
+          Kirim ulang email verifikasi
+        </a>
+      </div>
+
         <p class="mt-6 text-center text-gray-600">
           Belum memiliki akun?
           <a href="{{ route('register') }}" class="ml-1 text-emerald-500 hover:text-emerald-700 font-semibold">Sign up</a>

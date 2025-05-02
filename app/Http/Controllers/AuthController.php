@@ -45,6 +45,44 @@ class AuthController extends Controller
         ])->onlyInput('email');
     }
 
+    public function showResendEmailForm()
+    {
+        return view('layouts.resend-email');
+    }
+
+    public function handleResendEmail(Request $request)
+    {
+        $request->validate([
+            'email' => ['required', 'email'],
+        ], [
+            'email.required' => 'Email wajib diisi.',
+            'email.email' => 'Format email tidak valid.',
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user) {
+            return back()->withErrors([
+                'email' => 'Anda belum membuat akun dengan email ini.',
+            ])->withInput();
+        }
+
+        if ($user->email_verified_at) {
+            return back()->withErrors([
+                'email' => 'Email sudah diaktivasi.',
+            ])->withInput();
+        }
+
+        // Send email verification notification
+
+        Auth::login($user);
+
+        event(new Registered($user));
+
+        return back()->with('status', 'Link verifikasi telah dikirim ke email Anda.');
+
+    }
+
     function register(){
         return view('layouts.register');
     }
