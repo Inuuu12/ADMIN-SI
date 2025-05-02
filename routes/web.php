@@ -114,7 +114,7 @@ Route::get('/profil', function () {
 
 //login
 Route::get('/login', [AuthController::class, 'login'])->name('login');
-Route::post('/login', [AuthController::class, 'authenticating'])->middleware("verified");
+Route::post('/login', [AuthController::class, 'authenticating']);
 Route::get('/logout', [AuthController::class, 'logout']);
 Route::post('/register', [AuthController::class, 'createUser']);
 

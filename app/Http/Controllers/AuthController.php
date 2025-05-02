@@ -29,6 +29,12 @@ class AuthController extends Controller
         ]);
 
         if (Auth::attempt($credentials)) {
+            if (is_null(Auth::user()->email_verified_at)) {
+                Auth::logout();
+                return back()->withErrors([
+                    'email' => 'Anda harus memverifikasi email terlebih dahulu. Silakan cek email Anda.',
+                ])->onlyInput('email');
+            }
             $request->session()->regenerate();
            
             return redirect()->intended('beranda');
@@ -75,7 +81,7 @@ class AuthController extends Controller
 
         event(new Registered($user));
 
-        return redirect("/login");
+        return redirect("/email/verify");
 
     }
 
