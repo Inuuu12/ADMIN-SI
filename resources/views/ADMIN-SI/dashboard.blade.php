@@ -92,10 +92,10 @@
     </div>
 
     <!-- Wrapper Alpine -->
-    <div x-data="{ showTambah: false }" class="mb-8">
+    <div x-data="{ showTambah: false }">
 
         <!-- Tombol Tambah -->
-        <div class="flex justify-end">
+        <div class="flex justify-end mb-6">
             <button @click="showTambah = true" class="bg-emerald-500 text-white px-4 py-2 rounded-lg flex items-center gap-2 shadow-md hover:bg-emerald-600">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
@@ -267,42 +267,15 @@
 </div>
 
 <!-- Modal Edit -->
-<div id="modalEdit" class="hidden fixed inset-0 z-50 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center transition-opacity duration-300 px-4">
+<div id="modalApprove" class="hidden fixed inset-0 z-50 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center transition-opacity duration-300 px-4">
   <div class="bg-white rounded-xl shadow-xl w-full max-w-md p-6 animate-scaleIn">
-    <h2 class="text-2xl font-bold text-center text-yellow-600 mb-4">Edit Siswa</h2>
-    <form id="formEdit" onsubmit="saveEdit(event)" class="space-y-4">
-      <input type="hidden" id="editIndex">
-
-      <div>
-        <label for="editNama" class="block font-medium text-gray-700 mb-1">Nama</label>
-        <input type="text" id="editNama" placeholder="Masukkan nama siswa" class="w-full border rounded px-4 py-2" required>
-      </div>
-
-      <div>
-        <label for="editSekolah" class="block font-medium text-gray-700 mb-1">Sekolah</label>
-        <input type="text" id="editSekolah" placeholder="Nama sekolah" class="w-full border rounded px-4 py-2" required>
-      </div>
-
-      <div>
-        <label for="editUsia" class="block font-medium text-gray-700 mb-1">Usia</label>
-        <input type="number" id="editUsia" placeholder="Contoh: 16" class="w-full border rounded px-4 py-2" required>
-      </div>
-
-      <div>
-        <label for="editStatus" class="block font-medium text-gray-700 mb-1">Status</label>
-        <select id="editStatus" class="w-full border rounded px-4 py-2" required>
-          <option value="">-- Pilih Status --</option>
-          <option value="Diterima">Diterima</option>
-          <option value="Menunggu">Menunggu</option>
-          <option value="Ditolak">Ditolak</option>
-        </select>
-      </div>
-
-      <div class="flex flex-col sm:flex-row gap-2 pt-2">
-        <button type="submit" class="sm:flex-1 bg-green-500 hover:bg-green-600 text-white py-2 rounded-md">Simpan</button>
-        <button type="button" onclick="closeEdit()" class="sm:flex-1 bg-gray-400 hover:bg-gray-500 text-white py-2 rounded-md">Batal</button>
-      </div>
-    </form>
+    <h2 class="text-xl font-semibold text-center text-yellow-600 mb-4">Konfirmasi Approve</h2>
+    <input type="hidden" id="approveIndex">
+    <p class="text-center text-gray-700 mb-6">Setujui status siswa <strong id="approveNama"></strong> menjadi <strong>Diterima</strong>?</p>
+    <div class="flex gap-3 justify-center">
+      <button onclick="confirmApprove()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md">Ya, Setujui</button>
+      <button onclick="closeApprove()" class="bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded-md">Batal</button>
+    </div>
   </div>
 </div>
 
@@ -396,8 +369,8 @@
             <td class="px-6 py-4">${s.status}</td>
             <td class="px-6 py-4">
               <div class="flex flex-col md:flex-row gap-2 justify-center">
-                <button onclick="showDetail(${s.originalIndex})" class="bg-emerald-500 text-white px-3 py-1 rounded text-sm">Detail</button>
-                <button onclick="showEdit(${s.originalIndex})" class="bg-yellow-400 text-white px-3 py-1 rounded text-sm">Edit</button>
+                <button onclick="showDetail(${s.originalIndex})" class="bg-blue-500 text-white px-3 py-1 rounded text-sm">Detail</button>
+                <button onclick="showApprove(${s.originalIndex})" class="bg-emerald-500 text-white px-3 py-1 rounded text-sm">Approve</button>
                 <button onclick="deleteSiswa(${s.originalIndex})" class="bg-red-500 text-white px-3 py-1 rounded text-sm">Hapus</button>
               </div>
             </td>
@@ -418,34 +391,27 @@
       document.getElementById("modalDetail").classList.add("hidden");
     }
 
-    function showEdit(i) {
-      const s = siswa[i];
-      document.getElementById("editIndex").value = i;
-      document.getElementById("editNama").value = s.nama;
-      document.getElementById("editSekolah").value = s.sekolah;
-      document.getElementById("editUsia").value = s.usia;
-      document.getElementById("editStatus").value = s.status;
-      document.getElementById("modalEdit").classList.remove("hidden");
-    }
+    function showApprove(i) {
+  const s = siswa[i];
+  document.getElementById("approveIndex").value = i;
+  document.getElementById("approveNama").innerText = s.nama;
+  document.getElementById("modalApprove").classList.remove("hidden");
+}
 
-    function closeEdit() {
-      document.getElementById("modalEdit").classList.add("hidden");
-    }
 
-    function saveEdit(e) {
-      e.preventDefault();
-      const i = document.getElementById("editIndex").value;
-      siswa[i].nama = document.getElementById("editNama").value;
-      siswa[i].sekolah = document.getElementById("editSekolah").value;
-      siswa[i].usia = parseInt(document.getElementById("editUsia").value);
-      siswa[i].status = document.getElementById("editStatus").value;
-      closeEdit();
-      renderTable();
-    }
+function closeApprove() {
+  document.getElementById("modalApprove").classList.add("hidden");
+}
+
+function confirmApprove() {
+  const i = document.getElementById("approveIndex").value;
+  siswa[i].status = "Diterima";
+  closeApprove();
+  renderTable();
+}
 
     function deleteSiswa(i) {
       deleteIndex = i;
-      document.getElementById("hapusNama").innerText = `Siswa: ${siswa[i].nama}`;
       document.getElementById("modalHapus").classList.remove("hidden");
     }
 
