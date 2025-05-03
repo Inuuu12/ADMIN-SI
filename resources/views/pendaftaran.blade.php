@@ -16,7 +16,7 @@
                         <div class="flex flex-col items-center border-2 p-5">
                             <div class="text-2xl font-bold text-center mb-8  text-gray-800">Formulir Pendaftaran Online
                             </div>
-                            <form action="pembayaran.html" class="flex flex-col items-center">
+                            <form action="{{ route('pembayaran') }}" class="flex flex-col items-center">
                                 <div class="w-full mb-7">
                                     <label for="tempat-lahir" class="block text-sm font-medium mb-4">A. DATA SANTRI
                                     </label>
