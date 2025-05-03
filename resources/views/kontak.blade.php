@@ -37,19 +37,18 @@
                             </div>
                         </div>
 
-                        <!-- Peta -->
-                        <div class="flex px-28">
-                            <div
-                                class="relative mt-12 rounded-lg overflow-hidden shadow-lg border border-gray-300 w-full">
-                                <div
-                                    class="absolute inset-0 bg-gradient-to-b from-transparent to-green-50 opacity-30 pointer-events-none">
-                                </div>
+                            <!-- Peta -->
+                            <div class="flex px-4 sm:px-6 md:px-10 lg:px-28">
+                            <div class="relative mt-12 rounded-lg overflow-hidden shadow-lg border border-gray-300 w-full">
+                                <div class="absolute inset-0 bg-gradient-to-b from-transparent to-green-50 opacity-30 pointer-events-none"></div>
                                 <iframe class="rounded-lg"
                                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3958.6269499982014!2d106.85750497479656!3d-7.162048372994154!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e6993ef57336b33%3A0x553bb830cc0bcebc!2sAnanda%20Collection%20Pisangan%20Baru!5e0!3m2!1sid!2sid!4v1699000000000!5m2!1sid!2sid"
-                                    width="100%" height="650" style="border:0;" allowfullscreen="" loading="lazy"
+                                    width="100%" height="750" style="border:0;" allowfullscreen="" loading="lazy"
                                     referrerpolicy="no-referrer-when-downgrade">
                                 </iframe>
                             </div>
+                        </div>
+                        
                         </div>
                     </div>
                 </div>
