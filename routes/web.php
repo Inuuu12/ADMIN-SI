@@ -39,7 +39,64 @@ Route::view('/program', 'program')->name('program');
 
 Route::view('/tentang', 'tentang')->name('tentang');
 
-// Authentication Routes
+
+// Route Admin
+Route::get('/dashboard', function () {
+    return view('ADMIN-SI.dashboard');
+})->name('dashboard');
+
+// Route::get('/pendaftaran', function () {
+//     return view('pendaftaran');
+// })->name('pendaftaran');
+
+Route::get('/akademik', [GuruController::class, 'webIndex'])->name('akademik');
+Route::get('/guru/create', [GuruController::class, 'webCreate'])->name('guru.create');
+Route::post('/guru', [GuruController::class, 'webStore'])->name('guru.store');
+Route::get('/guru/{guru}', [GuruController::class, 'webShow'])->name('guru.show');
+Route::get('/guru/{guru}/edit', [GuruController::class, 'webEdit'])->name('guru.edit');
+Route::put('/guru/{guru}', [GuruController::class, 'webUpdate'])->name('guru.update');
+Route::delete('/guru/{guru}', [GuruController::class, 'webDestroy'])->name('guru.destroy');
+
+Route::get('/fotokegiatan', [GaleriController::class, 'fotokegiatan'])->name('fotokegiatan');
+
+Route::get('/galeri/create', [GaleriController::class, 'webCreate'])->name('galeri.create');
+Route::post('/galeri', [GaleriController::class, 'webStore'])->name('galeri.store');
+Route::get('/galeri/{galeri}', [GaleriController::class, 'webShow'])->name('galeri.show');
+Route::get('/galeri/{galeri}/edit', [GaleriController::class, 'webEdit'])->name('galeri.edit');
+Route::put('/galeri/{galeri}', [GaleriController::class, 'webUpdate'])->name('galeri.update');
+Route::delete('/galeri/{galeri}', [GaleriController::class, 'webDestroy'])->name('galeri.destroy');
+
+Route::get('/aduan', function () {
+    return view('ADMIN-SI.aduan');
+})->name('aduan');
+
+Route::get('/panduan', function () {
+    return view('ADMIN-SI.panduan');
+})->name('panduan');
+
+Route::get('/search', function () {
+    return view('search');
+})->name('search');
+
+Route::get('/fotokegiatan', [GaleriController::class, 'fotokegiatan'])->name('fotokegiatan');
+
+Route::get('/spp', function () {
+    return view('ADMIN-SI.spp');
+})->name('spp');
+
+Route::get('/kelas', function () {
+    return view('ADMIN-SI.kelas');
+})->name('kelas');
+
+Route::get('/profil', function () {
+    return view('ADMIN-SI.profil');
+})->name('profil');
+
+Route::get('/siswa', function () {
+    return view('ADMIN-SI.siswa');
+})->name('siswa');
+
+//login
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/login', [AuthController::class, 'authenticating']);
 Route::get('/logout', [AuthController::class, 'logout']);
@@ -56,6 +113,7 @@ Route::get('/email/verify', function () {
 
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
+
     return redirect('/login');
 })->middleware(['auth', 'signed'])->name('verification.verify');
 
