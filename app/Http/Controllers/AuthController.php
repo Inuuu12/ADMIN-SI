@@ -35,6 +35,13 @@ class AuthController extends Controller
                     'email' => 'Anda harus memverifikasi email terlebih dahulu. Silakan cek email Anda.',
                 ])->onlyInput('email');
             }
+            // Check if user role is 'user'
+            if (Auth::user()->role !== 'user') {
+                Auth::logout();
+                return back()->withErrors([
+                    'email' => 'Anda tidak memiliki akses sebagai user.',
+                ])->onlyInput('email');
+            }
             $request->session()->regenerate();
            
             return redirect()->intended('beranda');
@@ -145,11 +152,43 @@ class AuthController extends Controller
             'password.min' => 'Kata sandi minimal 8 karakter.',
             'password.regex' => 'Kata sandi harus mengandung huruf dan angka.',
         ]);
-
+ 
         if (Auth::attempt($credentials)) {
+            if (Auth::user()->role == 'user') {
+                Auth::logout();
+                return back()->withErrors([
+                    'email' => 'Anda tidak memiliki akses sebagai admin.',
+                ])->onlyInput('email');
+            }
             $request->session()->regenerate();
  
-            return redirect()->intended('ADMIN-SI.dashboard');
+            return redirect()->intended(route('dashboard'));
+        }
+ 
+        return back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+        ])->onlyInput('email');
+    }
+
+    // Handle pendaftaran POST
+    public function postPendaftaran(Request $request) {
+        if (Auth::check() && Auth::user()->role === 'user') {
+            // Validate and process pendaftaran data here
+            // For now, just redirect to pembayaran page
+            return redirect()->route('pembayaran');
+        } else {
+            return redirect()->route('login')->withErrors(['error' => 'Anda harus login sebagai user untuk melakukan pendaftaran.']);
+        }
+    }
+
+    // Handle pembayaran POST
+    public function postPembayaran(Request $request) {
+        if (Auth::check() && Auth::user()->role === 'user') {
+            // Validate and process pembayaran data here
+            // For now, just redirect to beranda with success message
+            return redirect()->route('beranda')->with('success', 'Pembayaran berhasil diproses.');
+        } else {
+            return redirect()->route('login')->withErrors(['error' => 'Anda harus login sebagai user untuk melakukan pembayaran.']);
         }
     }
 }

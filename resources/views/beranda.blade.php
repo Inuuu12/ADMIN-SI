@@ -18,23 +18,24 @@
     </section>
 
 
-    <div class="mt-20 px-48">
-        <div class="flex gap-8">
+    <div class="mt-20 px-4 sm:px-6 md:px-8 lg:px-48">
+    <div class="flex flex-col md:flex-row gap-8">
 
-            <img class="w-60 aspect-square rounded-md" src="img/ustendang.png" alt="">
+        <!-- Gambar -->
+        <img class="w-full md:w-60 aspect-square rounded-md" src="img/ustendang.png" alt="">
 
-            <div class="flex flex-col bg-green-600 p-8 rounded-lg shadow-md gap-4">
-                <h1 class="text-2xl font-semibold text-white">Sambutan Kepala TPQ Nurul Iman</h1>
-                <p class="text-white text-justify text-sm"> Puji syukur kehadirat Allah SWT yang telah melimpahkan rahmat dan hidayah-Nya, 
-                    sehingga kita semua masih diberi kesempatan untuk terus berkontribusi dalam mendidik generasi penerus bangsa. 
-                    Selamat datang di website resmi TPQ Nurul Iman. Website ini kami hadirkan sebagai media informasi, komunikasi, 
-                    dan silaturahmi antara pihak TPQ, orang tua, dan masyarakat. TPQ Nurul Iman hadir sebagai lembaga pendidikan yang tidak 
-                    hanya mengajarkan huruf-huruf hijaiyah dan bacaan Al-Qur’an, tetapi juga menanamkan nilai-nilai kebaikan, kejujuran, 
-                    kepedulian, serta kecintaan terhadap ibadah dan akhlak Islami sejak usia dini. Melalui website ini, kami berharap masyarakat dapat 
-                    mengenal lebih dekat visi, misi, serta program-program unggulan yang kami jalankan di TPQ Nurul Iman.
-            </div>
+        <!-- Teks Sambutan -->
+        <div class="flex flex-col bg-green-600 p-8 rounded-lg shadow-md gap-4 w-full">
+            <h1 class="text-2xl font-semibold text-white">Sambutan Kepala TPQ Nurul Iman</h1>
+            <p class="text-white text-justify text-sm">
+                Puji syukur kehadirat Allah SWT yang telah melimpahkan rahmat dan hidayah-Nya, sehingga kita semua masih diberi kesempatan untuk terus berkontribusi dalam mendidik generasi penerus bangsa. 
+                Selamat datang di website resmi TPQ Nurul Iman. Website ini kami hadirkan sebagai media informasi, komunikasi, dan silaturahmi antara pihak TPQ, orang tua, dan masyarakat. TPQ Nurul Iman hadir sebagai lembaga pendidikan yang tidak hanya mengajarkan huruf-huruf hijaiyah dan bacaan Al-Qur’an, tetapi juga menanamkan nilai-nilai kebaikan, kejujuran, kepedulian, serta kecintaan terhadap ibadah dan akhlak Islami sejak usia dini. 
+                Melalui website ini, kami berharap masyarakat dapat mengenal lebih dekat visi, misi, serta program-program unggulan yang kami jalankan di TPQ Nurul Iman.
+            </p>
         </div>
     </div>
+</div>
+
 
 
     <div class="container mx-auto mt-16 mb-20">

@@ -29,7 +29,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'password',
-        'user',
+        'role',
     ];
     
 
@@ -56,5 +56,23 @@ class User extends Authenticatable implements MustVerifyEmail
         ];
     }
 
-    
+    /**
+     * Check if user has admin role
+     *
+     * @return bool
+     */
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
+    /**
+     * Check if user has user role
+     *
+     * @return bool
+     */
+    public function isUser(): bool
+    {
+        return $this->role === 'user';
+    }
 }

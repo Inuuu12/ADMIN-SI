@@ -1,8 +1,9 @@
 @extends('layouts.berandaly')
 
-    <!-- Tentang Kami -->
-    <div class="container mx-auto py-10 max-w-3xl">
-        <h1 class="text-2xl font-bold text-center mb-4 text-gray-800">Tentang Kami</h1>
+   <!-- Tentang Kami -->
+<div class="px-4 sm:px-6 md:px-8 lg:px-24 xl:px-48 py-10">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-2xl font-bold text-center mb-6 text-gray-800">Tentang Kami</h1>
         <p class="text-sm text-gray-600 text-justify leading-relaxed">
             TPQ Nurul Iman (Taman Pendidikan Al-Qur'an Nurul Iman) adalah lembaga pendidikan non-formal yang berfokus
             pada pendidikan Al-Qur'an dan nilai-nilai keislaman. Lembaga ini didirikan pada tahun 1990 di bawah naungan
@@ -36,6 +37,8 @@
             anak-anak agar tumbuh menjadi individu yang beriman, bertakwa, dan berkarakter islami yang kuat.
         </p>
     </div>
+</div>
+
 
     <!-- Filosofi dan Misi Kami -->
     <div class="container mx-auto py-15 max-w-5xl px-6 mb-20">
