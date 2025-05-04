@@ -213,6 +213,7 @@ Route::prefix('admin')->middleware(['auth', 'web'])->group(function () {
     })->name('profil');
 
     Route::post('/pendaftaran/{id}/reject', [DashboardController::class, 'reject'])->name('dashboard.pendaftaran.reject');
+    Route::post('/pendaftaran/{id}/approve', [DashboardController::class, 'approve'])->name('dashboard.pendaftaran.approve');
     Route::delete('/pendaftaran/{id}', [DashboardController::class, 'destroy'])->name('dashboard.pendaftaran.destroy');
 });
 

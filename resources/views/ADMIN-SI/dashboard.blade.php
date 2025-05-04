@@ -164,7 +164,7 @@
             </div>
             <div>
                 <p class="text-gray-500">Total Pendaftar</p>
-                <h3 class="text-2xl font-bold">128</h3>
+                <h3 class="text-2xl font-bold">{{ $totalPendaftar }}</h3>
             </div>
         </div>
 
@@ -177,7 +177,7 @@
             </div>
             <div>
                 <p class="text-gray-500">Diterima</p>
-                <h3 class="text-2xl font-bold">72</h3>
+                <h3 class="text-2xl font-bold">{{ $diterimaCount }}</h3>
             </div>
         </div>
 
@@ -190,7 +190,7 @@
             </div>
             <div>
                 <p class="text-gray-500">Menunggu</p>
-                <h3 class="text-2xl font-bold">45</h3>
+                <h3 class="text-2xl font-bold">{{ $menungguCount }}</h3>
             </div>
         </div>
 
@@ -203,7 +203,7 @@
             </div>
             <div>
                 <p class="text-gray-500">Ditolak</p>
-                <h3 class="text-2xl font-bold">11</h3>
+                <h3 class="text-2xl font-bold">{{ $ditolakCount }}</h3>
             </div>
         </div>
     </div>
@@ -399,7 +399,7 @@
 
     filtered.forEach(function(s, i) {
       var actionButtons = '<button onclick="showDetail(' + s.originalIndex + ')" class="bg-blue-500 text-white px-3 py-1 rounded text-sm">Detail</button>';
-      if (s.status !== "Ditolak") {
+      if (s.status !== "Ditolak" && s.status !== "Diterima") {
         actionButtons += '<button onclick="showApprove(' + s.originalIndex + ')" class="bg-emerald-500 text-white px-3 py-1 rounded text-sm">Diterima</button>';
         actionButtons += '<button onclick="showDitolak(' + s.originalIndex + ')" class="bg-red-600 text-white px-3 py-1 rounded text-sm">Ditolak</button>';
       }
@@ -493,9 +493,29 @@
 
   function confirmApprove() {
     const i = document.getElementById("approveIndex").value;
-    pendaftaran[i].status = "Diterima";
-    closeApprove();
-    renderTable();
+    const id = pendaftaran[i].id;
+
+    fetch(`/admin/pendaftaran/${id}/approve`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+      }
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then(data => {
+      pendaftaran[i].status = "Diterima";
+      closeApprove();
+      renderTable();
+    })
+    .catch(error => {
+      alert('Gagal mengubah status: ' + error.message);
+    });
   }
 
   function deleteSiswa(i) {

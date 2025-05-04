@@ -16,6 +16,11 @@ class DashboardController extends Controller
             abort(403, 'Unauthorized');
         }
 
+        $totalPendaftar = Pendaftaran::count();
+        $diterimaCount = Pendaftaran::where('status', 'accepted')->count();
+        $menungguCount = Pendaftaran::where('status', 'pending')->count();
+        $ditolakCount = Pendaftaran::where('status', 'rejected')->count();
+
         $pendaftaran = Pendaftaran::all()->map(function ($item) {
             $tanggalLahir = Carbon::parse($item->tanggal_lahir);
             $usia = $tanggalLahir->age; // Calculate age from tanggal_lahir
@@ -36,7 +41,7 @@ class DashboardController extends Controller
             ];
         });
 
-        return view('ADMIN-SI.dashboard', compact('pendaftaran'));
+        return view('ADMIN-SI.dashboard', compact('pendaftaran', 'totalPendaftar', 'diterimaCount', 'menungguCount', 'ditolakCount'));
     }
 
     public function reject($id)
@@ -55,6 +60,24 @@ class DashboardController extends Controller
         $pendaftaran->save();
 
         return response()->json(['message' => 'Status updated to rejected']);
+    }
+
+    public function approve($id)
+    {
+        $user = Auth::user();
+        if (!$user || $user->isAdmin() === false) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
+        $pendaftaran = Pendaftaran::find($id);
+        if (!$pendaftaran) {
+            return response()->json(['message' => 'Data not found'], 404);
+        }
+
+        $pendaftaran->status = 'accepted';
+        $pendaftaran->save();
+
+        return response()->json(['message' => 'Status updated to accepted']);
     }
 
     public function destroy($id)
