@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GuruController;
 use App\Http\Controllers\GaleriController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PendaftaranController;
+use App\Http\Controllers\DashboardController;
 use App\Models\User;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
@@ -39,11 +41,6 @@ Route::view('/program', 'program')->name('program');
 
 Route::view('/tentang', 'tentang')->name('tentang');
 
-
-// Route Admin
-Route::get('/dashboard', function () {
-    return view('ADMIN-SI.dashboard');
-})->name('dashboard');
 
 // Route::get('/pendaftaran', function () {
 //     return view('pendaftaran');
@@ -118,36 +115,35 @@ Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $requ
 })->middleware(['auth', 'signed'])->name('verification.verify');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/pendaftaran', function () {
-        $user = auth()->user();
-        if (!$user || $user->isUser() === false) {
-            abort(403, 'Unauthorized');
-        }
-        return view('pendaftaran');
-    })->name('pendaftaran');
 
-    Route::post('/pendaftaran', [AuthController::class, 'postPendaftaran'])->name('pendaftaran.post');
+Route::get('/pendaftaran', function () {
+    $user = auth()->user();
+    if (!$user || $user->isUser() === false) {
+        abort(403, 'Unauthorized');
+    }
+    return view('pendaftaran');
+})->name('pendaftaran');
 
-    Route::get('/pembayaran', function () {
-        $user = auth()->user();
-        if (!$user || $user->isUser() === false) {
-            abort(403, 'Unauthorized');
-        }
-        return view('pembayaran');
-    })->name('pembayaran');
+Route::post('/pendaftaran', [PendaftaranController::class, 'store'])->name('pendaftaran.post');
+
+Route::get('/pendaftaran/success', function () {
+    return view('pendaftaran_success');
+})->name('pendaftaran.success');
+
+Route::get('/pembayaran', function () {
+    $user = auth()->user();
+    if (!$user || $user->isUser() === false) {
+        abort(403, 'Unauthorized');
+    }
+    return view('pembayaran');
+})->name('pembayaran');
 
     Route::post('/pembayaran', [AuthController::class, 'postPembayaran'])->name('pembayaran.post');
 });
 
 // Admin Routes
 Route::prefix('admin')->middleware(['auth', 'web'])->group(function () {
-    Route::get('/dashboard', function () {
-        $user = auth()->user();
-        if (!$user || $user->isAdmin() === false) {
-            abort(403, 'Unauthorized');
-        }
-        return view('ADMIN-SI.dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::get('/akademik', [GuruController::class, 'webIndex'])->name('akademik');
     Route::get('/guru/create', [GuruController::class, 'webCreate'])->name('guru.create');
@@ -213,6 +209,9 @@ Route::prefix('admin')->middleware(['auth', 'web'])->group(function () {
         }
         return view('ADMIN-SI.profil');
     })->name('profil');
+
+    Route::post('/pendaftaran/{id}/reject', [DashboardController::class, 'reject'])->name('dashboard.pendaftaran.reject');
+    Route::delete('/pendaftaran/{id}', [DashboardController::class, 'destroy'])->name('dashboard.pendaftaran.destroy');
 });
 
 Route::get('/login-admin', [AuthController::class, 'login_admin'])->name('login-admin');

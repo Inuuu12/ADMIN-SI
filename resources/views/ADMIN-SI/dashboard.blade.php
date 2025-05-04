@@ -115,16 +115,22 @@
                 <input type="text" class="w-full p-2 border rounded-md focus:ring focus:ring-emerald-300" id="tambahNama" placeholder="Nama Siswa">
             </div>
 
-            <!-- Sekolah -->
+            <!-- Jenis Kelamin -->
             <div>
-                <label class="block mb-1 font-medium">Sekolah:</label>
-                <input type="text" class="w-full p-2 border rounded-md focus:ring focus:ring-emerald-300" id="tambahSekolah" placeholder="Sekolah Asal">
+                <label class="block mb-1 font-medium">Jenis Kelamin:</label>
+                <input type="text" class="w-full p-2 border rounded-md focus:ring focus:ring-emerald-300" id="tambahJenisKelamin" placeholder="Jenis Kelamin">
             </div>
 
             <!-- Usia -->
             <div>
                 <label class="block mb-1 font-medium">Usia:</label>
                 <input type="number" class="w-full p-2 border rounded-md focus:ring focus:ring-emerald-300" id="tambahUsia" placeholder="Usia">
+            </div>
+
+            <!-- Orang Tua -->
+            <div>
+                <label class="block mb-1 font-medium">Orang Tua:</label>
+                <input type="number" class="w-full p-2 border rounded-md focus:ring focus:ring-emerald-300" id="tambahOrtu" placeholder="Usia">
             </div>
 
             <!-- Status -->
@@ -183,7 +189,7 @@
                 </svg>
             </div>
             <div>
-                <p class="text-gray-500">Pending</p>
+                <p class="text-gray-500">Menunggu</p>
                 <h3 class="text-2xl font-bold">45</h3>
             </div>
         </div>
@@ -212,7 +218,7 @@
             <select id="filterStatus" onchange="renderTable()" class="w-full border rounded-lg px-3 py-2">
                 <option value="">Semua Status</option>
                 <option value="Diterima">Diterima</option>
-                <option value="Menunggu">Pending</option>
+                <option value="Menunggu">Menunggu</option>
                 <option value="Ditolak">Ditolak</option>
             </select>
         </div>
@@ -242,34 +248,80 @@
     </div>
 </div>
 
+<!-- Tailwind CSS styled table for dynamic rendering -->
+<div class="container mx-auto mt-8 px-4">
+  <div class="w-full overflow-x-auto rounded-md">
+    <table class="min-w-full bg-white shadow-md text-sm">
+      <thead class="bg-gray-200">
+      <tr>
+        <th class="px-6 py-3 text-center text-gray-600 whitespace-">No</th>
+        <th class="px-6 py-3 text-center text-gray-600 whitespace-">Nama Santri</th>
+        <th class="px-6 py-3 text-center text-gray-600 whitespace-">Jenis Kelamin</th>
+        <th class="px-6 py-3 text-center text-gray-600 whitespace-">Usia</th>
+        <th class="px-6 py-3 text-center text-gray-600 whitespace-">Orang Tua</th>
+        <th class="px-6 py-3 text-center text-gray-600 whitespace-">Status</th>
+        <th class="px-6 py-3 text-center text-gray-600 whitespace-">Aksi</th>
+      </tr>
+    </thead>
+    <tbody id="siswaTable">
+      <!-- Rows will be dynamically rendered here by JavaScript -->
+    </tbody>
+  </table>
+  </div>
+</div>
+
 <!-- Modal Detail -->
 <div id="modalDetail" class="hidden fixed inset-0 z-50 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center transition-opacity duration-300 px-4">
-  <div class="bg-white rounded-xl shadow-xl w-full max-w-md p-6 animate-scaleIn">
+  <div class="bg-white rounded-xl shadow-xl w-full max-w-3xl p-8 animate-scaleIn overflow-y-auto max-h-[80vh] space-y-6">
     <h2 class="text-2xl font-bold text-center text-emerald-600 mb-4">Detail Siswa</h2>
     <div>
-      <label class="block font-medium text-gray-700 mb-1">Nama</label>
+      <label class="block font-medium text-gray-700 mb-1">Nama Santri</label>
       <div id="detailNama" class="w-full border rounded px-4 py-2 bg-gray-100 text-gray-800"></div>
     </div>
     <div>
-      <label class="block font-medium text-gray-700 mb-1">Sekolah</label>
-      <div id="detailSekolah" class="w-full border rounded px-4 py-2 bg-gray-100 text-gray-800"></div>
+      <label class="block font-medium text-gray-700 mb-1">Jenis Kelamin</label>
+      <div id="detailJenisKelamin" class="w-full border rounded px-4 py-2 bg-gray-100 text-gray-800"></div>
     </div>
     <div>
       <label class="block font-medium text-gray-700 mb-1">Usia</label>
       <div id="detailUsia" class="w-full border rounded px-4 py-2 bg-gray-100 text-gray-800"></div>
     </div>
     <div>
-      <label class="block font-medium text-gray-700 mb-1">Status</label>
-      <div id="detailStatus" class="w-full border rounded px-4 py-2 bg-gray-100 text-gray-800"></div>
+      <label class="block font-medium text-gray-700 mb-1">Nama Orang Tua</label>
+      <div id="detailNamaOrangTua" class="w-full border rounded px-4 py-2 bg-gray-100 text-gray-800"></div>
+    </div>
+    <div>
+      <label class="block font-medium text-gray-700 mb-1">Tempat Lahir</label>
+      <div id="detailTempatLahir" class="w-full border rounded px-4 py-2 bg-gray-100 text-gray-800"></div>
+    </div>
+    <div>
+      <label class="block font-medium text-gray-700 mb-1">Tanggal Lahir</label>
+      <div id="detailTanggalLahir" class="w-full border rounded px-4 py-2 bg-gray-100 text-gray-800"></div>
+    </div>
+    <div>
+      <label class="block font-medium text-gray-700 mb-1">No HP</label>
+      <div id="detailNoHp" class="w-full border rounded px-4 py-2 bg-gray-100 text-gray-800"></div>
+    </div>
+    <div>
+      <label class="block font-medium text-gray-700 mb-1">Alamat</label>
+      <div id="detailAlamat" class="w-full border rounded px-4 py-2 bg-gray-100 text-gray-800"></div>
+    </div>
+    <div>
+      <label class="block font-medium text-gray-700 mb-1">Akta Kelahiran</label>
+      <img id="detailAktaKelahiran" class="w-full max-h-64 object-contain border rounded px-4 py-2 bg-gray-100 text-gray-800" alt="Akta Kelahiran">
+    </div>
+    <div>
+      <label class="block font-medium text-gray-700 mb-1">Kartu Keluarga</label>
+      <img id="detailKartuKeluarga" class="w-full max-h-64 object-contain border rounded px-4 py-2 bg-gray-100 text-gray-800" alt="Kartu Keluarga">
     </div>
     <button onclick="closeDetail()" class="mt-6 w-full py-2 bg-rose-500 hover:bg-rose-600 text-white rounded-lg">Tutup</button>
   </div>
 </div>
 
-<!-- Modal Edit -->
+<!-- Modal Diterima -->
 <div id="modalApprove" class="hidden fixed inset-0 z-50 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center transition-opacity duration-300 px-4">
   <div class="bg-white rounded-xl shadow-xl w-full max-w-md p-6 animate-scaleIn">
-    <h2 class="text-xl font-semibold text-center text-yellow-600 mb-4">Konfirmasi Approve</h2>
+    <h2 class="text-xl font-semibold text-center text-yellow-600 mb-4">Konfirmasi Diterima</h2>
     <input type="hidden" id="approveIndex">
     <p class="text-center text-gray-700 mb-6">Setujui status siswa <strong id="approveNama"></strong> menjadi <strong>Diterima</strong>?</p>
     <div class="flex gap-3 justify-center">
@@ -291,144 +343,200 @@
   </div>
 </div>
 
-
-
-
-    <!-- Table -->
-    <div class="container mx-auto mt-8 px-4">
-  <div class="w-full overflow-x-auto rounded-md">
-    <table class="min-w-full bg-white shadow-md text-sm">
-      <thead class="bg-gray-200">
-        <tr>
-          <th class="px-6 py-3 text-left text-gray-600 whitespace-nowrap">No</th>
-          <th class="px-6 py-3 text-left text-gray-600 whitespace-nowrap">Nama</th>
-          <th class="px-6 py-3 text-left text-gray-600 whitespace-nowrap">Sekolah</th>
-          <th class="px-6 py-3 text-left text-gray-600 whitespace-nowrap">Usia</th>
-          <th class="px-6 py-3 text-left text-gray-600 whitespace-nowrap">Status</th>
-          <th class="px-6 py-3 text-center text-gray-600 whitespace-nowrap">Aksi</th>
-        </tr>
-      </thead>
-      <tbody id="siswaTable"></tbody>
-    </table>
+<!-- Modal Ditolak -->
+<div id="modalDitolak" class="hidden fixed inset-0 z-50 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center transition-opacity duration-300 px-4">
+  <div class="bg-white rounded-xl shadow-xl w-full max-w-md p-6 animate-scaleIn">
+    <h2 class="text-xl font-semibold text-center text-red-600 mb-4">Konfirmasi Tolak</h2>
+    <input type="hidden" id="ditolakIndex">
+    <p class="text-center text-gray-700 mb-6">Tolak status siswa <strong id="ditolakNama"></strong>?</p>
+    <div class="flex gap-3 justify-center">
+      <button onclick="confirmDitolak()" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md">Ya, Tolak</button>
+      <button onclick="closeDitolak()" class="bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded-md">Batal</button>
+    </div>
   </div>
 </div>
 
 
 
 
-  <script>
-  let siswa = [
-      { nama: "Andi", sekolah: "SMA 1 Jakarta", usia: 12, status: "Diterima" },
-      { nama: "Budi", sekolah: "SMA 2 Bandung", usia: 14, status: "Menunggu" },
-      { nama: "Citra", sekolah: "SMA 3 Surabaya", usia: 15, status: "Ditolak" },
-      { nama: "Dina", sekolah: "SMA 1 Jakarta", usia: 13, status: "Diterima" },
-    ];
+<script>
+  let pendaftaran = @json($pendaftaran);
 
-    let deleteIndex = null;
+  let deleteIndex = null;
 
-    function renderTable() {
-      const filterStatus = document.getElementById("filterStatus").value;
-      const filterUsia = document.getElementById("filterUsia").value;
-      const sortBy = document.getElementById("sortBy").value;
-      const searchQuery = document.getElementById("searchQuery").value.toLowerCase();
+  function renderTable() {
+    const filterStatus = document.getElementById("filterStatus").value;
+    const filterUsia = document.getElementById("filterUsia").value;
+    const sortBy = document.getElementById("sortBy").value;
+    const searchQuery = document.getElementById("searchQuery").value.toLowerCase();
 
-      let filtered = siswa
-        .map((s, idx) => ({ ...s, originalIndex: idx }))
-        .filter(s => {
-          if (filterStatus && s.status !== filterStatus) return false;
-          if (filterUsia === "11-12" && !(s.usia >= 11 && s.usia <= 12)) return false;
-          if (filterUsia === "13-14" && !(s.usia >= 13 && s.usia <= 14)) return false;
-          if (filterUsia === "15+" && s.usia < 15) return false;
-          if (!s.nama.toLowerCase().includes(searchQuery)) return false;
-          return true;
-        });
-
-      if (sortBy === "nama_asc") {
-        filtered.sort((a, b) => a.nama.localeCompare(b.nama));
-      } else if (sortBy === "nama_desc") {
-        filtered.sort((a, b) => b.nama.localeCompare(a.nama));
-      } else if (sortBy === "terbaru") {
-        filtered.reverse();
-      }
-
-      const tbody = document.getElementById("siswaTable");
-      tbody.innerHTML = "";
-
-      if (filtered.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="6" class="text-center py-4 text-gray-500">Data tidak ditemukan</td></tr>`;
-        return;
-      }
-
-      filtered.forEach((s, i) => {
-        tbody.innerHTML += `
-          <tr>
-            <td class="px-6 py-4">${i + 1}</td>
-            <td class="px-6 py-4">${s.nama}</td>
-            <td class="px-6 py-4">${s.sekolah}</td>
-            <td class="px-6 py-4">${s.usia}</td>
-            <td class="px-6 py-4">${s.status}</td>
-            <td class="px-6 py-4">
-              <div class="flex flex-col md:flex-row gap-2 justify-center">
-                <button onclick="showDetail(${s.originalIndex})" class="bg-blue-500 text-white px-3 py-1 rounded text-sm">Detail</button>
-                <button onclick="showApprove(${s.originalIndex})" class="bg-emerald-500 text-white px-3 py-1 rounded text-sm">Approve</button>
-                <button onclick="deleteSiswa(${s.originalIndex})" class="bg-red-500 text-white px-3 py-1 rounded text-sm">Hapus</button>
-              </div>
-            </td>
-          </tr>`;
+    let filtered = pendaftaran
+      .map((s, idx) => ({ ...s, originalIndex: idx }))
+      .filter(s => {
+        if (filterStatus && s.status !== filterStatus) return false;
+        if (filterUsia === "11-12" && !(s.usia >= 11 && s.usia <= 12)) return false;
+        if (filterUsia === "13-14" && !(s.usia >= 13 && s.usia <= 14)) return false;
+        if (filterUsia === "15+" && s.usia < 15) return false;
+        if (!s.nama_santri.toLowerCase().includes(searchQuery)) return false;
+        return true;
       });
+
+    if (sortBy === "nama_asc") {
+      filtered.sort((a, b) => a.nama_santri.localeCompare(b.nama_santri));
+    } else if (sortBy === "nama_desc") {
+      filtered.sort((a, b) => b.nama_santri.localeCompare(a.nama_santri));
+    } else if (sortBy === "terbaru") {
+      filtered.reverse();
     }
 
-    function showDetail(i) {
-      const s = siswa[i];
-      document.getElementById("detailNama").innerText = s.nama;
-      document.getElementById("detailSekolah").innerText = s.sekolah;
-      document.getElementById("detailUsia").innerText = s.usia;
-      document.getElementById("detailStatus").innerText = s.status;
-      document.getElementById("modalDetail").classList.remove("hidden");
+    const tbody = document.getElementById("siswaTable");
+    tbody.innerHTML = "";
+
+    if (filtered.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="6" class="text-center py-4 text-gray-500">Data tidak ditemukan</td></tr>`;
+      return;
     }
 
-    function closeDetail() {
-      document.getElementById("modalDetail").classList.add("hidden");
-    }
+    filtered.forEach(function(s, i) {
+      var actionButtons = '<button onclick="showDetail(' + s.originalIndex + ')" class="bg-blue-500 text-white px-3 py-1 rounded text-sm">Detail</button>';
+      if (s.status !== "Ditolak") {
+        actionButtons += '<button onclick="showApprove(' + s.originalIndex + ')" class="bg-emerald-500 text-white px-3 py-1 rounded text-sm">Diterima</button>';
+        actionButtons += '<button onclick="showDitolak(' + s.originalIndex + ')" class="bg-red-600 text-white px-3 py-1 rounded text-sm">Ditolak</button>';
+      }
+      actionButtons += '<button onclick="deleteSiswa(' + s.originalIndex + ')" class="bg-red-500 text-white px-3 py-1 rounded text-sm">Hapus</button>';
 
-    function showApprove(i) {
-  const s = siswa[i];
-  document.getElementById("approveIndex").value = i;
-  document.getElementById("approveNama").innerText = s.nama;
-  document.getElementById("modalApprove").classList.remove("hidden");
-}
+      tbody.innerHTML += '<tr>' +
+        '<td class="px-6 py-4">' + (i + 1) + '</td>' +
+        '<td class="px-6 py-4">' + s.nama_santri + '</td>' +
+        '<td class="px-6 py-4">' + s.jenis_kelamin + '</td>' +
+        '<td class="px-6 py-4">' + s.usia + '</td>' +
+        '<td class="px-6 py-4">' + s.nama_orang_tua + '</td>' +
+        '<td class="px-6 py-4">' + s.status + '</td>' +
+        '<td class="px-6 py-4">' +
+          '<div class="flex flex-col md:flex-row gap-2 justify-center">' +
+            actionButtons +
+          '</div>' +
+        '</td>' +
+      '</tr>';
+    });
+  }
 
+  function showDetail(i) {
+    const s = pendaftaran[i];
+    document.getElementById("detailNama").innerText = s.nama_santri;
+    document.getElementById("detailJenisKelamin").innerText = s.jenis_kelamin;
+    document.getElementById("detailUsia").innerText = s.usia;
+    document.getElementById("detailNamaOrangTua").innerText = s.nama_orang_tua;
+    document.getElementById("detailTempatLahir").innerText = s.tempat_lahir;
+    document.getElementById("detailTanggalLahir").innerText = s.tanggal_lahir;
+    document.getElementById("detailNoHp").innerText = s.no_hp;
+    document.getElementById("detailAlamat").innerText = s.alamat;
+    document.getElementById("detailAktaKelahiran").src = '/gambar/akta_kelahiran/' + s.akta_kelahiran;
+    document.getElementById("detailKartuKeluarga").src = '/gambar/kartu_keluarga/' + s.kartu_keluarga;
+    document.getElementById("modalDetail").classList.remove("hidden");
+  }
 
-function closeApprove() {
-  document.getElementById("modalApprove").classList.add("hidden");
-}
+  function closeDetail() {
+    document.getElementById("modalDetail").classList.add("hidden");
+  }
 
-function confirmApprove() {
-  const i = document.getElementById("approveIndex").value;
-  siswa[i].status = "Diterima";
-  closeApprove();
-  renderTable();
-}
+  function showApprove(i) {
+    const s = pendaftaran[i];
+    document.getElementById("approveIndex").value = i;
+    document.getElementById("approveNama").innerText = s.nama_santri;
+    document.getElementById("modalApprove").classList.remove("hidden");
+  }
 
-    function deleteSiswa(i) {
-      deleteIndex = i;
-      document.getElementById("modalHapus").classList.remove("hidden");
-    }
+  function closeApprove() {
+    document.getElementById("modalApprove").classList.add("hidden");
+  }
 
-    function closeHapus() {
-      document.getElementById("modalHapus").classList.add("hidden");
-      deleteIndex = null;
-    }
+  // New functions for Ditolak action
+  function showDitolak(i) {
+    const s = pendaftaran[i];
+    document.getElementById("ditolakIndex").value = i;
+    document.getElementById("ditolakNama").innerText = s.nama_santri;
+    document.getElementById("modalDitolak").classList.remove("hidden");
+  }
 
-    function confirmDelete() {
-      if (deleteIndex !== null) {
-        siswa.splice(deleteIndex, 1);
+  function closeDitolak() {
+    document.getElementById("modalDitolak").classList.add("hidden");
+  }
+
+  function confirmDitolak() {
+    const i = document.getElementById("ditolakIndex").value;
+    const id = pendaftaran[i].id;
+
+    fetch(`/admin/pendaftaran/${id}/reject`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+      },
+      body: JSON.stringify({ status: 'rejected' })
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then(data => {
+      pendaftaran[i].status = "Ditolak";
+      closeDitolak();
+      renderTable();
+    })
+    .catch(error => {
+      alert('Gagal mengubah status: ' + error.message);
+    });
+  }
+
+  function confirmApprove() {
+    const i = document.getElementById("approveIndex").value;
+    pendaftaran[i].status = "Diterima";
+    closeApprove();
+    renderTable();
+  }
+
+  function deleteSiswa(i) {
+    deleteIndex = i;
+    document.getElementById("modalHapus").classList.remove("hidden");
+  }
+
+  function closeHapus() {
+    document.getElementById("modalHapus").classList.add("hidden");
+    deleteIndex = null;
+  }
+
+  function confirmDelete() {
+    if (deleteIndex !== null) {
+      const id = pendaftaran[deleteIndex].id;
+      fetch(`/admin/pendaftaran/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        }
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        pendaftaran.splice(deleteIndex, 1);
         deleteIndex = null;
         renderTable();
         closeHapus();
-      }
+      })
+      .catch(error => {
+        alert('Gagal menghapus data: ' + error.message);
+      });
     }
+  }
 
-    document.addEventListener("DOMContentLoaded", renderTable);
+  document.addEventListener("DOMContentLoaded", renderTable);
 </script>
+
 @endsection
