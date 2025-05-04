@@ -6,6 +6,8 @@ use App\Http\Controllers\GaleriController;
 use App\Http\Controllers\AuthController;
 use App\Models\User;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\PembayaranController;
 
 /*
 |--------------------------------------------------------------------------
@@ -115,7 +117,7 @@ Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $requ
     $request->fulfill();
 
     return redirect('/login');
-})->middleware(['auth', 'signed'])->name('verification.verify');
+})->middleware(['signed'])->name('verification.verify');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/pendaftaran', function () {
@@ -215,8 +217,13 @@ Route::prefix('admin')->middleware(['auth', 'web'])->group(function () {
     })->name('profil');
 });
 
+//Login Admin
 Route::get('/login-admin', [AuthController::class, 'login_admin'])->name('login-admin');
 Route::post('/login-admin', [AuthController::class, 'authenticating_admin'])->name('login-admin.post');
+
+//Pembayaran 
+Route::get('/bayar/{id}', [PembayaranController::class, 'formBayar']);
+Route::post('/bayar/process', [PembayaranController::class, 'processBayar']);
 
 // Route with parameter
 Route::get('/kelas/{kelas}', function ($kelas) {
