@@ -91,9 +91,7 @@ Route::get('/profil', function () {
     return view('ADMIN-SI.profil');
 })->name('profil');
 
-Route::get('/siswa', function () {
-    return view('ADMIN-SI.siswa');
-})->name('siswa');
+
 
 //login
 Route::get('/login', [AuthController::class, 'login'])->name('login');
@@ -101,6 +99,16 @@ Route::post('/login', [AuthController::class, 'authenticating']);
 Route::get('/logout', [AuthController::class, 'logout']);
 Route::post('/register', [AuthController::class, 'createUser']);
 Route::get('/register', [AuthController::class, 'register'])->name('register');
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/user/profile', function () {
+        $user = auth()->user();
+        if (!$user || $user->isUser() === false) {
+            abort(403, 'Unauthorized');
+        }
+        return view('user.profile', ['user' => $user]);
+    })->name('user.profile');
+});
 
 Route::get('/resend-email', [AuthController::class, 'showResendEmailForm'])->name('resend.email.form');
 Route::post('/resend-email', [AuthController::class, 'handleResendEmail'])->name('resend.email.submit');

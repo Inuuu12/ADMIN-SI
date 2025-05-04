@@ -58,13 +58,29 @@
                 <li><a href="{{ route('kontak') }}" class="text-gray-600 hover:text-green-500 transition">Kontak</a></li>
             </ul>
 
-            <!-- Tombol Login -->
-            <a href="{{ route('login') }}" onclick="document.getElementById('modal_login').showModal();"
-                class="hidden md:flex items-center px-4 py-1 text-gray-600 border-2 border-gray-400 rounded-lg hover:border-green-500 hover:text-green-500 transition">
+            <!-- Tombol Login or User Profile Dropdown -->
+            @if(auth()->check() && auth()->user()->role === 'user')
+                <div class="relative group">
+                    <button class="flex items-center text-gray-600 hover:text-green-500 transition"
+                        onclick="toggleDropdown('userProfileDropdown')">
+                        <i class="ph ph-user-circle text-lg mr-2"></i>
+                        {{ auth()->user()->name }}
+                        <i class="ph ph-caret-down ml-1"></i>
+                    </button>
+                    <ul id="userProfileDropdown" class="absolute right-0 hidden bg-white shadow-md mt-2 py-2 w-48 text-gray-600">
+<li><a href="{{ route('user.profile') }}" class="block px-4 py-2 hover:bg-green-100">Profile</a></li>
+                        <li><a href="{{ route('pembayaran') }}" class="block px-4 py-2 hover:bg-green-100">Pembayaran</a></li>
+                        <li><a href="{{ url('/logout') }}" class="block px-4 py-2 hover:bg-green-100">Logout</a></li>
+                    </ul>
+                </div>
+            @else
+                <a href="{{ route('login') }}" onclick="document.getElementById('modal_login').showModal();"
+                    class="hidden md:flex items-center px-4 py-1 text-gray-600 border-2 border-gray-400 rounded-lg hover:border-green-500 hover:text-green-500 transition">
 
-                <i class="ph ph-user-circle text-lg mr-2"></i>
-                Login
-            </a>
+                    <i class="ph ph-user-circle text-lg mr-2"></i>
+                    Login
+                </a>
+            @endif
 
             <!-- Burger Menu untuk Mobile -->
             <button id="menuToggle" class="md:hidden text-gray-600 focus:outline-none">
