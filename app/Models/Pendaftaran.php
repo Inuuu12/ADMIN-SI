@@ -13,7 +13,7 @@ class Pendaftaran extends Model
         'akta_kelahiran', 'kartu_keluarga', 'status'
     ]; // Kolom-kolom yang bisa diisi
     
-    // Aturan relasi jika ada, misalnya relasi dengan tabel users
+
     public function user()
     {
         return $this->belongsTo(User::class);

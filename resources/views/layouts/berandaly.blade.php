@@ -20,7 +20,7 @@
         <div class="container mx-auto flex justify-between items-center px-6 md:px-32">
             <!-- Logo -->
             <a href="{{ route('beranda') }}" class="flex items-center space-x-3 text-xl font-bold text-gray-700">
-                <img src="img/logotpanurul.png" alt="Logo TPQ" class="h-12 w-auto">
+<img src="{{ asset('img/logotpanurul.png') }}" alt="Logo TPQ" class="h-12 w-auto">
                 <span>TPQ Nurul Iman</span>
             </a>
 
