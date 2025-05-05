@@ -28,14 +28,14 @@
 
   <!-- Kiri: Form Login -->
   <div class="w-full md:w-1/2 p-8 opacity-0 translate-y-5 animate-fadeInUp flex items-center justify-center">
-  
+
     <div class="w-full max-w-md">
     <a href="{{ route('beranda') }}" class="border border-red-500 text-red-500 px-4 py-2 rounded text-center hover:bg-red-50 inline-flex items-center gap-2">
       <i class="fas fa-arrow-left"></i> Kembali
     </a>
-        
+
       <div class="text-center mb-8">
-  
+
         <div class="inline-flex items-center justify-center w-16 h-16 bg-emerald-100 rounded-full mb-4">
           <i class="fas fa-sign-in-alt text-emerald-500 fa-lg"></i>
         </div>
@@ -60,11 +60,15 @@
   Masuk
 </button>
 
-      <div class="mt-4 text-center">
-        <a href="{{ route('resend.email.form') }}" class="text-sm text-emerald-500 hover:text-emerald-700 font-semibold">
-          Kirim ulang email verifikasi
-        </a>
-      </div>
+        <div class="flex mb-6 mt-6 justify-between items-center w-full">
+        <!-- Verifikasi di kiri -->
+        <a href ="{{ route('resend.email.form') }}" class="text-emerald-500 hover:underline">Kirim Ulang Verifikasi</a>
+
+        <!-- Lupa Password di kanan -->
+        <a href="{{ route('password.request') }}" class="text-emerald-600 hover:underline">Lupa Password?</a>
+        </div>
+
+
 
         <p class="mt-6 text-center text-gray-600">
           Belum memiliki akun?

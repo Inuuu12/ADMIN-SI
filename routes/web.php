@@ -92,6 +92,10 @@ Route::get('/profil', function () {
 })->name('profil');
 
 
+Route::get('/siswa', function () {
+    return view('ADMIN-SI.siswa');
+})->name('siswa');
+
 
 //login
 Route::get('/login', [AuthController::class, 'login'])->name('login');
@@ -229,7 +233,7 @@ Route::prefix('admin')->middleware(['auth', 'web'])->group(function () {
 Route::get('/login-admin', [AuthController::class, 'login_admin'])->name('login-admin');
 Route::post('/login-admin', [AuthController::class, 'authenticating_admin'])->name('login-admin.post');
 
-//Pembayaran 
+//Pembayaran
 Route::get('/bayar/{id}', [PembayaranController::class, 'formBayar']);
 Route::post('/bayar/process', [PembayaranController::class, 'processBayar']);
 
@@ -244,3 +248,27 @@ Route::get('/kelas/{kelas}', function ($kelas) {
     ];
     return view('ADMIN-SI.kelasa', compact('kelas', 'guru', 'siswa'));
 });
+
+// Route untuk halaman lupa password (GET)
+Route::get('/lupa-password', function () {
+    return view('layouts.lupa-password'); // Mengarahkan ke view lupa-password.blade.php
+})->name('password.request');
+
+Route::get('/sandi', function () {
+    return view('layouts.sandi'); // Mengarahkan ke view lupa-password.blade.php
+})->name('sandi.request');
+
+// Route untuk kirim email reset password (POST)
+Route::post('/lupa-password', function () {
+    $credentials = request()->validate([
+        'email' => 'required|email|exists:users,email',
+    ]);
+
+    // Mengirimkan link reset password
+    $status = Password::sendResetLink($credentials);
+
+    return $status == Password::RESET_LINK_SENT
+        ? back()->with('status', 'Link reset password telah dikirim ke email Anda!')
+        : back()->withErrors(['email' => 'Email yang dimasukkan tidak terdaftar.']);
+})->name('password.email');
+
