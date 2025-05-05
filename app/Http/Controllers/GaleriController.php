@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Galeri;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class GaleriController extends Controller
 {
@@ -27,6 +29,13 @@ class GaleriController extends Controller
 
     public function webCreate()
     {
+        $user = Auth::user();
+        if (!$user || $user->isAdmin() === false) {
+            Session::flash('error', 'Anda tidak memiliki akses ke halaman ini.');
+
+            // Redirect ke halaman sebelumnya
+            return redirect()->back();
+        }
         return view('galeri.create');
     }
 
@@ -44,6 +53,13 @@ class GaleriController extends Controller
 
     public function webStore(Request $request)
     {
+        $user = Auth::user();
+        if (!$user || $user->isAdmin() === false) {
+            Session::flash('error', 'Anda tidak memiliki akses ke halaman ini.');
+
+            // Redirect ke halaman sebelumnya
+            return redirect()->back();
+        }
         $request->validate([
             'judul' => 'required|string|max:30',
             'deskripsi' => 'required|string|max:255',
@@ -198,6 +214,13 @@ class GaleriController extends Controller
     // Custom method fotokegiatan remains unchanged
     public function fotokegiatan(Request $request)
     {
+        $user = Auth::user();
+        if (!$user || $user->isAdmin() === false) {
+            Session::flash('error', 'Anda tidak memiliki akses ke halaman ini.');
+
+            // Redirect ke halaman sebelumnya
+            return redirect()->back();
+        }
         $sort = $request->query('sort');
         $search = $request->query('search');
 

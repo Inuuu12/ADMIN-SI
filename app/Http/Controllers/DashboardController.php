@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Pendaftaran;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class DashboardController extends Controller
 {
@@ -13,7 +14,10 @@ class DashboardController extends Controller
     {
         $user = Auth::user();
         if (!$user || $user->isAdmin() === false) {
-            abort(403, 'Unauthorized');
+            Session::flash('error', 'Anda tidak memiliki akses ke halaman ini.');
+
+            // Redirect ke halaman sebelumnya
+            return redirect()->back();
         }
 
         $totalPendaftar = Pendaftaran::count();

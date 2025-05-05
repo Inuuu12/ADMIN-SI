@@ -16,6 +16,12 @@
     </div>
 </div iv>
 
+@if(session('error'))
+    <div id="popup-error" class="popup-alert">
+        {{ session('error') }}
+    </div>
+@endif
+
 <style>
     @keyframes fadeIn {
         from {
@@ -28,9 +34,34 @@
         }
     }
 
+        .popup-alert {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        background-color: #f44336; /* Merah untuk error */
+        color: white;
+        padding: 12px 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        z-index: 9999;
+        opacity: 1;
+        transition: opacity 0.5s ease-in-out;
+    }
+
     .animate-fadeIn {
         animation: fadeIn 0.8s ease forwards;
     }
 </style>
+
+
+<script>
+    setTimeout(() => {
+        const popup = document.getElementById('popup-error');
+        if (popup) {
+            popup.style.opacity = '0';
+            setTimeout(() => popup.remove(), 500);
+        }
+    }, 3000);
+</script>
 
 @extends('layouts.footerly')

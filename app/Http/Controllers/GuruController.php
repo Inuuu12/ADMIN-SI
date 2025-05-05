@@ -4,12 +4,21 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Guru;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class GuruController extends Controller
 {
     // Web methods
     public function webIndex(Request $request)
     {
+        $user = Auth::user();
+        if (!$user || $user->isAdmin() === false) {
+            Session::flash('error', 'Anda tidak memiliki akses ke halaman ini.');
+
+            // Redirect ke halaman sebelumnya
+            return redirect()->back();
+        }
         $search = $request->query('q');
         if ($search) {
             $gurus = Guru::where('nama', 'like', '%' . $search . '%')->get();
@@ -27,23 +36,51 @@ class GuruController extends Controller
 
     public function webCreate()
     {
+        $user = Auth::user();
+        if (!$user || $user->isAdmin() === false) {
+            Session::flash('error', 'Anda tidak memiliki akses ke halaman ini.');
+
+            // Redirect ke halaman sebelumnya
+            return redirect()->back();
+        }
         return view('guru.create');
     }
 
     public function webShow($id)
     {
+        $user = Auth::user();
+        if (!$user || $user->isAdmin() === false) {
+            Session::flash('error', 'Anda tidak memiliki akses ke halaman ini.');
+
+            // Redirect ke halaman sebelumnya
+            return redirect()->back();
+        }
         $guru = Guru::findOrFail($id);
         return view('guru.show', compact('guru'));
     }
 
     public function webEdit($id)
     {
+        $user = Auth::user();
+        if (!$user || $user->isAdmin() === false) {
+            Session::flash('error', 'Anda tidak memiliki akses ke halaman ini.');
+
+            // Redirect ke halaman sebelumnya
+            return redirect()->back();
+        }
         $guru = Guru::findOrFail($id);
         return view('guru.edit', compact('guru'));
     }
 
     public function webStore(Request $request)
     {
+        $user = Auth::user();
+        if (!$user || $user->isAdmin() === false) {
+            Session::flash('error', 'Anda tidak memiliki akses ke halaman ini.');
+
+            // Redirect ke halaman sebelumnya
+            return redirect()->back();
+        }
         $request->validate([
             'nama' => 'required|max:100',
             'nip' => 'required|max:20|unique:tblguru,nip',
@@ -84,6 +121,13 @@ class GuruController extends Controller
 
     public function webUpdate(Request $request, $id)
     {
+        $user = Auth::user();
+        if (!$user || $user->isAdmin() === false) {
+            Session::flash('error', 'Anda tidak memiliki akses ke halaman ini.');
+
+            // Redirect ke halaman sebelumnya
+            return redirect()->back();
+        }
         $guru = Guru::findOrFail($id);
 
         $request->validate([
@@ -126,6 +170,13 @@ class GuruController extends Controller
 
     public function webDestroy($id)
     {
+        $user = Auth::user();
+        if (!$user || $user->isAdmin() === false) {
+            Session::flash('error', 'Anda tidak memiliki akses ke halaman ini.');
+
+            // Redirect ke halaman sebelumnya
+            return redirect()->back();
+        }
         $guru = Guru::findOrFail($id);
         $guru->delete();
 
