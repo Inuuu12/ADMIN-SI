@@ -7,6 +7,8 @@ use App\Models\Pendaftaran;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SantriRejected;
 
 class DashboardController extends Controller
 {
@@ -63,6 +65,11 @@ class DashboardController extends Controller
         $pendaftaran->status = 'rejected';
         $pendaftaran->save();
 
+        // Send rejection email
+        if ($pendaftaran->user && $pendaftaran->user->email) {
+            Mail::to($pendaftaran->user->email)->send(new SantriRejected($pendaftaran));
+        }
+
         return response()->json(['message' => 'Status updated to rejected']);
     }
 
@@ -80,6 +87,11 @@ class DashboardController extends Controller
 
         $pendaftaran->status = 'accepted';
         $pendaftaran->save();
+
+        // Send approval email with payment link
+        if ($pendaftaran->user && $pendaftaran->user->email) {
+            \Illuminate\Support\Facades\Mail::to($pendaftaran->user->email)->send(new \App\Mail\SantriApproved($pendaftaran));
+        }
 
         return response()->json(['message' => 'Status updated to accepted']);
     }

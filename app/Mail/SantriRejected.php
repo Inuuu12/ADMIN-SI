@@ -6,7 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class SantriApproved extends Mailable
+class SantriRejected extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -19,7 +19,7 @@ class SantriApproved extends Mailable
 
     public function build()
     {
-        return $this->subject('Pendaftaran Diterima')
-                    ->view('emails.santri_approved_with_payment');
+        return $this->subject('Pendaftaran Ditolak')
+                    ->view('emails.santri_rejected');
     }
 }
