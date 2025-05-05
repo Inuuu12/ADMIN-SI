@@ -80,14 +80,19 @@ class AuthController extends Controller
             ])->withInput();
         }
 
-        // Send email verification notification
-
+        // Login terlebih dahulu untuk bisa mengakses email verification
         Auth::login($user);
 
-        event(new Registered($user));
+        if (!Auth::check()) {
+            return back()->withErrors([
+                'email' => 'Gagal login untuk mengirim verifikasi.',
+            ])->withInput();
+        }
+
+        // Kirim ulang email verifikasi
+        event(new Registered(Auth::user()));
 
         return back()->with('status', 'Link verifikasi telah dikirim ke email Anda.');
-
     }
 
     function register(){

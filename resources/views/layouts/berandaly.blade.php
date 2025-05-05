@@ -68,8 +68,6 @@
                         <i class="ph ph-caret-down ml-1"></i>
                     </button>
                     <ul id="userProfileDropdown" class="absolute right-0 hidden bg-white shadow-md mt-2 py-2 w-48 text-gray-600">
-<li><a href="{{ route('user.profile') }}" class="block px-4 py-2 hover:bg-green-100">Profile</a></li>
-                        <li><a href="{{ route('pembayaran') }}" class="block px-4 py-2 hover:bg-green-100">Pembayaran</a></li>
                         <li><a href="{{ url('/logout') }}" class="block px-4 py-2 hover:bg-green-100">Logout</a></li>
                     </ul>
                 </div>

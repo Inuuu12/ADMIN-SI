@@ -14,7 +14,7 @@
             Kembali ke Beranda
         </a>
     </div>
-</div>
+</div iv>
 
 <style>
     @keyframes fadeIn {
