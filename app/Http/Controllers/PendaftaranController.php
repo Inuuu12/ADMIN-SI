@@ -6,9 +6,12 @@ use Illuminate\Http\Request;
 use App\Models\Pendaftaran;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SantriApproved;
 
 class PendaftaranController extends Controller
 {
+
     public function store(Request $request)
     {
         if (!Auth::check() || Auth::user()->role !== 'user') {
@@ -49,5 +52,17 @@ class PendaftaranController extends Controller
         Pendaftaran::create($validatedData);
 
         return redirect()->route('pendaftaran.success');
+    }
+
+    public function approve($id)
+    {
+        $pendaftaran = Pendaftaran::findOrFail($id);
+        $pendaftaran->status = 'Diterima';
+        $pendaftaran->save();
+
+        // Kirim email ke santri atau wali
+        Mail::to($pendaftaran->email)->send(new SantriApproved($pendaftaran));
+
+        return response()->json(['success' => true]);
     }
 }

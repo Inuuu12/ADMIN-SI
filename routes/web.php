@@ -44,9 +44,6 @@ Route::view('/program', 'program')->name('program');
 Route::view('/tentang', 'tentang')->name('tentang');
 
 
-// Route::get('/pendaftaran', function () {
-//     return view('pendaftaran');
-// })->name('pendaftaran');
 
 Route::get('/akademik', [GuruController::class, 'webIndex'])->name('akademik');
 Route::get('/guru/create', [GuruController::class, 'webCreate'])->name('guru.create');
@@ -124,9 +121,8 @@ Route::get('/email/verify', function () {
 
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
-
     return redirect('/login');
-})->middleware(['signed'])->name('verification.verify');
+})->middleware(['auth', 'signed'])->name('verification.verify');
 
 Route::middleware(['auth', 'verified'])->group(function () {
 
@@ -139,6 +135,7 @@ Route::get('/pendaftaran', function () {
 })->name('pendaftaran');
 
 Route::post('/pendaftaran', [PendaftaranController::class, 'store'])->name('pendaftaran.post');
+// Route::post('/pendaftaran', [PendaftaranController::class, 'index'])->name('pendaftaran.index');
 
 Route::get('/pendaftaran/success', function () {
     return view('pendaftaran_success');
@@ -154,6 +151,8 @@ Route::get('/pembayaran', function () {
 
     Route::post('/pembayaran', [AuthController::class, 'postPembayaran'])->name('pembayaran.post');
 });
+
+
 
 // Admin Routes
 Route::prefix('admin')->middleware(['auth', 'web'])->group(function () {
@@ -215,6 +214,10 @@ Route::prefix('admin')->middleware(['auth', 'web'])->group(function () {
         }
         return view('ADMIN-SI.kelas');
     })->name('kelas');
+
+    Route::get('/siswa', function () {
+        return view('ADMIN-SI.siswa');
+    })->name('siswa');
 
     Route::get('/profil', function () {
         $user = auth()->user();
