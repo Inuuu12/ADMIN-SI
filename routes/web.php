@@ -36,7 +36,6 @@ Route::view('/program', 'program')->name('program');
 Route::view('/tentang', 'tentang')->name('tentang');
 
 //login
-    Route::middleware(['guest'])->group(function () {
     Route::get('/login', [AuthController::class, 'login'])->name('login');
     Route::post('/login', [AuthController::class, 'authenticating']);
     Route::post('/register', [AuthController::class, 'createUser']);
@@ -70,7 +69,6 @@ Route::view('/tentang', 'tentang')->name('tentang');
 
     Route::get('/login-admin', [AuthController::class, 'login_admin'])->name('login-admin');
     Route::post('/login-admin', [AuthController::class, 'authenticating_admin'])->name('login-admin.post');
-});
 
 
 Route::middleware(['auth', 'verified'])->group(function () {
