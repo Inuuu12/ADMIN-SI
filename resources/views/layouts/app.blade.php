@@ -15,7 +15,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 
-<body class="bg-[#F8F9FD]" x-data="{ sidebarOpen: false, open: false }">
+<body class="bg-[#F8F9FD]" x-data="{ sidebarOpen: false, open: false }" style="visibility: hidden;">
     <!-- Tombol Menu untuk Mobile -->
     <button @click="sidebarOpen = !sidebarOpen"
         class="fixed top-4 left-4 z-50 bg-emerald-600 text-white p-2 rounded-md md:hidden">
@@ -55,5 +55,10 @@
         </div>
     </div>
 
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.body.style.visibility = "visible";
+        });
+    </script>
 </body>
 </html>

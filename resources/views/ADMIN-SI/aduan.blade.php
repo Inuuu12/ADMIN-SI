@@ -203,8 +203,6 @@
         transition: opacity 0.5s ease-in-out;
     }
 </style>
-@endsection
-
 <script>
     setTimeout(() => {
         const popup = document.getElementById('popup-error');
@@ -213,3 +211,5 @@
             setTimeout(() => popup.remove(), 500);
         }
     }, 3000);
+</script>
+@endsection

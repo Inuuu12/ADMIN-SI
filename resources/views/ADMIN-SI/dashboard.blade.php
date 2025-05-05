@@ -12,7 +12,14 @@
   }
 </style>
 
-<div class="p-6 bg-[#F8F9FD]">
+<script>
+  // Hide content initially to prevent flicker
+  document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById('mainContent').style.visibility = 'visible';
+  });
+</script>
+
+<div id="mainContent" class="p-6 bg-[#F8F9FD]" style="visibility: hidden;">
     <!-- Wrapper -->
     <div class="flex flex-col mb-8">
 
