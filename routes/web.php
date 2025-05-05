@@ -39,9 +39,22 @@ Route::view('/tentang', 'tentang')->name('tentang');
     Route::middleware(['guest'])->group(function () {
     Route::get('/login', [AuthController::class, 'login'])->name('login');
     Route::post('/login', [AuthController::class, 'authenticating']);
-    Route::get('/logout', [AuthController::class, 'logout']);
     Route::post('/register', [AuthController::class, 'createUser']);
     Route::get('/register', [AuthController::class, 'register'])->name('register');
+
+    // Halaman form input email
+    Route::get('/password/reset', function () {
+        return view('auth.passwords.email');
+    })->name('password.request');
+
+    // Kirim link reset via email
+    Route::post('/password/email', [AuthController::class, 'sendResetLinkEmail'])->name('password.email');
+
+    // Tampilkan form reset password (token dari email)
+    Route::get('/password/reset/{token}', [AuthController::class, 'showResetForm'])->name('password.reset');
+
+    // Proses reset password
+    Route::post('/password/reset', [AuthController::class, 'reset'])->name('password.update');
 
     Route::get('/resend-email', [AuthController::class, 'showResendEmailForm'])->name('resend.email.form');
     Route::post('/resend-email', [AuthController::class, 'handleResendEmail'])->name('resend.email.submit');
@@ -192,6 +205,7 @@ Route::prefix('admin')->middleware(['auth', 'web'])->group(function () {
     Route::delete('/pendaftaran/{id}', [DashboardController::class, 'destroy'])->name('dashboard.pendaftaran.destroy');
 });
 
+Route::get('/logout', [AuthController::class, 'logout']);
 
 //Pembayaran 
 Route::get('/bayar/{id}', [PembayaranController::class, 'formBayar']);

@@ -16,8 +16,8 @@ class DashboardController extends Controller
         if (!$user || $user->isAdmin() === false) {
             Session::flash('error', 'Anda tidak memiliki akses ke halaman ini.');
 
-            // Redirect ke halaman sebelumnya
-            return redirect()->back();
+            // Redirect ke beranda instead of back to prevent redirect loop
+            return redirect()->route('beranda');
         }
 
         $totalPendaftar = Pendaftaran::count();

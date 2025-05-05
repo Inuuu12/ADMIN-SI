@@ -7,6 +7,7 @@ use App\Models\Pendaftaran;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Carbon;
 use App\Mail\SantriApproved;
 
 class PendaftaranController extends Controller
@@ -21,13 +22,18 @@ class PendaftaranController extends Controller
         $validatedData = $request->validate([
             'nama_santri' => 'required|string|max:255',
             'tempat_lahir' => 'required|string|max:255',
-            'tanggal_lahir' => 'required|date',
+            'tanggal_lahir' => ['required', 'date', function ($attribute, $value, $fail) {
+                $age = Carbon::parse($value)->age;
+                if ($age < 5 || $age > 12) {
+                    $fail('Umur santri harus antara 5 hingga 12 tahun.');
+                }
+            }],
             'jenis_kelamin' => 'required|string|in:L,P',
             'alamat' => 'required|string',
             'nama_orang_tua' => 'required|string|max:255',
             'no_hp' => 'required|string|max:20',
-            'akta_kelahiran' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048',
-            'kartu_keluarga' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048',
+            'akta_kelahiran' => 'required|file|mimes:pdf|max:2048',
+            'kartu_keluarga' => 'required|file|mimes:pdf|max:2048',
         ]);
 
         // Simpan file akta_kelahiran

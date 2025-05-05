@@ -308,12 +308,18 @@
     </div>
     <div>
       <label class="block font-medium text-gray-700 mb-1">Akta Kelahiran</label>
-      <img id="detailAktaKelahiran" class="w-full max-h-64 object-contain border rounded px-4 py-2 bg-gray-100 text-gray-800" alt="Akta Kelahiran">
+    <div id="aktaPreviewContainer" class="w-full border rounded bg-gray-100 p-2 text-gray-800 flex flex-col" style="height: 60vh;">
+      <iframe id="detailAktaKelahiran" class="w-full flex-grow" style="display: none;" frameborder="0"></iframe>
+      <a id="aktaLink" href="#" target="_blank" class="text-blue-600 underline mt-2">Lihat Akta Kelahiran</a>
     </div>
+  </div>
     <div>
-      <label class="block font-medium text-gray-700 mb-1">Kartu Keluarga</label>
-      <img id="detailKartuKeluarga" class="w-full max-h-64 object-contain border rounded px-4 py-2 bg-gray-100 text-gray-800" alt="Kartu Keluarga">
+  <label class="block font-medium text-gray-700 mb-1">Kartu Keluarga</label>
+    <div id="kkPreviewContainer" class="w-full border rounded bg-gray-100 p-2 text-gray-800 flex flex-col" style="height: 60vh;">
+      <iframe id="detailKartuKeluarga" class="w-full flex-grow" style="display: none;" frameborder="0"></iframe>
+      <a id="kkLink" href="#" target="_blank" class="text-blue-600 underline mt-2">Lihat Kartu Keluarga</a>
     </div>
+  </div>
     <button onclick="closeDetail()" class="mt-6 w-full py-2 bg-rose-500 hover:bg-rose-600 text-white rounded-lg">Tutup</button>
   </div>
 </div>
@@ -356,10 +362,38 @@
   </div>
 </div>
 
+@if(session('error'))
+    <div id="popup-error" class="popup-alert">
+        {{ session('error') }}
+    </div>
+@endif
 
+<style>
+    .popup-alert {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        background-color: #f44336; /* Merah untuk error */
+        color: white;
+        padding: 12px 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        z-index: 9999;
+        opacity: 1;
+        transition: opacity 0.5s ease-in-out;
+    }
+</style>
 
 
 <script>
+setTimeout(() => {
+        const popup = document.getElementById('popup-error');
+        if (popup) {
+            popup.style.opacity = '0';
+            setTimeout(() => popup.remove(), 500);
+        }
+    }, 3000);
+
   let pendaftaran = @json($pendaftaran);
 
   let deleteIndex = null;
@@ -422,7 +456,7 @@
   }
 
   function showDetail(i) {
-    const s = pendaftaran[i];
+    var s = pendaftaran[i];
     document.getElementById("detailNama").innerText = s.nama_santri;
     document.getElementById("detailJenisKelamin").innerText = s.jenis_kelamin;
     document.getElementById("detailUsia").innerText = s.usia;
@@ -431,8 +465,35 @@
     document.getElementById("detailTanggalLahir").innerText = s.tanggal_lahir;
     document.getElementById("detailNoHp").innerText = s.no_hp;
     document.getElementById("detailAlamat").innerText = s.alamat;
-    document.getElementById("detailAktaKelahiran").src = '/gambar/akta_kelahiran/' + s.akta_kelahiran;
-    document.getElementById("detailKartuKeluarga").src = '/gambar/kartu_keluarga/' + s.kartu_keluarga;
+
+    var aktaPath = '/gambar/akta_kelahiran/' + s.akta_kelahiran;
+    var kkPath = '/gambar/kartu_keluarga/' + s.kartu_keluarga;
+
+    var aktaIframe = document.getElementById("detailAktaKelahiran");
+    var kkIframe = document.getElementById("detailKartuKeluarga");
+    var aktaLink = document.getElementById("aktaLink");
+    var kkLink = document.getElementById("kkLink");
+
+    if (s.akta_kelahiran) {
+      aktaIframe.style.display = "block";
+      aktaIframe.src = aktaPath;
+      aktaLink.href = aktaPath;
+      aktaLink.style.display = "inline";
+    } else {
+      aktaIframe.style.display = "none";
+      aktaLink.style.display = "none";
+    }
+
+    if (s.kartu_keluarga) {
+      kkIframe.style.display = "block";
+      kkIframe.src = kkPath;
+      kkLink.href = kkPath;
+      kkLink.style.display = "inline";
+    } else {
+      kkIframe.style.display = "none";
+      kkLink.style.display = "none";
+    }
+
     document.getElementById("modalDetail").classList.remove("hidden");
   }
 

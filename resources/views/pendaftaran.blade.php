@@ -37,17 +37,17 @@
 
                             <div class="w-full mb-7">
                             <label for="tanggal_lahir" class="block text-gray-600 font-medium mb-2">Tanggal Lahir</label>
-                                <input type="date" name="tanggal_lahir" class="w-full px-4 bg-gray-100 text-sm py-3 shadow" required>
+                                <input type="date" name="tanggal_lahir" id="tanggal_lahir" class="w-full px-4 bg-gray-100 text-sm py-3 shadow" required>
                             </div>
 
                             <div class="w-full mb-7">
                                 <label for="akta_kelahiran" class="block text-gray-600 font-medium mb-2">Upload Akta Kelahiran:</label>
-                                <input type="file" id="akta_kelahiran" name="akta_kelahiran" accept="image/*" required class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring focus:ring-green-500">
+                                <input type="file" id="akta_kelahiran" name="akta_kelahiran" accept="application/pdf" required class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring focus:ring-green-500">
                             </div>
 
                             <div class="w-full mb-7">
                                 <label for="kartukeluarga" class="block text-gray-600 font-medium mb-2">Upload Kartu Keluarga:</label>
-                                <input type="file" id="kartu_keluarga" name="kartu_keluarga" accept="image/*" required class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring focus:ring-green-500">
+                                <input type="file" id="kartu_keluarga" name="kartu_keluarga" accept="application/pdf" required class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring focus:ring-green-500">
                             </div>
 
                             <!-- DATA ORANG TUA -->
@@ -89,6 +89,16 @@
     </div>
 @endif
 
+@if($errors->any())
+      <div class="mb-4 p-3 bg-red-100 text-red-700 rounded">
+        <ul class="list-disc list-inside">
+          @foreach($errors->all() as $error)
+            <li>{{ $error }}</li>
+          @endforeach
+        </ul>
+      </div>
+    @endif
+
 <style>
     .popup-alert {
         position: fixed;
@@ -113,5 +123,42 @@
             setTimeout(() => popup.remove(), 500);
         }
     }, 3000);
+
+    window.addEventListener('DOMContentLoaded', () => {
+    const tanggalInput = document.getElementById('tanggal_lahir');
+    const today = new Date();
+
+    const maxAge = 5;  // umur minimal
+    const minAge = 12; // umur maksimal
+
+    // Batas atas = 5 tahun yang lalu
+    const maxDate = new Date(today.getFullYear() - maxAge, today.getMonth(), today.getDate());
+
+    // Batas bawah = 12 tahun yang lalu
+    const minDate = new Date(today.getFullYear() - minAge, today.getMonth(), today.getDate());
+
+    // Format ke YYYY-MM-DD
+    const formatDate = (date) => {
+        const y = date.getFullYear();
+        const m = String(date.getMonth() + 1).padStart(2, '0');
+        const d = String(date.getDate()).padStart(2, '0');
+        return `${y}-${m}-${d}`;
+    };
+
+    tanggalInput.min = formatDate(minDate);
+    tanggalInput.max = formatDate(maxDate);
+    });
+
+    document.querySelector('form').addEventListener('submit', function(e) {
+    const akta = document.querySelector('input[name="akta_kelahiran"]').files[0];
+    const kk = document.querySelector('input[name="kartu_keluarga"]').files[0];
+
+    const isPdf = (file) => file && file.type === 'application/pdf';
+
+    if (!isPdf(akta) || !isPdf(kk)) {
+        e.preventDefault();
+        alert("Akta Kelahiran dan Kartu Keluarga harus berupa file PDF.");
+    }
+    });
 </script>
 @extends('layouts.footerly')
