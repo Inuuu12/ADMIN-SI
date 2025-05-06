@@ -51,7 +51,7 @@
         <!-- Email -->
         <div class="mb-6">
           <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
-          <input type="email" name="email" required class="w-full px-4 py-3 rounded-lg border border-gray-300" placeholder="you@example.com">
+          <input type="email" name="email" required class="w-full px-4 py-3 rounded-lg border border-gray-300" placeholder="Masukkan email Anda">
           @error('email')
             <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
           @enderror

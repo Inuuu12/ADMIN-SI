@@ -92,7 +92,7 @@
 
 <script>
     function markAsRead(notificationId) {
-        fetch('/notifications/' + notificationId + '/read', {
+        fetch('/admin/notifications/' + notificationId + '/read', {
             method: 'POST',
             headers: {
                 'X-CSRF-TOKEN': '{{ csrf_token() }}',
@@ -100,15 +100,13 @@
             }
         }).then(response => {
             if (response.ok) {
-                // Remove notification from Alpine.js notifications array
-                const notifications = document.querySelector('[x-data]').__x.$data.notifications;
-                const index = notifications.findIndex(n => n.id === notificationId);
-                if (index !== -1) {
-                    notifications.splice(index, 1);
-                }
+                // Redirect to admin dashboard after marking as read
+                window.location.href = '{{ route("dashboard") }}';
             } else {
                 alert('Gagal menandai notifikasi sebagai sudah dibaca.');
             }
+        }).catch(() => {
+            alert('Terjadi kesalahan saat menghubungi server.');
         });
     }
 </script>

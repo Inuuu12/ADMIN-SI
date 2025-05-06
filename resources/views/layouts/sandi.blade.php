@@ -19,7 +19,7 @@
           <label class="block text-gray-700 mb-2" for="password">Sandi Baru</label>
           <div class="flex items-center border rounded-lg px-3 py-2 bg-white shadow-inner">
             <i class="fas fa-lock text-gray-400 mr-2"></i>
-            <input id="password" type="password" placeholder="********"
+            <input id="password" type="password" placeholder="Masukkan kata sandi baru Anda"
               class="w-full outline-none text-gray-700 bg-transparent" />
           </div>
         </div>
@@ -28,7 +28,7 @@
           <label class="block text-gray-700 mb-2" for="password_confirmation">Konfirmasi Sandi Baru</label>
           <div class="flex items-center border rounded-lg px-3 py-2 bg-white shadow-inner">
             <i class="fas fa-lock text-gray-400 mr-2"></i>
-            <input id="password_confirmation" type="password" placeholder="********"
+            <input id="password_confirmation" type="password" placeholder="Masukkan konfirmasi kata sandi Anda"
               class="w-full outline-none text-gray-700 bg-transparent" />
           </div>
         </div>

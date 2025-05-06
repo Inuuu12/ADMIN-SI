@@ -202,9 +202,14 @@ Route::prefix('admin')->middleware(['auth', 'web'])->group(function () {
     Route::post('/pendaftaran/{id}/reject', [DashboardController::class, 'reject'])->name('dashboard.pendaftaran.reject');
     Route::post('/pendaftaran/{id}/approve', [DashboardController::class, 'approve'])->name('dashboard.pendaftaran.approve');
     Route::delete('/pendaftaran/{id}', [DashboardController::class, 'destroy'])->name('dashboard.pendaftaran.destroy');
+
+    Route::post('/notifications/{id}/read', [\App\Http\Controllers\NotificationController::class, 'markAsRead'])->name('notifications.read');
+
 });
 
-Route::get('/logout', [AuthController::class, 'logout']);
+Route::middleware(['web'])->group(function () {
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+});
 
 //Pembayaran 
 Route::get('/bayar/{id}', [PembayaranController::class, 'formBayar']);

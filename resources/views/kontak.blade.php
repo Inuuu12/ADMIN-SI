@@ -57,7 +57,6 @@
         </div>
     </div>
 
-<<<<<<< HEAD
     @if(session('error'))
     <div id="popup-error" class="popup-alert">
         {{ session('error') }}
@@ -96,6 +95,5 @@
     }, 3000);
 </script>
 
-=======
->>>>>>> 037b5423f401582f66053c746f3bf0250e14947e
+
 @extends('layouts.footerly')

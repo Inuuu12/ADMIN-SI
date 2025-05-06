@@ -34,7 +34,7 @@
           <!-- Email -->
           <div class="mb-6">
             <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email</label>
-            <input id="email" type="email" name="email" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-400" placeholder="you@example.com">
+            <input id="email" type="email" name="email" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-400" placeholder="Masukkan email Anda">
           </div>
 
           <button type="submit" class="w-full bg-emerald-500 text-white py-3 rounded-lg font-semibold hover:bg-emerald-600 transition">
