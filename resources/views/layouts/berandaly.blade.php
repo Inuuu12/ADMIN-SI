@@ -59,12 +59,12 @@
                     <i class="ph ph-caret-down ml-1"></i>
                 </button>
                 <ul id="userProfileDropdown" class="absolute right-0 hidden bg-white shadow-md mt-2 py-2 w-48 text-gray-600 text-sm lg:text-base">
-                    <li><a href="{{ url('/logout') }}" class="block px-4 py-2 hover:bg-green-100">Logout</a></li>
+                    <li><a href="{{ url('/logout') }}" class="block px-4 py-2 hover:bg-green-100">Keluar</a></li>
                 </ul>
             </div>
             @else
             <a href="{{ route('login') }}" class="text-gray-600 border border-gray-300 rounded-lg py-2 px-4 hover:border-green-500 hover:text-green-500 transition">
-                <i class="ph ph-user-circle text-lg mr-2"></i> Login
+                <i class="ph ph-user-circle text-lg mr-2"></i> Masuk
             </a>
             @endif
         </div>
@@ -110,12 +110,12 @@
                 <i class="ph ph-caret-down ml-2"></i>
             </button>
             <div id="userMobileDropdown" class="hidden mt-1 bg-white border border-gray-200 rounded-md shadow-md">
-                <a href="{{ url('/logout') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-green-100">Logout</a>
+                <a href="{{ url('/logout') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-green-100">Keluar</a>
             </div>
         </div>
         @else
         <a href="{{ route('login') }}" class="block text-gray-600 border border-gray-300 rounded-lg text-center mt-2 py-2 hover:border-green-500 hover:text-green-500 transition">
-            <i class="ph ph-user-circle text-lg mr-2"></i> Login
+            <i class="ph ph-user-circle text-lg mr-2"></i> Masuk
         </a>
         @endif
     </div>

@@ -80,7 +80,7 @@
         <svg class="w-5 h-5 mr-3 hover:stroke-red-700" xmlns="hover:red-700 http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class=" w-6 h-6">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12H3m12 0l-4 4m4-4l-4-4m8-5H9a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2z" />
         </svg>
-        <span>Logout</span>
+        <span>Keluar</span>
     </button>
 </div>
 </div>

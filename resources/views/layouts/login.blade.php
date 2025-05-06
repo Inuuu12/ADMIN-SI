@@ -52,7 +52,7 @@
         </div>
 
         <div class="mb-6">
-          <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Kata Sandi</label>
           <input type="password" name="password" required class="w-full px-4 py-3 rounded-lg border border-gray-300" placeholder="••••••••">
         </div>
 
@@ -65,14 +65,14 @@
         <a href ="{{ route('resend.email.form') }}" class="text-emerald-500 hover:underline">Kirim Ulang Verifikasi</a>
 
         <!-- Lupa Password di kanan -->
-        <a href="{{ route('password.request') }}" class="text-emerald-600 hover:underline">Lupa Password?</a>
+        <a href="{{ route('password.request') }}" class="text-emerald-600 hover:underline">Lupa Kata Sandi?</a>
         </div>
 
 
 
         <p class="mt-6 text-center text-gray-600">
           Belum memiliki akun?
-          <a href="{{ route('register') }}" class="ml-1 text-emerald-500 hover:text-emerald-700 font-semibold">Sign up</a>
+          <a href="{{ route('register') }}" class="ml-1 text-emerald-500 hover:text-emerald-700 font-semibold">Daftar</a>
         </p>
       </form>
       <hr class="my-6 border-t border-gray-300">

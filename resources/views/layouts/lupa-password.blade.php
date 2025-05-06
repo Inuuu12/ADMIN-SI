@@ -23,8 +23,8 @@
           <div class="inline-flex items-center justify-center w-16 h-16 bg-emerald-500 rounded-full mb-4">
             <i class="fas fa-unlock-alt text-white fa-lg"></i>
           </div>
-          <h2 class="text-2xl font-bold text-gray-800">Lupa Password</h2>
-          <p class="text-gray-600 mt-2">Masukkan email untuk reset password</p>
+          <h2 class="text-2xl font-bold text-gray-800">Lupa Kata Sandi</h2>
+          <p class="text-gray-600 mt-2">Masukkan email untuk ubah kata sandi</p>
         </div>
 
         <!-- Form -->

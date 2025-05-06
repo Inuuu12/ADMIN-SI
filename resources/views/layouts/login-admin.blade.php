@@ -49,7 +49,7 @@
         </div>
 
         <div class="mb-6">
-          <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Kata Sandi</label>
           <input type="password" name="password" required class="w-full px-4 py-3 rounded-lg border border-gray-300" placeholder="••••••••">
         </div>
 
