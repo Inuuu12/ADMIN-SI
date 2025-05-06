@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('kartu_keluarga', 255); // path file gambar
             $table->enum('status', ['pending', 'accepted', 'rejected'])->default('pending');
             $table->timestamps(); // created_at & updated_at
+            $table->string('snap_token')->nullable();
         });
     }
 

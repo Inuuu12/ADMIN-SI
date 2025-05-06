@@ -208,3 +208,9 @@ Route::get('/logout', [AuthController::class, 'logout']);
 //Pembayaran 
 Route::get('/bayar/{id}', [PembayaranController::class, 'formBayar']);
 Route::post('/bayar/process', [PembayaranController::class, 'processBayar']);
+
+//incase kalau bayar berhasil
+Route::get('/pembayaran/sukses', function () {
+    return view('pembayaran.sukses');
+});
+Route::get('/pembayaran/sukses', [PembayaranController::class, 'suksesPembayaran']);

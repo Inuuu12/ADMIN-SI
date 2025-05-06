@@ -8,21 +8,29 @@
         <div class="card flex bg-white shadow-sm rounded-lg overflow-hidden w-full md:w-full border border-gray-300">
             <div class="bg-white rounded-lg p-6 w-full">
                 <h1 class="text-xl font-bold text-gray-800 mb-6 text-center">Pembayaran Awal</h1>
-                <div class="mb-6">
-                    <p class="text-sm text-gray-600">Total Pembayaran</p>
-                    <p class="text-2xl font-bold text-gray-800">Rp{{ number_format(200000, 0, ',', '.') }}</p>
-                </div>
-                <div>
-                    <button id="pay-button"
-                        class="w-full px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
-                        Bayar
-                    </button>
-                </div>
+                
+                <!-- Cek status pembayaran -->
+                @if($pendaftaran->status_pembayaran == 'sudah') 
+                    <div class="mb-6">
+                        <p class="text-sm text-gray-600">Pembayaran Anda sudah berhasil</p>
+                        <p class="text-2xl font-bold text-green-600">Terima kasih telah melakukan pembayaran</p>
+                    </div>
+                @else
+                    <div class="mb-6">  
+                        <p class="text-sm text-gray-600">Total Pembayaran</p>
+                        <p class="text-2xl font-bold text-gray-800">Rp{{ number_format(10000, 0, ',', '.') }}</p>
+                    </div>
+                    <div>
+                        <button id="pay-button"
+                            class="w-full px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
+                            Bayar
+                        </button>
+                    </div>
+                @endif
             </div>
         </div>
     </div>
 </div>
-
 
 @extends('layouts.footerly')
 
@@ -40,9 +48,9 @@
 
             snap.pay(snapToken, {
                 onSuccess: function (result) {
-                    console.log("Success:", result);
-                    alert("Pembayaran berhasil!");
+                    window.location.href = "/pembayaran/sukses?order_id={{ $pendaftaran->order_id }}";
                 },
+
                 onPending: function (result) {
                     console.log("Pending:", result);
                     alert("Pembayaran masih pending.");

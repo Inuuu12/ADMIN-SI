@@ -62,80 +62,84 @@
                     <li><a href="{{ url('/logout') }}" class="block px-4 py-2 hover:bg-green-100">Logout</a></li>
                 </ul>
             </div>
-            @endif
-        </div>
-
-            <!-- Burger Menu Mobile -->
-            <button id="menuToggle" class="md:hidden text-gray-600 focus:outline-none text-2xl">
-                ☰
-            </button>
-        </div>
-
-        <!-- Menu Mobile -->
-        <div id="mobileMenu" class="hidden md:hidden bg-white shadow-md py-3 px-6">
-            <a href="{{ route('beranda') }}" class="block text-gray-600 hover:text-green-500 transition py-2">Beranda</a>
-
-            <button class="w-full flex justify-between text-gray-600 hover:text-green-500 transition py-2"
-                onclick="toggleDropdown('profilDropdownMobile')">
-                Profil <i class="ph ph-caret-down"></i>
-            </button>
-            <div id="profilDropdownMobile" class="hidden pl-4">
-                <a href="{{ route('tentang') }}" class="block text-gray-600 hover:bg-green-100 py-1">Tentang</a>
-                <a href="{{ route('pengajar') }}" class="block text-gray-600 hover:bg-green-100 py-1">Guru</a>
-                <a href="{{ route('program') }}" class="block text-gray-600 hover:bg-green-100 py-1">Program</a>
-            </div>
-
-            <a href="{{ route('galeri') }}" class="block text-gray-600 hover:text-green-500 transition py-2">Galeri</a>
-
-            <button class="w-full flex justify-between text-gray-600 hover:text-green-500 transition py-2"
-                onclick="toggleDropdown('layananDropdownMobile')">
-                Layanan <i class="ph ph-caret-down"></i>
-            </button>
-            <div id="layananDropdownMobile" class="hidden pl-4">
-                <a href="{{ route('informasi_pendaftaran') }}" class="block text-gray-600 hover:bg-green-100 py-1">Informasi Pendaftaran</a>
-                <a href="{{ route('pendaftaran') }}" class="block text-gray-600 hover:bg-green-100 py-1">Pendaftaran</a>
-            </div>
-
-            <a href="{{ route('kontak') }}" class="block text-gray-600 hover:text-green-500 transition py-2">Kontak</a>
-
-            @if(auth()->check() && auth()->user()->role === 'user')
-            <div class="relative group mt-2">
-                <button onclick="toggleDropdown('userMobileDropdown')"
-                    class="w-full flex justify-between items-center text-gray-600 border border-gray-300 rounded-lg py-2 px-4 hover:border-green-500 hover:text-green-500 transition">
-                    <i class="ph ph-user-circle text-lg mr-2"></i> {{ auth()->user()->name }}
-                    <i class="ph ph-caret-down ml-2"></i>
-                </button>
-                <div id="userMobileDropdown" class="hidden mt-1 bg-white border border-gray-200 rounded-md shadow-md">
-                    <a href="{{ url('/logout') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-green-100">Logout</a>
-                </div>
-            </div>
             @else
-            <a href="{{ route('login') }}" class="block text-gray-600 border border-gray-300 rounded-lg text-center mt-2 py-2 hover:border-green-500 hover:text-green-500 transition">
+            <a href="{{ route('login') }}" class="text-gray-600 border border-gray-300 rounded-lg py-2 px-4 hover:border-green-500 hover:text-green-500 transition">
                 <i class="ph ph-user-circle text-lg mr-2"></i> Login
             </a>
             @endif
         </div>
-    </nav>
 
-    <script>
-        document.getElementById('menuToggle').addEventListener('click', function () {
-            document.getElementById('mobileMenu').classList.toggle('hidden');
+        <!-- Burger Menu Mobile -->
+        <button id="menuToggle" class="md:hidden text-gray-600 focus:outline-none text-2xl">
+            ☰
+        </button>
+    </div>
+
+    <!-- Menu Mobile -->
+    <div id="mobileMenu" class="hidden md:hidden bg-white shadow-md py-3 px-6">
+        <a href="{{ route('beranda') }}" class="block text-gray-600 hover:text-green-500 transition py-2">Beranda</a>
+
+        <button class="w-full flex justify-between text-gray-600 hover:text-green-500 transition py-2"
+            onclick="toggleDropdown('profilDropdownMobile')">
+            Profil <i class="ph ph-caret-down"></i>
+        </button>
+        <div id="profilDropdownMobile" class="hidden pl-4">
+            <a href="{{ route('tentang') }}" class="block text-gray-600 hover:bg-green-100 py-1">Tentang</a>
+            <a href="{{ route('pengajar') }}" class="block text-gray-600 hover:bg-green-100 py-1">Guru</a>
+            <a href="{{ route('program') }}" class="block text-gray-600 hover:bg-green-100 py-1">Program</a>
+        </div>
+
+        <a href="{{ route('galeri') }}" class="block text-gray-600 hover:text-green-500 transition py-2">Galeri</a>
+
+        <button class="w-full flex justify-between text-gray-600 hover:text-green-500 transition py-2"
+            onclick="toggleDropdown('layananDropdownMobile')">
+            Layanan <i class="ph ph-caret-down"></i>
+        </button>
+        <div id="layananDropdownMobile" class="hidden pl-4">
+            <a href="{{ route('informasi_pendaftaran') }}" class="block text-gray-600 hover:bg-green-100 py-1">Informasi Pendaftaran</a>
+            <a href="{{ route('pendaftaran') }}" class="block text-gray-600 hover:bg-green-100 py-1">Pendaftaran</a>
+        </div>
+
+        <a href="{{ route('kontak') }}" class="block text-gray-600 hover:text-green-500 transition py-2">Kontak</a>
+
+        @if(auth()->check() && auth()->user()->role === 'user')
+        <div class="relative group mt-2">
+            <button onclick="toggleDropdown('userMobileDropdown')"
+                class="w-full flex justify-between items-center text-gray-600 border border-gray-300 rounded-lg py-2 px-4 hover:border-green-500 hover:text-green-500 transition">
+                <i class="ph ph-user-circle text-lg mr-2"></i> {{ auth()->user()->name }}
+                <i class="ph ph-caret-down ml-2"></i>
+            </button>
+            <div id="userMobileDropdown" class="hidden mt-1 bg-white border border-gray-200 rounded-md shadow-md">
+                <a href="{{ url('/logout') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-green-100">Logout</a>
+            </div>
+        </div>
+        @else
+        <a href="{{ route('login') }}" class="block text-gray-600 border border-gray-300 rounded-lg text-center mt-2 py-2 hover:border-green-500 hover:text-green-500 transition">
+            <i class="ph ph-user-circle text-lg mr-2"></i> Login
+        </a>
+        @endif
+    </div>
+</nav>
+
+<script>
+    document.getElementById('menuToggle').addEventListener('click', function () {
+        document.getElementById('mobileMenu').classList.toggle('hidden');
+    });
+
+    function toggleDropdown(id) {
+        document.getElementById(id).classList.toggle("hidden");
+    }
+
+    document.addEventListener("click", function (event) {
+        const dropdowns = ["profilDropdown", "layananDropdown", "userProfileDropdown", "userMobileDropdown"];
+        dropdowns.forEach(id => {
+            const el = document.getElementById(id);
+            if (el && !el.contains(event.target) && !event.target.closest('.group')) {
+                el.classList.add("hidden");
+            }
         });
-
-        function toggleDropdown(id) {
-            document.getElementById(id).classList.toggle("hidden");
-        }
-
-        document.addEventListener("click", function (event) {
-            const dropdowns = ["profilDropdown", "layananDropdown", "userProfileDropdown", "userMobileDropdown"];
-            dropdowns.forEach(id => {
-                const el = document.getElementById(id);
-                if (el && !el.contains(event.target) && !event.target.closest('.group')) {
-                    el.classList.add("hidden");
-                }
-            });
-        });
-    </script>
+    });
+</script>
 </body>
 
 </html>
