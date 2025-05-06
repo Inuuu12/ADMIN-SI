@@ -23,18 +23,22 @@
                     <li><a href="{{ route('kontak') }}" class="hover:underline">Kontak</a></li>
                 </ul>
             </div>
-            <!-- Kontak -->
-            <div>
-                <h2 class="text-lg font-bold mb-4">Kontak Kami</h2>
-                <ul class="text-sm space-y-2">
-                    <li><strong>Alamat:</strong> Jl. Pisangan Baru, Jakarta Timur</li>
-                    <li><strong>Email:</strong> <a href="mailto:info@TPQnuruliman.com"
-                            class="hover:underline">info@TPQnuruliman.com</a></li>
-                    <li><strong>Telepon:</strong> +62 812-3456-7890</li>
-                    <li><strong>Jam Operasional:</strong> Senin - Jum'at, 08.00 - 16.00 WIB</li>
-                </ul>
-            </div>
-        </div>
+           <!-- Kontak -->
+<div>
+    <h2 class="text-lg font-bold mb-4">Kontak Kami</h2>
+    <ul class="text-sm space-y-2">
+        <li><strong>Alamat:</strong> Jl. Pisangan Baru, Jakarta Timur</li>
+        <li>
+            <strong>Email:</strong>
+            <a href="mailto:tpqnurulimanpis@gmail.com" class="hover:underline">
+                tpqnurulimanpis@gmail.com
+            </a>
+        </li>
+        <li><strong>Telepon:</strong> +62 877-1537-3102</li>
+        <li><strong>Jam Operasional:</strong> Senin - Jum'at, 08.00 - 17.00 WIB</li>
+    </ul>
+</div>
+
 
         <!-- Divider -->
         <div class="border-t border-gray-400 mt-6"></div>
