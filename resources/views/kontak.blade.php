@@ -7,7 +7,7 @@
 
             <div class="container mx-auto ">
                 <h1 class="text-sm font-sm text-center mb-10 text-gray-600">Silahkan menghubungi kami untuk menyampaikan
-                    pertanyaan, komentar, saran maupun hal lainnya.</h1>
+                    pertanyaan, komentar, saran maupun hal dan lainnya.</h1>
                 <div class="flex flex-wrap justify-center">
 
                     <div class="container mx-auto p-1/2">
