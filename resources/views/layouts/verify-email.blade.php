@@ -11,11 +11,11 @@
   <div class="max-w-md mx-auto bg-white p-6 rounded shadow">
     <h1 class="text-2xl font-bold mb-4">Verifikasi Email</h1>
     <p class="mb-4">Silakan periksa email Anda dan klik tautan verifikasi untuk mengaktifkan akun Anda.</p>
-    <p class="mb-4">Jika Anda belum menerima email verifikasi, silakan periksa folder spam atau kirim ulang email verifikasi dari halaman profil Anda setelah login.</p>
+    <p class="mb-4">Jika Anda belum menerima email verifikasi, silakan periksa folder spam atau kirim ulang email verifikasi dari halaman profil Anda setelah masuk.</p>
     <div class="mt-4 text-center">
       <a href="/login"
          class="w-full bg-emerald-500 text-white py-3 rounded-lg font-semibold hover:bg-emerald-600 block">
-        Kembali ke login
+        Kembali ke masuk
       </a>
     </div>
   </div>

@@ -59,7 +59,7 @@
 
         <!-- Password -->
         <div class="mb-6">
-          <label class="block text-sm font-medium text-gray-700 mb-2">Buat Password</label>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Buat Kata Sandi</label>
           <input type="password" name="password" required class="w-full px-4 py-3 rounded-lg border border-gray-300" placeholder="••••••••">
           @error('password')
             <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
@@ -67,7 +67,7 @@
         </div>
 
         <div class="mb-6">
-          <label class="block text-sm font-medium text-gray-700 mb-2">Konfirmasi Password</label>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Konfirmasi Kata Sandi</label>
           <input type="password" name="password_confirmation" required class="w-full px-4 py-3 rounded-lg border border-gray-300" placeholder="••••••••">
           @error('password_confirmation')
             <p class="text-red-500 text-sm mt-1">{{ $message }}</p>

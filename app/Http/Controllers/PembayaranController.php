@@ -9,9 +9,6 @@ use Midtrans\Config;
 
 class PembayaranController extends Controller
 {
-
-    
-
     public function __construct()
     {
         \Midtrans\Config::$serverKey = config('midtrans.server_key');
@@ -25,42 +22,48 @@ class PembayaranController extends Controller
             dd('Server Key kosong');
         }
     }
-    
 
     public function formBayar($id)
     {
-        // Ambil data pendaftaran santri berdasarkan ID
         $pendaftaran = Pendaftaran::find($id);
 
-        // Cek jika data pendaftaran tidak ditemukan atau statusnya belum diterima (accepted)
         if (!$pendaftaran || $pendaftaran->status != 'accepted') {
             return abort(404, 'Data pendaftaran belum disetujui atau tidak ditemukan.');
         }
 
-        // Biaya tetap Rp 200.000
-        $biaya = 200000;
+        // Buat Snap Token baru jika belum ada
+        if (!$pendaftaran->snap_token) {
+            $orderId = 'ORDER-' . uniqid();
+            $pendaftaran->order_id = $orderId;
 
-        // Atur parameter transaksi untuk Midtrans
-        $params = [
-            'transaction_details' => [
-                'order_id' => 'ORDER-' . uniqid(),
-                'gross_amount' => $biaya, // Menggunakan biaya tetap
-            ],
-            'customer_details' => [
-                'first_name' => $pendaftaran->nama_santri,
-                'email' => 'santri@example.com', // Ganti dengan email dari data pendaftaran jika ada
-            ],
-        ];
+            $params = [
+                'transaction_details' => [
+                    'order_id' => $orderId,
+                    'gross_amount' => 10000, // total pembayaran
+                ],
+                'customer_details' => [
+                    'first_name' => $pendaftaran->nama_santri,
+                    'email' => 'santri@example.com',
+                ],
+            ];
 
-        // Dapatkan Snap Token
-        $snapToken = Snap::getSnapToken($params);
+            try {
+                $snapToken = Snap::getSnapToken($params);
+                $pendaftaran->snap_token = $snapToken;
+                $pendaftaran->save();
+            } catch (\Exception $e) {
+                return response()->json(['error' => $e->getMessage()]);
+            }
+        } else {
+            $snapToken = $pendaftaran->snap_token;
+        }
 
-        // Kirim data pendaftaran dan snap token ke view
         return view('pembayaran', compact('pendaftaran', 'snapToken'));
     }
 
 
 
+    
 
 
     public function processBayar(Request $request)
@@ -68,7 +71,7 @@ class PembayaranController extends Controller
         $params = [
             'transaction_details' => [
                 'order_id' => 'ORDER-' . uniqid(),
-                'gross_amount' => 200000,
+                'gross_amount' => 10000,
             ],
             'customer_details' => [
                 'first_name' => 'Santri Baru',
@@ -80,5 +83,35 @@ class PembayaranController extends Controller
 
         return response()->json(['token' => $snapToken]);
     }
+
+    public function suksesPembayaran(Request $request)
+    {
+        $orderId = $request->get('order_id');
+        $statusPembayaran = $request->get('transaction_status');
+    
+        $pendaftaran = Pendaftaran::where('order_id', $orderId)->first();
+    
+        if (!$pendaftaran) {
+            return abort(404, 'Pendaftaran tidak ditemukan');
+        }
+    
+        // Cek status pembayaran dan update status
+        if ($statusPembayaran == 'settlement') {
+            $pendaftaran->status_pembayaran = 'sudah';
+        } elseif ($statusPembayaran == 'pending') {
+            $pendaftaran->status_pembayaran = 'pending';
+        } else {
+            $pendaftaran->status_pembayaran = 'gagal';
+        }
+    
+        $pendaftaran->save();
+    
+        return view('pembayaran.sukses', compact('pendaftaran'));
+    }
+    
+
+
+
 }
+
  

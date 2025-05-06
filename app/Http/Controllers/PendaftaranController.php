@@ -14,7 +14,6 @@ use App\Models\User;
 
 class PendaftaranController extends Controller
 {
-
     public function store(Request $request)
     {
         if (!Auth::check() || Auth::user()->role !== 'user') {
@@ -34,8 +33,11 @@ class PendaftaranController extends Controller
             'alamat' => 'required|string',
             'nama_orang_tua' => 'required|string|max:255',
             'no_hp' => 'required|string|max:20',
-            'akta_kelahiran' => 'required|file|mimes:pdf|max:2048',
-            'kartu_keluarga' => 'required|file|mimes:pdf|max:2048',
+            'akta_kelahiran' => 'required|file|mimes:pdf|max:10240',
+            'kartu_keluarga' => 'required|file|mimes:pdf|max:10240',
+        ], [
+            'akta_kelahiran.max' => 'Ukuran akta kelahiran tidak boleh lebih dari 10 MB.',
+            'kartu_keluarga.max' => 'Ukuran kartu keluarga tidak boleh lebih dari 10 MB.',
         ]);
 
         // Simpan file akta_kelahiran

@@ -4,7 +4,7 @@
     <a href="">
         <img src="{{ asset('img/bannerpendaftaran1.png') }}" alt="">
     </a>
-    
+
     <div class="flex flex-col p-10 bg-white">
         <div class="text-2xl font-bold text-center mb-4 text-gray-800">Pendaftaran Santri Baru TPQ Nurul Iman</div>
         <div class="flex flex-wrap justify-center gap-6">
@@ -19,7 +19,7 @@
 
                             <!-- DATA SANTRI -->
                             <div class="w-full mb-7">
-                                <label for="nama_santri" class="block text-sm font-medium mb-4">A. DATA SANTRI</label>
+                                <label class="block text-sm font-medium mb-4">A. DATA SANTRI</label>
                                 <input type="text" name="nama_santri" placeholder="Nama Calon Santri" class="w-full px-4 bg-gray-100 text-sm py-3 shadow" required>
                             </div>
 
@@ -36,7 +36,7 @@
                             </div>
 
                             <div class="w-full mb-7">
-                            <label for="tanggal_lahir" class="block text-gray-600 font-medium mb-2">Tanggal Lahir</label>
+                                <label for="tanggal_lahir" class="block text-gray-600 font-medium mb-2">Tanggal Lahir</label>
                                 <input type="date" name="tanggal_lahir" id="tanggal_lahir" class="w-full px-4 bg-gray-100 text-sm py-3 shadow" required>
                             </div>
 
@@ -46,13 +46,13 @@
                             </div>
 
                             <div class="w-full mb-7">
-                                <label for="kartukeluarga" class="block text-gray-600 font-medium mb-2">Upload Kartu Keluarga:</label>
+                                <label for="kartu_keluarga" class="block text-gray-600 font-medium mb-2">Upload Kartu Keluarga:</label>
                                 <input type="file" id="kartu_keluarga" name="kartu_keluarga" accept="application/pdf" required class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring focus:ring-green-500">
                             </div>
 
                             <!-- DATA ORANG TUA -->
                             <div class="w-full mb-7">
-                                <label for="nama_orang_tua" class="block text-sm font-medium mt-10 mb-4">B. DATA ORANG TUA</label>
+                                <label class="block text-sm font-medium mt-10 mb-4">B. DATA ORANG TUA</label>
                                 <input type="text" name="nama_orang_tua" placeholder="Nama Orang Tua" class="w-full px-4 bg-gray-100 text-sm py-3 shadow" required>
                             </div>
 
@@ -65,9 +65,7 @@
                             </div>
 
                             <div class="mb-3 text-sm font-sm text-center">
-                                <p>
-                                    Terima kasih telah mengisi formulir! Setelah ini, selesaikan pendaftaran melalui halaman pembayaran yang aman dan mudah.
-                                </p>
+                                <p>Terima kasih telah mengisi formulir! Setelah ini, selesaikan pendaftaran melalui halaman pembayaran yang aman dan mudah.</p>
                             </div>
 
                             <div class="w-full">
@@ -77,6 +75,7 @@
                             </div>
                         </form>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -90,21 +89,21 @@
 @endif
 
 @if($errors->any())
-      <div class="mb-4 p-3 bg-red-100 text-red-700 rounded">
+    <div class="mb-4 p-3 bg-red-100 text-red-700 rounded">
         <ul class="list-disc list-inside">
-          @foreach($errors->all() as $error)
-            <li>{{ $error }}</li>
-          @endforeach
+            @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
         </ul>
-      </div>
-    @endif
+    </div>
+@endif
 
 <style>
     .popup-alert {
         position: fixed;
         bottom: 30px;
         right: 30px;
-        background-color: #f44336; /* Merah untuk error */
+        background-color: #f44336;
         color: white;
         padding: 12px 20px;
         border-radius: 8px;
@@ -125,40 +124,37 @@
     }, 3000);
 
     window.addEventListener('DOMContentLoaded', () => {
-    const tanggalInput = document.getElementById('tanggal_lahir');
-    const today = new Date();
+        const tanggalInput = document.getElementById('tanggal_lahir');
+        const today = new Date();
 
-    const maxAge = 5;  // umur minimal
-    const minAge = 12; // umur maksimal
+        const maxAge = 5;
+        const minAge = 12;
 
-    // Batas atas = 5 tahun yang lalu
-    const maxDate = new Date(today.getFullYear() - maxAge, today.getMonth(), today.getDate());
+        const maxDate = new Date(today.getFullYear() - maxAge, today.getMonth(), today.getDate());
+        const minDate = new Date(today.getFullYear() - minAge, today.getMonth(), today.getDate());
 
-    // Batas bawah = 12 tahun yang lalu
-    const minDate = new Date(today.getFullYear() - minAge, today.getMonth(), today.getDate());
+        const formatDate = (date) => {
+            const y = date.getFullYear();
+            const m = String(date.getMonth() + 1).padStart(2, '0');
+            const d = String(date.getDate()).padStart(2, '0');
+            return `${y}-${m}-${d}`;
+        };
 
-    // Format ke YYYY-MM-DD
-    const formatDate = (date) => {
-        const y = date.getFullYear();
-        const m = String(date.getMonth() + 1).padStart(2, '0');
-        const d = String(date.getDate()).padStart(2, '0');
-        return `${y}-${m}-${d}`;
-    };
-
-    tanggalInput.min = formatDate(minDate);
-    tanggalInput.max = formatDate(maxDate);
+        tanggalInput.min = formatDate(minDate);
+        tanggalInput.max = formatDate(maxDate);
     });
 
     document.querySelector('form').addEventListener('submit', function(e) {
-    const akta = document.querySelector('input[name="akta_kelahiran"]').files[0];
-    const kk = document.querySelector('input[name="kartu_keluarga"]').files[0];
+        const akta = document.querySelector('input[name="akta_kelahiran"]').files[0];
+        const kk = document.querySelector('input[name="kartu_keluarga"]').files[0];
 
-    const isPdf = (file) => file && file.type === 'application/pdf';
+        const isPdf = (file) => file && file.type === 'application/pdf';
 
-    if (!isPdf(akta) || !isPdf(kk)) {
-        e.preventDefault();
-        alert("Akta Kelahiran dan Kartu Keluarga harus berupa file PDF.");
-    }
+        if (!isPdf(akta) || !isPdf(kk)) {
+            e.preventDefault();
+            alert("Akta Kelahiran dan Kartu Keluarga harus berupa file PDF.");
+        }
     });
 </script>
+
 @extends('layouts.footerly')

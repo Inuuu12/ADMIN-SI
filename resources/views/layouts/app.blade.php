@@ -46,11 +46,11 @@
     <!-- Popup Konfirmasi Logout -->
     <div x-show="open" x-cloak class="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
         <div class="bg-white p-6 rounded-lg shadow-lg w-80 text-center">
-            <h2 class="text-lg font-semibold mb-4">Konfirmasi Logout</h2>
+            <h2 class="text-lg font-semibold mb-4">Konfirmasi Keluar</h2>
             <p class="text-gray-600 mb-4">Apakah Anda yakin ingin keluar?</p>
             <div class="flex justify-center gap-4">
                 <button @click="open = false" class="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400">Batal</button>
-                <a href="/login" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">Logout</a>
+                <a href="/login" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">Keluar</a>
             </div>
         </div>
     </div>
