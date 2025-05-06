@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\GuruController;
 use App\Http\Controllers\GaleriController;
 use App\Http\Controllers\AuthController;

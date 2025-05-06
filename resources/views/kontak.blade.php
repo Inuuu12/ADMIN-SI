@@ -93,4 +93,5 @@
         }
     }, 3000);
 </script>
+
 @extends('layouts.footerly')

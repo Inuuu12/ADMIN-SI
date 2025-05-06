@@ -16,7 +16,7 @@
             <div>
                 <h2 class="text-lg font-bold mb-4">Tautan Cepat</h2>
                 <ul class="text-sm space-y-2">
-                    <li><a href="/{{ route('beranda') }}" class="hover:underline">Beranda</a></li>
+                    <li><a href="{{ route('beranda') }}" class="hover:underline">Beranda</a></li>
                     <li><a href="{{ route('tentang') }}" class="hover:underline">Tentang Kami</a></li>
                     <li><a href="{{ route('program') }}" class="hover:underline">Program Belajar</a></li>
                     <li><a href="{{ route('pendaftaran') }}" class="hover:underline">Pendaftaran</a></li>

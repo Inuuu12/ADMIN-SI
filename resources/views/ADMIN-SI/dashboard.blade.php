@@ -35,15 +35,15 @@
                 </form>
 
                 <!-- Notifikasi -->
-                <div x-data="{ showModal: false, notifications: [{ id: 1, message: 'Siswa baru telah ditambahkan.', time: '2 menit yang lalu' }, { id: 2, message: 'Pendaftaran ditutup.', time: '5 menit yang lalu' }] }" class="relative">
-                    <button @click="showModal = true" class="text-gray-600 focus:outline-none relative">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.002 2.002 0 0018 14V10a6 6 0 00-12 0v4c0 .795-.316 1.513-.832 2.005L3 17h5"/>
-                        </svg>
-                        <span x-show="notifications.length > 0" class="absolute top-0 right-0 bg-red-500 text-white text-xs font-bold rounded-full px-1">
-                            <span x-text="notifications.length"></span>
-                        </span>
-                    </button>
+<div x-data="{ showModal: false, notifications: [] }" x-init="notifications = JSON.parse('{{ addslashes(json_encode($notifications)) }}')" class="relative">
+    <button @click="showModal = true" class="text-gray-600 focus:outline-none relative">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.002 2.002 0 0018 14V10a6 6 0 00-12 0v4c0 .795-.316 1.513-.832 2.005L3 17h5"/>
+        </svg>
+        <span x-show="notifications.length > 0" class="absolute top-0 right-0 bg-red-500 text-white text-xs font-bold rounded-full px-1">
+            <span x-text="notifications.length"></span>
+        </span>
+    </button>
 
                     <!-- Modal Popup -->
                     <div x-show="showModal" x-transition class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 px-4">
@@ -71,24 +71,47 @@
                                         <tbody>
                                             <template x-for="notification in notifications" :key="notification.id">
                                                 <tr class="hover:bg-gray-50 border-b">
-                                                    <td class="px-4 py-2" x-text="notification.message"></td>
-                                                    <td class="px-4 py-2 text-xs" x-text="notification.time"></td>
+                                                    <td class="px-4 py-2" x-text="notification.data.message"></td>
+                                                    <td class="px-4 py-2 text-xs" x-text="new Date(notification.created_at).toLocaleString()"></td>
                                                     <td class="px-4 py-2 text-right">
-                                                        <button @click.stop="notifications = notifications.filter(n => n.id !== notification.id)" class="text-red-500 hover:underline text-xs">Hapus</button>
+                                                        <button @click.stop="markAsRead(notification.id)" class="text-blue-500 hover:underline text-xs">Sudah Dibaca</button>
                                                     </td>
                                                 </tr>
                                             </template>
-                                        </tbody>
-                                    </table>
-                                </template>
-                            </div>
-                            <!-- Modal Footer -->
-                            <div class="flex justify-end px-6 py-4 border-t">
-                                <button @click="showModal = false" class="bg-emerald-500 text-white px-4 py-2 rounded hover:bg-emerald-600">Tutup</button>
-                            </div>
-                        </div>
+                                </tbody>
+                            </table>
+                        </template>
+                    </div>
+                    <!-- Modal Footer -->
+                    <div class="flex justify-end px-6 py-4 border-t">
+                        <button @click="showModal = false" class="bg-emerald-500 text-white px-4 py-2 rounded hover:bg-emerald-600">Tutup</button>
                     </div>
                 </div>
+            </div>
+        </div>
+
+<script>
+    function markAsRead(notificationId) {
+        fetch('/notifications/' + notificationId + '/read', {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'Content-Type': 'application/json'
+            }
+        }).then(response => {
+            if (response.ok) {
+                // Remove notification from Alpine.js notifications array
+                const notifications = document.querySelector('[x-data]').__x.$data.notifications;
+                const index = notifications.findIndex(n => n.id === notificationId);
+                if (index !== -1) {
+                    notifications.splice(index, 1);
+                }
+            } else {
+                alert('Gagal menandai notifikasi sebagai sudah dibaca.');
+            }
+        });
+    }
+</script>
 
                 <!-- Profile -->
                 <div class="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-600 font-medium">
