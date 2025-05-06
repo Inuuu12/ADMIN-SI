@@ -42,7 +42,7 @@
         <!-- Full Name -->
         <div class="mb-6">
           <label class="block text-sm font-medium text-gray-700 mb-2">Nama Lengkap</label>
-          <input type="text" name="name" required class="w-full px-4 py-3 rounded-lg border border-gray-300" placeholder="John Doe">
+          <input type="text" name="name" required class="w-full px-4 py-3 rounded-lg border border-gray-300" placeholder="Masukkan nama Anda">
           @error('name')
             <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
           @enderror
@@ -60,7 +60,7 @@
         <!-- Password -->
         <div class="mb-6">
           <label class="block text-sm font-medium text-gray-700 mb-2">Buat Kata Sandi</label>
-          <input type="password" name="password" required class="w-full px-4 py-3 rounded-lg border border-gray-300" placeholder="••••••••">
+          <input type="password" name="password" required class="w-full px-4 py-3 rounded-lg border border-gray-300" placeholder="Masukkan kata sandi Anda">
           @error('password')
             <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
           @enderror
@@ -68,7 +68,7 @@
 
         <div class="mb-6">
           <label class="block text-sm font-medium text-gray-700 mb-2">Konfirmasi Kata Sandi</label>
-          <input type="password" name="password_confirmation" required class="w-full px-4 py-3 rounded-lg border border-gray-300" placeholder="••••••••">
+          <input type="password" name="password_confirmation" required class="w-full px-4 py-3 rounded-lg border border-gray-300" placeholder="Masukkan kata sandi konfirmasi Anda">
           @error('password_confirmation')
             <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
           @enderror

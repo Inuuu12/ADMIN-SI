@@ -17,12 +17,15 @@ class AuthController extends Controller
 {
     function login() {
         if (Auth::check()) {
-            // Redirect berdasarkan peran
-            if (Auth::user()->isUser()) {
-                return redirect()->route('beranda'); // atau 'beranda' jika pakai route string
-            } elseif (Auth::user()->isAdmin()) {
-                return redirect()->route('dashboard');
+            // Jika user sudah login dan sudah verified, redirect sesuai peran
+            if (!is_null(Auth::user()->email_verified_at)) {
+                if (Auth::user()->isUser()) {
+                    return redirect()->route('beranda'); // atau 'beranda' jika pakai route string
+                } elseif (Auth::user()->isAdmin()) {
+                    return redirect()->route('dashboard');
+                }
             }
+            // Jika user sudah login tapi belum verified, tetap tampilkan halaman login
         }
         return view('layouts.login');
     }
