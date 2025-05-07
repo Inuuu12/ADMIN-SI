@@ -1,20 +1,24 @@
 @extends('layouts.berandaly')
 
-    <div class="w-3/4 mb-[100px] mx-auto drop-shadow">
-        <a href="">
-            <img src="{{ asset('img/bannerpendaftaran.png') }}" alt="">
+    <div class="w-11/12 md:w-3/4 mx-auto my-10">
+        <a href="#">
+            <img src="{{ asset('/img/bannerpendaftaran1.png') }}" alt="Banner Pendaftaran" class="w-full rounded-lg shadow-md">
         </a>
-        <div class="flex flex-col p-10 bg-white">
-            <div class="card flex bg-white shadow-sm rounded-lg overflow-hidden w-full md:w-full border border-gray-300">
-                <div class="bg-white rounded-lg p-6 w-full">
-                    <h1 class="text-xl font-bold text-gray-800 mb-6 text-center">Pembayaran Sukses</h1>
-                    <div class="mb-6">
-                        <p class="text-sm text-gray-600">Terima kasih, pembayaran Anda berhasil!</p>
-                        <p class="text-2xl font-bold text-gray-800">Status Pembayaran: {{ $pendaftaran->status_pembayaran }}</p>
-                    </div>
-                </div>
+
+        <div class="mt-8 bg-white p-8 rounded-xl shadow-lg border border-gray-200">
+            <h1 class="text-2xl font-semibold text-center text-green-700 mb-4">Pembayaran Sukses</h1>
+            <p class="text-center text-gray-700 text-sm mb-6">
+                Apabila Anda memiliki pertanyaan lebih lanjut atau membutuhkan bantuan, jangan ragu untuk menghubungi 
+                kami melalui halaman kontak resmi.
+            </p>
+            
+            <div class="text-center">
+                <a href="{{ url('/') }}" class="inline-block bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-300">
+                    Kembali ke Beranda
+                </a>
             </div>
         </div>
+        
     </div>
 
 

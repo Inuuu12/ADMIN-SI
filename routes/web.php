@@ -176,7 +176,7 @@ Route::prefix('admin')->middleware(['auth', 'web'])->group(function () {
         return view('ADMIN-SI.kelas');
     })->name('kelas');
 
-    Route::get('/siswa', function () {
+    Route::get('/santri', function () {
         $user = Auth::user();
         if (!$user || $user->isAdmin() === false) {
             Session::flash('error', 'Anda tidak memiliki akses ke halaman ini.');
@@ -184,8 +184,8 @@ Route::prefix('admin')->middleware(['auth', 'web'])->group(function () {
             // Redirect ke halaman sebelumnya
             return redirect()->back();
         }
-        return view('ADMIN-SI.siswa');
-    })->name('siswa');
+        return view('ADMIN-SI.santri');
+    })->name('santri');
 
     Route::get('/profil', function () {
         $user = Auth::user();
