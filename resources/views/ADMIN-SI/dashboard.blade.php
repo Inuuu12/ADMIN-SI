@@ -35,17 +35,6 @@
                 </form>
 
                 <!-- Notifikasi -->
-<<<<<<< HEAD
-<div x-data="{ showModal: false, notifications: [] }" x-init="notifications = JSON.parse('{{ addslashes(json_encode($notifications)) }}')" class="relative">
-    <button @click="showModal = true" class="text-gray-600 focus:outline-none relative">
-        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.002 2.002 0 0018 14V10a6 6 0 00-12 0v4c0 .795-.316 1.513-.832 2.005L3 17h5"/>
-        </svg>
-        <span x-show="notifications.length > 0" class="absolute top-0 right-0 bg-red-500 text-white text-xs font-bold rounded-full px-1">
-            <span x-text="notifications.length"></span>
-        </span>
-    </button>
-=======
                 <div x-data="{ showModal: false, notifications: [{ id: 1, message: 'Santri baru telah ditambahkan.', time: '2 menit yang lalu' }, { id: 2, message: 'Pendaftaran ditutup.', time: '5 menit yang lalu' }] }" class="relative">
                     <button @click="showModal = true" class="text-gray-600 focus:outline-none relative">
                         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -55,7 +44,6 @@
                             <span x-text="notifications.length"></span>
                         </span>
                     </button>
->>>>>>> 71b2eb0 (payment midtrans)
 
                     <!-- Modal Popup -->
                     <div x-show="showModal" x-transition class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 px-4">
