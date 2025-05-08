@@ -221,3 +221,8 @@ Route::get('/pembayaran/sukses', function () {
     return view('pembayaran.sukses');
 });
 Route::get('/pembayaran/sukses', [PembayaranController::class, 'suksesPembayaran']);
+
+//Cetak PDF
+Route::get('/pengajar/cetak-pdf', [App\Http\Controllers\GuruController::class, 'cetakPDF'])->name('pengajar.cetak.pdf');
+Route::get('/invoice/cetak/{id}', [PembayaranController::class, 'cetakInvoice'])->name('invoice.cetak');
+

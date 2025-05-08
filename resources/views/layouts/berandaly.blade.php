@@ -69,11 +69,7 @@
             </div>
             @else
             <a href="{{ route('login') }}" class="text-gray-600 border border-gray-300 rounded-lg py-2 px-4 hover:border-green-500 hover:text-green-500 transition">
-<<<<<<< HEAD
-                <i class="ph ph-user-circle text-lg mr-2"></i> Login
-=======
                 <i class="ph ph-user-circle text-lg mr-2"></i> Masuk
->>>>>>> 037b5423f401582f66053c746f3bf0250e14947e
             </a>
             @endif
         </div>

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Midtrans\Snap;
 use Midtrans\Config;
 use Midtrans\Transaction;
+use Barryvdh\DomPDF\Facade as PDF;
 
 class PembayaranController extends Controller
 {
@@ -139,6 +140,30 @@ class PembayaranController extends Controller
         } catch (\Exception $e) {
             dd($e->getMessage()); // Bisa "Transaction doesn't exist"
         }
+    }
+
+    public function cetakInvoice($id)
+    {
+        // Ambil data pendaftaran berdasarkan ID
+        $pendaftaran = Pendaftaran::findOrFail($id);
+
+        // Cek jika pembayaran sudah selesai
+        if ($pendaftaran->status_pembayaran != 'sudah') {
+            return abort(404, 'Pembayaran belum selesai.');
+        }
+
+        // Siapkan data untuk template PDF
+        $data = [
+            'pendaftaran' => $pendaftaran,
+            'paymentDate' => $pendaftaran->updated_at->format('d M Y'), // Tanggal pembayaran
+            // Tambahkan data lain yang dibutuhkan untuk invoice
+        ];
+
+        // Gunakan DomPDF untuk menghasilkan PDF
+        $pdf = PDF::loadView('invoice.cetak', $data);
+
+        // Menghasilkan dan mengunduh file PDF
+        return $pdf->download('invoice-' . $pendaftaran->order_id . '.pdf');
     }
 
 }
