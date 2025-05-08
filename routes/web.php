@@ -185,6 +185,7 @@ Route::prefix('admin')->middleware(['auth', 'web'])->group(function () {
             // Redirect ke halaman sebelumnya
             return redirect()->back();
         }
+
         return view('ADMIN-SI.santri');
     })->name('santri');
 

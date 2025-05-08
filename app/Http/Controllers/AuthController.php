@@ -162,7 +162,7 @@ class AuthController extends Controller
 
     function createUser(Request $request){
         $credentials = $request->validate([
-            'name' => ['required', 'string', 'min:3', 'regex:/^[A-Za-z\s]+$/'],
+            'name' => ['required', 'string', 'min:3', 'max:50', 'regex:/^[A-Za-z\s]+$/'],
             'email' => ['required', 'email', 'unique:users,email'],
             'password' => ['required', 'min:8', 'regex:/^(?=.*[a-zA-Z])(?=.*[0-9]).+$/'],
             'password_confirmation' => ['required', 'same:password'],
@@ -170,6 +170,7 @@ class AuthController extends Controller
             'name.required' => 'Nama wajib diisi.',
             'name.string' => 'Nama harus berupa huruf.',
             'name.min' => 'Nama minimal 3 karakter.',
+            'name.max' => 'Nama maksimal 50 karakter.',
             'name.regex' => 'Nama hanya boleh berisi huruf dan spasi',
             'email.required' => 'Email wajib diisi.',
             'email.email' => 'Format email tidak valid.',
