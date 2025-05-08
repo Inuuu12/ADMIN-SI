@@ -48,11 +48,11 @@
     </a>
 
     <!-- Data Siswa -->
-    <a href="{{ route('siswa') }}" class="flex items-center px-4 py-2 hover:bg-white/10 rounded-lg group {{ request()->is('siswa*') ? 'bg-green-600 text-white': 'text-white' }}">
+    <a href="{{ route('santri') }}" class="flex items-center px-4 py-2 hover:bg-white/10 rounded-lg group {{ request()->is('siswa*') ? 'bg-green-600 text-white': 'text-white' }}">
         <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
         </svg>
-        <span>Siswa</span>
+        <span>Santri</span>
     </a>
 
     <!-- Panduan Menu -->
@@ -64,22 +64,23 @@
     </a>
 
     <!-- Aduan Menu -->
-    <a href="{{ route('aduan') }}" class="flex items-center px-4 py-2 hover:bg-white/10 rounded-lg group {{ request()->is('aduan*') ? 'bg-green-600 text-white': 'text-white' }}">
+    {{-- <a href="{{ route('aduan') }}" class="flex items-center px-4 py-2 hover:bg-white/10 rounded-lg group {{ request()->is('aduan*') ? 'bg-green-600 text-white': 'text-white' }}">
         <svg class="w-5 h-5 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l9-6 9 6v8a9 9 0 0 1-18 0z" />
             <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M8 16h8" />
         </svg>
         <span>Aduan</span>
-    </a>
+    </a> --}}
     </div>
 
     <!-- Tombol Logout agak naik -->
     <div class="xl mb-8">
-    <button @click="open = true" class="transition-colors duration-200 hover:text-red-700  flex items-center gap-2 text-left px-4 py-2 hover:bg-white/10 rounded-lg transition {{ request()->is('logout*') ? 'bg-green-600 text-white': 'text-white' }}">
+    <button @click="open = true" class="transition-colors duration-200 hover:text-red-700  flex items-center gap-2 text-left px-4 py-2 hover:bg-white/10 rounded-lg transition {{ request()->is('keluar*') ? 'bg-green-600 text-white': 'text-white' }}">
             <!-- Icon Logout -->
         <svg class="w-5 h-5 mr-3 hover:stroke-red-700" xmlns="hover:red-700 http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class=" w-6 h-6">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12H3m12 0l-4 4m4-4l-4-4m8-5H9a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2z" />
         </svg>
+        <span>Keluar</span>
         <span>Keluar</span>
     </button>
 </div>

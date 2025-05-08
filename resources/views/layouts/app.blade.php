@@ -63,5 +63,23 @@
             document.body.style.visibility = "visible";
         });
     </script>
+<div id="loadingOverlay" class="hidden fixed inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center z-50">
+  <!-- Spinner Hijau -->
+  <div class="w-16 h-16 border-4 border-green-500 border-t-transparent rounded-full animate-spin"></div>
+
+  <!-- Tulisan Loading -->
+  <p class="mt-4 text-white font-medium text-base animate-pulse">Memuat... Mohon tunggu</p>
+</div>
+
+<script>
+  function showLoading() {
+    document.getElementById('loadingOverlay').classList.remove('hidden');
+  }
+
+  function hideLoading() {
+    document.getElementById('loadingOverlay').classList.add('hidden');
+  }
+</script>
+
 </body>
 </html>

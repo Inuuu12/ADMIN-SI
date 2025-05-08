@@ -552,7 +552,16 @@ setTimeout(() => {
     document.getElementById("modalDitolak").classList.add("hidden");
   }
 
+  function showLoading() {
+    document.getElementById('loadingOverlay').classList.remove('hidden');
+  }
+
+  function hideLoading() {
+    document.getElementById('loadingOverlay').classList.add('hidden');
+  }
+
   function confirmDitolak() {
+    showLoading();
     const i = document.getElementById("ditolakIndex").value;
     const id = pendaftaran[i].id;
 
@@ -566,21 +575,25 @@ setTimeout(() => {
     })
     .then(response => {
       if (!response.ok) {
+        hideLoading();
         throw new Error('Network response was not ok');
       }
       return response.json();
     })
     .then(data => {
-      pendaftaran[i].status = "Ditolak";
+      // pendaftaran[i].status = "Ditolak";
       closeDitolak();
-      renderTable();
+      // renderTable();
+      window.location.href = '{{ route("dashboard") }}';
     })
     .catch(error => {
+      hideLoading();
       alert('Gagal mengubah status: ' + error.message);
     });
   }
 
   function confirmApprove() {
+    showLoading();
     const i = document.getElementById("approveIndex").value;
     const id = pendaftaran[i].id;
 
@@ -593,16 +606,19 @@ setTimeout(() => {
     })
     .then(response => {
       if (!response.ok) {
+        hideLoading();
         throw new Error('Network response was not ok');
       }
       return response.json();
     })
     .then(data => {
-      pendaftaran[i].status = "Diterima";
+      // pendaftaran[i].status = "Diterima";
       closeApprove();
-      renderTable();
+      // renderTable();
+      window.location.href = '{{ route("dashboard") }}';
     })
     .catch(error => {
+      hideLoading();
       alert('Gagal mengubah status: ' + error.message);
     });
   }
@@ -619,6 +635,7 @@ setTimeout(() => {
 
   function confirmDelete() {
     if (deleteIndex !== null) {
+      showLoading();
       const id = pendaftaran[deleteIndex].id;
       fetch(`/admin/pendaftaran/${id}`, {
         method: 'DELETE',
@@ -629,17 +646,20 @@ setTimeout(() => {
       })
       .then(response => {
         if (!response.ok) {
+          hideLoading();
           throw new Error('Network response was not ok');
         }
         return response.json();
       })
       .then(data => {
-        pendaftaran.splice(deleteIndex, 1);
+        // pendaftaran.splice(deleteIndex, 1);
         deleteIndex = null;
-        renderTable();
-        closeHapus();
+        // renderTable();
+        // closeHapus();
+        window.location.href = '{{ route("dashboard") }}';
       })
       .catch(error => {
+        hideLoading();
         alert('Gagal menghapus data: ' + error.message);
       });
     }
@@ -647,5 +667,26 @@ setTimeout(() => {
 
   document.addEventListener("DOMContentLoaded", renderTable);
 </script>
+
+<div id="loadingOverlay" class="hidden fixed inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center z-50">
+  <!-- Spinner Hijau -->
+  <div class="w-16 h-16 border-4 border-green-500 border-t-transparent rounded-full animate-spin"></div>
+
+  <!-- Tulisan Loading -->
+  <p class="mt-4 text-white font-medium text-base animate-pulse">Memuat... Mohon tunggu</p>
+</div>
+
+
+
+<style>
+  .loader {
+    border-top-color: #22c55e;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+</style>
 
 @endsection
