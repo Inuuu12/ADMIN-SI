@@ -4,7 +4,7 @@
 <div class="px-4 sm:px-6 md:px-8 lg:px-24 xl:px-48 py-10">
     <div class="max-w-4xl mx-auto">
         <h1 class="text-2xl font-bold text-center mb-6 text-gray-800">Tentang Kami</h1>
-        <p class="text-sm text-gray-600 text-justify leading-relaxed">
+        <p class="text-lg text-gray-600 text-justify leading-relaxed">
             TPQ Nurul Iman (Taman Pendidikan Al-Qur'an Nurul Iman) adalah lembaga pendidikan non-formal yang berfokus
             pada pendidikan Al-Qur'an dan nilai-nilai keislaman. Lembaga ini didirikan pada tahun 1990 di bawah naungan
             Yayasan Wakaf Nurul Iman Pondok Bambu, dengan tujuan utama untuk memberikan pendidikan agama Islam yang
@@ -12,7 +12,7 @@
             masjid dengan jumlah santri lebih dari 200 orang. Hal ini menunjukkan antusiasme masyarakat terhadap
             pendidikan agama, terutama karena pada saat itu masih sedikit TPQ yang tersedia di Jakarta.
         </p>
-        <p class="text-sm text-gray-600 text-justify leading-relaxed mt-4">
+        <p class="text-lg text-gray-600 text-justify leading-relaxed mt-4">
             Seiring berjalannya waktu, TPQ Nurul Iman terus berkembang, baik dari segi jumlah santri, tenaga pendidik,
             maupun metode pembelajaran yang diterapkan. Saat ini, lembaga ini menawarkan program pendidikan yang
             mencakup berbagai aspek keislaman, di antaranya Aqidah Akhlak, Fiqih, serta Al-Qur'an Hadits. Dalam upaya
@@ -21,7 +21,7 @@
             belajar membaca dan menghafal Al-Qur’an dengan lebih cepat, menyenangkan, serta sesuai dengan perkembangan
             kognitif mereka.
         </p>
-        <p class="text-sm text-gray-600 text-justify leading-relaxed mt-4">
+        <p class="text-lg text-gray-600 text-justify leading-relaxed mt-4">
             Selain fokus pada pembelajaran agama, TPQ Nurul Iman juga menanamkan nilai-nilai akhlakul karimah dan
             pembiasaan ibadah dalam kehidupan sehari-hari santri. Para santri didorong untuk menerapkan ilmu yang mereka
             pelajari dalam kehidupan nyata, seperti membiasakan diri membaca Al-Qur’an, melaksanakan shalat tepat waktu,
@@ -29,7 +29,7 @@
             pendidik yang berpengalaman dan memiliki kompetensi dalam bidangnya, sehingga pembelajaran berlangsung
             dengan baik dan terarah.
         </p>
-        <p class="text-sm text-gray-600 text-justify leading-relaxed mt-4">
+        <p class="text-lg text-gray-600 text-justify leading-relaxed mt-4">
             Dengan fasilitas yang terus dikembangkan, tenaga pendidik yang kompeten, serta metode pembelajaran yang
             inovatif, TPQ Nurul Iman berkomitmen untuk mencetak generasi Qur’ani yang tidak hanya cerdas secara
             akademik, tetapi juga memiliki akhlak mulia. Sebagai lembaga pendidikan yang telah berdiri lebih dari tiga
@@ -50,12 +50,12 @@
                 <h2 class="text-lg font-bold text-white text-center drop-shadow-lg">
                     TPQ Nurul Iman
                 </h2>
-                <h3 class="text-sm font-semibold text-white text-center mt-2 drop-shadow-lg">
+                <h3 class="text-lg font-semibold text-white text-center mt-2 drop-shadow-lg">
                     Siap Mencetak Generasi Qur'ani, Cerdas, dan Berakhlakul Karimah
                 </h3>
 
                 <!-- Filosofi -->
-                <p class="text-white mt-6 text-sm leading-relaxed text-justify">
+                <p class="text-white mt-6 text-lg leading-relaxed text-justify">
                     Kami berkomitmen untuk memberikan pendidikan berbasis nilai-nilai Islam yang holistik, guna mencetak
                     generasi yang
                     beriman, berilmu, dan berakhlak mulia. Melalui metode pembelajaran yang menyeluruh, kami tidak hanya
@@ -65,8 +65,8 @@
 
                 <!-- Misi -->
                 <div class="mt-6">
-                    <p class="text-sm font-semibold text-white mb-2">Misi Kami:</p>
-                    <ul class="text-white text-sm leading-relaxed list-disc list-inside ">
+                    <p class="text-lg font-semibold text-white text-center mb-2">Misi Kami:</p>
+                    <ul class="text-white text-lg leading-relaxed list-disc list-outside ">
                         <li>Membimbing anak-anak dalam membaca, menghafal, dan mengamalkan Al-Qur'an hingga khatam.</li>
                         <li>Menanamkan akhlak mulia dan nilai-nilai Islam dalam kehidupan sehari-hari.</li>
                         <li>Mengembangkan kecerdasan dan keterampilan agar menjadi pribadi yang mandiri dan berdaya.

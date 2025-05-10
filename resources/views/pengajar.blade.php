@@ -6,7 +6,7 @@
 
 
             <div class="container mx-auto ">
-                <h1 class="text-sm font-sm text-center mb-10 text-gray-600">Staf pengajar TPQ Nurul Iman siap
+                <h1 class="text-lg font-lg text-center mb-10 text-gray-600">Staf pengajar TPQ Nurul Iman siap
                     mendampingi anak Anda dalam meraih kecintaan terhadap Al-Qur'an dan tumbuh menjadi generasi Qur'ani.
                 </h1>
                 <div class="flex flex-wrap justify-center gap-8">
@@ -19,10 +19,10 @@
                         class="card flex bg-white shadow-sm rounded-lg overflow-hidden w-full md:w-5/12 transform transition-all duration-300 hover:scale-105 hover:shadow-lg border border-gray-300 {{ $index === count($gurus) - 1 && count($gurus) % 2 !== 0 ? 'flex-row-reverse' : '' }}">
                         <div class="flex-1 p-6">
                             <h2 class="text-lg font-semibold text-gray-800">Ustadzah {{ $guru->nama }}</h2>
-                            <p class="text-sm text-gray-600 mt-2">{{ $guru->jabatan }} di TPQ Nurul Iman</p>
-                            <p class="text-sm text-gray-600">Mengajar {{ $guru->mata_pelajaran }}</p>
-                            <p class="text-sm text-gray-600">Pengalaman Mengajar {{ $guru->pengalaman }} Tahun</p>
-                            <p class="text-sm text-gray-600">Pendidikan {{ $guru->pendidikan_terakhir }}</p>
+                            <p class="text-md text-gray-600 mt-2">{{ $guru->jabatan }} di TPQ Nurul Iman</p>
+                            <p class="text-md text-gray-600">Mengajar {{ $guru->mata_pelajaran }}</p>
+                            <p class="text-md text-gray-600">Pengalaman Mengajar {{ $guru->pengalaman }} Tahun</p>
+                            <p class="text-md text-gray-600">Pendidikan {{ $guru->pendidikan_terakhir }}</p>
                         </div>
                         <div class="w-40 h-40 m-6">
                             <img class="w-full h-full object-cover rounded-full" src="{{ asset('gambar/' . $guru->gambar) }}"

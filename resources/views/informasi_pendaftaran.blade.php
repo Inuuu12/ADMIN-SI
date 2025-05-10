@@ -9,7 +9,7 @@
             </svg>
             <h2 class="text-lg font-semibold">Pendaftaran Belum Dibuka</h2>
         </div>
-        <p class="mt-2 text-sm">Pendaftaran untuk calon santri TPQ Nurul Iman saat ini belum dibuka. Harap tunggu
+        <p class="mt-2 text-lg">Pendaftaran untuk calon santri TPQ Nurul Iman saat ini belum dibuka. Harap tunggu
             pengumuman lebih lanjut mengenai jadwal pembukaan pendaftaran.</p>
     </div>
 
