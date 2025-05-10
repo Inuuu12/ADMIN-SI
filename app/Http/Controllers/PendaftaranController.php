@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Carbon;
 use App\Mail\SantriApproved;
+use App\Notifications\NewPendaftaranNotification;
+use App\Models\User;
 
 class PendaftaranController extends Controller
 {
@@ -57,7 +59,13 @@ class PendaftaranController extends Controller
         $validatedData['user_id'] = Auth::id();
         $validatedData['status'] = 'pending';
 
-        Pendaftaran::create($validatedData);
+        $pendaftaran = Pendaftaran::create($validatedData);
+
+        // Send notification to admin users
+        $admins = User::where('role', 'admin')->get();
+        foreach ($admins as $admin) {
+            $admin->notify(new NewPendaftaranNotification($pendaftaran));
+        }
 
         return redirect()->route('pendaftaran.success');
     }

@@ -53,15 +53,24 @@
     </div>
   </div>
 
-  <!-- Add Guru -->
-  <div class="mb-4 flex justify-end">
-    <button @click="openModal('tambah')" class="bg-emerald-500 text-white px-5 py-2.5 rounded-lg flex items-center gap-2 shadow-md hover:bg-emerald-600">
-      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-      </svg>
-      Tambah Guru
-    </button>
-  </div>
+  <!-- Action Buttons -->
+<div class="mb-6 flex justify-end gap-3 px-6">
+  <a href="{{ route('pengajar.cetak.pdf') }}" target="_blank"
+    class="bg-red-500 text-white px-5 py-2.5 rounded-lg flex items-center gap-2 shadow-md hover:bg-red-600">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 20h9M12 4v16m-8 0h8" />
+    </svg>
+    Cetak PDF
+  </a>
+
+  <button @click="openModal('tambah')" class="bg-emerald-500 text-white px-5 py-2.5 rounded-lg flex items-center gap-2 shadow-md hover:bg-emerald-600">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+    </svg>
+    Tambah Guru
+  </button>
+</div>
+
 
   <!-- Guru Grid -->
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">

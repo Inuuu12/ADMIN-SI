@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\GuruController;
 use App\Http\Controllers\GaleriController;
 use App\Http\Controllers\AuthController;
@@ -176,7 +177,7 @@ Route::prefix('admin')->middleware(['auth', 'web'])->group(function () {
         return view('ADMIN-SI.kelas');
     })->name('kelas');
 
-    Route::get('/siswa', function () {
+    Route::get('/santri', function () {
         $user = Auth::user();
         if (!$user || $user->isAdmin() === false) {
             Session::flash('error', 'Anda tidak memiliki akses ke halaman ini.');
@@ -184,8 +185,9 @@ Route::prefix('admin')->middleware(['auth', 'web'])->group(function () {
             // Redirect ke halaman sebelumnya
             return redirect()->back();
         }
-        return view('ADMIN-SI.siswa');
-    })->name('siswa');
+
+        return view('ADMIN-SI.santri');
+    })->name('santri');
 
     Route::get('/profil', function () {
         $user = Auth::user();
@@ -201,9 +203,14 @@ Route::prefix('admin')->middleware(['auth', 'web'])->group(function () {
     Route::post('/pendaftaran/{id}/reject', [DashboardController::class, 'reject'])->name('dashboard.pendaftaran.reject');
     Route::post('/pendaftaran/{id}/approve', [DashboardController::class, 'approve'])->name('dashboard.pendaftaran.approve');
     Route::delete('/pendaftaran/{id}', [DashboardController::class, 'destroy'])->name('dashboard.pendaftaran.destroy');
+
+    Route::post('/notifications/{id}/read', [\App\Http\Controllers\NotificationController::class, 'markAsRead'])->name('notifications.read');
+
 });
 
-Route::get('/logout', [AuthController::class, 'logout']);
+Route::middleware(['web'])->group(function () {
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+});
 
 //Pembayaran 
 Route::get('/bayar/{id}', [PembayaranController::class, 'formBayar']);
@@ -214,3 +221,8 @@ Route::get('/pembayaran/sukses', function () {
     return view('pembayaran.sukses');
 });
 Route::get('/pembayaran/sukses', [PembayaranController::class, 'suksesPembayaran']);
+
+//Cetak PDF
+Route::get('/pengajar/cetak-pdf', [App\Http\Controllers\GuruController::class, 'cetakPDF'])->name('pengajar.cetak.pdf');
+Route::get('/invoice/cetak/{id}', [PembayaranController::class, 'cetakInvoice'])->name('invoice.cetak');
+

@@ -30,12 +30,12 @@
 
                 <!-- Search Bar -->
                 <form onsubmit="event.preventDefault(); renderTable();" class="relative flex-1 md:flex-none w-full md:w-64">
-                <input type="text" id="searchQuery" placeholder="Search Siswa Baru..."
+                <input type="text" id="searchQuery" placeholder="Cari Santri Baru..."
                     class="w-full pl-10 pr-4 py-2 text-gray-500 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </form>
 
                 <!-- Notifikasi -->
-                <div x-data="{ showModal: false, notifications: [{ id: 1, message: 'Siswa baru telah ditambahkan.', time: '2 menit yang lalu' }, { id: 2, message: 'Pendaftaran ditutup.', time: '5 menit yang lalu' }] }" class="relative">
+                <div x-data="{ showModal: false, notifications: [{ id: 1, message: 'Santri baru telah ditambahkan.', time: '2 menit yang lalu' }, { id: 2, message: 'Pendaftaran ditutup.', time: '5 menit yang lalu' }] }" class="relative">
                     <button @click="showModal = true" class="text-gray-600 focus:outline-none relative">
                         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.002 2.002 0 0018 14V10a6 6 0 00-12 0v4c0 .795-.316 1.513-.832 2.005L3 17h5"/>
@@ -71,24 +71,45 @@
                                         <tbody>
                                             <template x-for="notification in notifications" :key="notification.id">
                                                 <tr class="hover:bg-gray-50 border-b">
-                                                    <td class="px-4 py-2" x-text="notification.message"></td>
-                                                    <td class="px-4 py-2 text-xs" x-text="notification.time"></td>
+                                                    <td class="px-4 py-2" x-text="notification.data.message"></td>
+                                                    <td class="px-4 py-2 text-xs" x-text="new Date(notification.created_at).toLocaleString()"></td>
                                                     <td class="px-4 py-2 text-right">
-                                                        <button @click.stop="notifications = notifications.filter(n => n.id !== notification.id)" class="text-red-500 hover:underline text-xs">Hapus</button>
+                                                        <button @click.stop="markAsRead(notification.id)" class="text-blue-500 hover:underline text-xs">Sudah Dibaca</button>
                                                     </td>
                                                 </tr>
                                             </template>
-                                        </tbody>
-                                    </table>
-                                </template>
-                            </div>
-                            <!-- Modal Footer -->
-                            <div class="flex justify-end px-6 py-4 border-t">
-                                <button @click="showModal = false" class="bg-emerald-500 text-white px-4 py-2 rounded hover:bg-emerald-600">Tutup</button>
-                            </div>
-                        </div>
+                                </tbody>
+                            </table>
+                        </template>
+                    </div>
+                    <!-- Modal Footer -->
+                    <div class="flex justify-end px-6 py-4 border-t">
+                        <button @click="showModal = false" class="bg-emerald-500 text-white px-4 py-2 rounded hover:bg-emerald-600">Tutup</button>
                     </div>
                 </div>
+            </div>
+        </div>
+
+<script>
+    function markAsRead(notificationId) {
+        fetch('/admin/notifications/' + notificationId + '/read', {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'Content-Type': 'application/json'
+            }
+        }).then(response => {
+            if (response.ok) {
+                // Redirect to admin dashboard after marking as read
+                window.location.href = '{{ route("dashboard") }}';
+            } else {
+                alert('Gagal menandai notifikasi sebagai sudah dibaca.');
+            }
+        }).catch(() => {
+            alert('Terjadi kesalahan saat menghubungi server.');
+        });
+    }
+</script>
 
                 <!-- Profile -->
                 <div class="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-600 font-medium">
@@ -107,19 +128,19 @@
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                 </svg>
-                Tambah Siswa Baru
+                Tambah Santri Baru
             </button>
         </div>
 
-        <!-- Modal Tambah Siswa -->
+        <!-- Modal Tambah Santri -->
         <div x-show="showTambah" x-transition class="fixed inset-0 z-20 flex justify-center items-center bg-black/50 backdrop-blur-sm px-4">
     <div @click.away="showTambah = false" class="bg-white p-6 rounded-md w-full max-w-md shadow-lg">
-        <h3 class="text-2xl font-semibold mb-4 text-center">Form Tambah Siswa Baru</h3>
+        <h3 class="text-2xl font-semibold mb-4 text-center">Form Tambah Santri Baru</h3>
         <form id="tambahSiswaForm" class="space-y-4">
             <!-- Nama -->
             <div>
                 <label class="block mb-1 font-medium">Nama:</label>
-                <input type="text" class="w-full p-2 border rounded-md focus:ring focus:ring-emerald-300" id="tambahNama" placeholder="Nama Siswa">
+                <input type="text" class="w-full p-2 border rounded-md focus:ring focus:ring-emerald-300" id="tambahNama" placeholder="Nama Santri">
             </div>
 
             <!-- Jenis Kelamin -->
@@ -280,7 +301,7 @@
 <!-- Modal Detail -->
 <div id="modalDetail" class="hidden fixed inset-0 z-50 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center transition-opacity duration-300 px-4">
   <div class="bg-white rounded-xl shadow-xl w-full max-w-3xl p-8 animate-scaleIn overflow-y-auto max-h-[80vh] space-y-6">
-    <h2 class="text-2xl font-bold text-center text-emerald-600 mb-4">Detail Siswa</h2>
+    <h2 class="text-2xl font-bold text-center text-emerald-600 mb-4">Detail Santri</h2>
     <div>
       <label class="block font-medium text-gray-700 mb-1">Nama Santri</label>
       <div id="detailNama" class="w-full border rounded px-4 py-2 bg-gray-100 text-gray-800"></div>
@@ -336,7 +357,7 @@
   <div class="bg-white rounded-xl shadow-xl w-full max-w-md p-6 animate-scaleIn">
     <h2 class="text-xl font-semibold text-center text-yellow-600 mb-4">Konfirmasi Diterima</h2>
     <input type="hidden" id="approveIndex">
-    <p class="text-center text-gray-700 mb-6">Setujui status siswa <strong id="approveNama"></strong> menjadi <strong>Diterima</strong>?</p>
+    <p class="text-center text-gray-700 mb-6">Setujui status Santri <strong id="approveNama"></strong> menjadi <strong>Diterima</strong>?</p>
     <div class="flex gap-3 justify-center">
       <button onclick="confirmApprove()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md">Ya, Setujui</button>
       <button onclick="closeApprove()" class="bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded-md">Batal</button>
@@ -361,7 +382,7 @@
   <div class="bg-white rounded-xl shadow-xl w-full max-w-md p-6 animate-scaleIn">
     <h2 class="text-xl font-semibold text-center text-red-600 mb-4">Konfirmasi Tolak</h2>
     <input type="hidden" id="ditolakIndex">
-    <p class="text-center text-gray-700 mb-6">Tolak status siswa <strong id="ditolakNama"></strong>?</p>
+    <p class="text-center text-gray-700 mb-6">Tolak status Santri <strong id="ditolakNama"></strong>?</p>
     <div class="flex gap-3 justify-center">
       <button onclick="confirmDitolak()" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md">Ya, Tolak</button>
       <button onclick="closeDitolak()" class="bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded-md">Batal</button>
@@ -531,7 +552,16 @@ setTimeout(() => {
     document.getElementById("modalDitolak").classList.add("hidden");
   }
 
+  function showLoading() {
+    document.getElementById('loadingOverlay').classList.remove('hidden');
+  }
+
+  function hideLoading() {
+    document.getElementById('loadingOverlay').classList.add('hidden');
+  }
+
   function confirmDitolak() {
+    showLoading();
     const i = document.getElementById("ditolakIndex").value;
     const id = pendaftaran[i].id;
 
@@ -545,21 +575,25 @@ setTimeout(() => {
     })
     .then(response => {
       if (!response.ok) {
+        hideLoading();
         throw new Error('Network response was not ok');
       }
       return response.json();
     })
     .then(data => {
-      pendaftaran[i].status = "Ditolak";
+      // pendaftaran[i].status = "Ditolak";
       closeDitolak();
-      renderTable();
+      // renderTable();
+      window.location.href = '{{ route("dashboard") }}';
     })
     .catch(error => {
+      hideLoading();
       alert('Gagal mengubah status: ' + error.message);
     });
   }
 
   function confirmApprove() {
+    showLoading();
     const i = document.getElementById("approveIndex").value;
     const id = pendaftaran[i].id;
 
@@ -572,16 +606,19 @@ setTimeout(() => {
     })
     .then(response => {
       if (!response.ok) {
+        hideLoading();
         throw new Error('Network response was not ok');
       }
       return response.json();
     })
     .then(data => {
-      pendaftaran[i].status = "Diterima";
+      // pendaftaran[i].status = "Diterima";
       closeApprove();
-      renderTable();
+      // renderTable();
+      window.location.href = '{{ route("dashboard") }}';
     })
     .catch(error => {
+      hideLoading();
       alert('Gagal mengubah status: ' + error.message);
     });
   }
@@ -598,6 +635,7 @@ setTimeout(() => {
 
   function confirmDelete() {
     if (deleteIndex !== null) {
+      showLoading();
       const id = pendaftaran[deleteIndex].id;
       fetch(`/admin/pendaftaran/${id}`, {
         method: 'DELETE',
@@ -608,17 +646,20 @@ setTimeout(() => {
       })
       .then(response => {
         if (!response.ok) {
+          hideLoading();
           throw new Error('Network response was not ok');
         }
         return response.json();
       })
       .then(data => {
-        pendaftaran.splice(deleteIndex, 1);
+        // pendaftaran.splice(deleteIndex, 1);
         deleteIndex = null;
-        renderTable();
-        closeHapus();
+        // renderTable();
+        // closeHapus();
+        window.location.href = '{{ route("dashboard") }}';
       })
       .catch(error => {
+        hideLoading();
         alert('Gagal menghapus data: ' + error.message);
       });
     }
@@ -626,5 +667,26 @@ setTimeout(() => {
 
   document.addEventListener("DOMContentLoaded", renderTable);
 </script>
+
+<div id="loadingOverlay" class="hidden fixed inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center z-50">
+  <!-- Spinner Hijau -->
+  <div class="w-16 h-16 border-4 border-green-500 border-t-transparent rounded-full animate-spin"></div>
+
+  <!-- Tulisan Loading -->
+  <p class="mt-4 text-white font-medium text-base animate-pulse">Memuat... Mohon tunggu</p>
+</div>
+
+
+
+<style>
+  .loader {
+    border-top-color: #22c55e;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+</style>
 
 @endsection

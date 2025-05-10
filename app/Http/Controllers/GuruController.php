@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Guru;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class GuruController extends Controller
 {
@@ -284,5 +285,13 @@ class GuruController extends Controller
         $guru = Guru::findOrFail($id);
         $guru->delete();
         return response()->json(['message' => 'Data guru berhasil dihapus.']);
+    }
+
+    //Cetak PDF
+    public function cetakPDF()
+    {
+        $guru = Guru::all();
+        $pdf = Pdf::loadView('pdf.cetakpengajar', compact('guru'));
+        return $pdf->stream('data-pengajar.pdf');
     }
 }

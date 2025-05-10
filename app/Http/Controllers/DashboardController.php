@@ -47,7 +47,9 @@ class DashboardController extends Controller
             ];
         });
 
-        return view('ADMIN-SI.dashboard', compact('pendaftaran', 'totalPendaftar', 'diterimaCount', 'menungguCount', 'ditolakCount'));
+        $notifications = $user->unreadNotifications()->get();
+
+        return view('ADMIN-SI.dashboard', compact('pendaftaran', 'totalPendaftar', 'diterimaCount', 'menungguCount', 'ditolakCount', 'notifications'));
     }
 
     public function reject($id)
