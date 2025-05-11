@@ -47,7 +47,7 @@
 
                     <!-- Modal Popup -->
                     <div x-show="showModal" x-transition class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 px-4">
-                        <div class="bg-white w-full max-w-2xl rounded-lg shadow-lg">
+                        <div class="bg-white w-full max-w-2xl rounded-lg shadow-lg max-h-[80vh] space-y-6">
                             <!-- Modal Header -->
                             <div class="flex justify-between items-center px-6 py-4 border-b">
                                 <h3 class="text-lg font-semibold">Notifikasi</h3>
@@ -118,68 +118,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Wrapper Alpine -->
-    <div x-data="{ showTambah: false }">
-
-        <!-- Tombol Tambah -->
-        <div class="flex justify-end mb-6">
-            <button @click="showTambah = true" class="bg-emerald-500 text-white px-4 py-2 rounded-lg flex items-center gap-2 shadow-md hover:bg-emerald-600">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-                </svg>
-                Tambah Santri Baru
-            </button>
-        </div>
-
-        <!-- Modal Tambah Santri -->
-        <div x-show="showTambah" x-transition class="fixed inset-0 z-20 flex justify-center items-center bg-black/50 backdrop-blur-sm px-4">
-    <div @click.away="showTambah = false" class="bg-white p-6 rounded-md w-full max-w-md shadow-lg">
-        <h3 class="text-2xl font-semibold mb-4 text-center">Form Tambah Santri Baru</h3>
-        <form id="tambahSiswaForm" class="space-y-4">
-            <!-- Nama -->
-            <div>
-                <label class="block mb-1 font-medium">Nama:</label>
-                <input type="text" class="w-full p-2 border rounded-md focus:ring focus:ring-emerald-300" id="tambahNama" placeholder="Nama Santri">
-            </div>
-
-            <!-- Jenis Kelamin -->
-            <div>
-                <label class="block mb-1 font-medium">Jenis Kelamin:</label>
-                <input type="text" class="w-full p-2 border rounded-md focus:ring focus:ring-emerald-300" id="tambahJenisKelamin" placeholder="Jenis Kelamin">
-            </div>
-
-            <!-- Usia -->
-            <div>
-                <label class="block mb-1 font-medium">Usia:</label>
-                <input type="number" class="w-full p-2 border rounded-md focus:ring focus:ring-emerald-300" id="tambahUsia" placeholder="Usia">
-            </div>
-
-            <!-- Orang Tua -->
-            <div>
-                <label class="block mb-1 font-medium">Orang Tua:</label>
-                <input type="number" class="w-full p-2 border rounded-md focus:ring focus:ring-emerald-300" id="tambahOrtu" placeholder="Usia">
-            </div>
-
-            <!-- Status -->
-            <div>
-                <label class="block mb-1 font-medium">Status:</label>
-                <select class="w-full p-2 border rounded-md focus:ring focus:ring-emerald-300" id="tambahStatus">
-                    <option value="">Pilih Status</option>
-                    <option value="Diterima">Diterima</option>
-                    <option value="Menunggu">Menunggu</option>
-                    <option value="Ditolak">Ditolak</option>
-                </select>
-            </div>
-
-            <!-- Tombol Simpan -->
-            <button type="button" class="w-full py-2 px-4 bg-emerald-500 text-white rounded-md hover:bg-emerald-600" onclick="saveTambahSiswa()">Simpan</button>
-        </form>
-        <!-- Tombol Tutup -->
-        <button class="mt-4 w-full py-2 bg-red-500 text-white rounded-md hover:bg-red-600" @click="showTambah = false">Tutup</button>
-    </div>
-</div>
-
 
     <!-- Stats Cards -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
@@ -277,7 +215,7 @@
 </div>
 
 <!-- Tailwind CSS styled table for dynamic rendering -->
-<div class="container mx-auto mt-8 px-4">
+<div class="max-w-7xl mx-auto mt-8 px-4">
   <div class="w-full overflow-x-auto rounded-md">
     <table class="min-w-full bg-white shadow-md text-sm">
       <thead class="bg-gray-200">
@@ -300,7 +238,7 @@
 
 <!-- Modal Detail -->
 <div id="modalDetail" class="hidden fixed inset-0 z-50 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center transition-opacity duration-300 px-4">
-  <div class="bg-white rounded-xl shadow-xl w-full max-w-3xl p-8 animate-scaleIn overflow-y-auto max-h-[80vh] space-y-6">
+  <div class="bg-white w-full max-w-2xl rounded-lg shadow-lg p-8 animate-scaleIn overflow-y-auto max-h-[80vh] space-y-6">
     <h2 class="text-2xl font-bold text-center text-emerald-600 mb-4">Detail Santri</h2>
     <div>
       <label class="block font-medium text-gray-700 mb-1">Nama Santri</label>
@@ -371,8 +309,8 @@
     <h2 class="text-2xl font-bold text-red-600 mb-2">Konfirmasi Hapus</h2>
     <p class="text-gray-700 mb-4" id="hapusNama"></p>
     <div class="flex flex-col sm:flex-row justify-center gap-4">
-      <button onclick="confirmDelete()" class="flex-1 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg">Ya, Hapus</button>
-      <button onclick="closeHapus()" class="flex-1 bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded-lg">Batal</button>
+      <button onclick="confirmDelete()" class="flex-1 bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg">Ya, Hapus</button>
+      <button onclick="closeHapus()" class="flex-1 bg-gray-400 hover:bg-gray-500 text-white px-3 py-2 rounded-lg">Batal</button>
     </div>
   </div>
 </div>

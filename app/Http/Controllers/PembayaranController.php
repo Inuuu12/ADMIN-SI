@@ -116,13 +116,42 @@ class PembayaranController extends Controller
 
             if ($status->transaction_status === 'settlement') {
                 $pendaftaran->status_pembayaran = 'sudah';
+
+                // Insert into tblsantri if not exists
+                $existingSantri = \App\Models\Santri::where('pendaftaran_id', $pendaftaran->id)->first();
+                if (!$existingSantri) {
+                    // Generate NIS
+                    $yearPrefix = \Carbon\Carbon::parse($pendaftaran->created_at)->format('y'); // 2 digit year
+                    $birthDatePart = \Carbon\Carbon::parse($pendaftaran->tanggal_lahir)->format('dmy'); // ddmmyy
+
+                    // Count existing santri with same yearPrefix and birthDatePart to get sequence number
+                    $count = \App\Models\Santri::where('nis', 'like', $yearPrefix . $birthDatePart . '%')->count();
+                    $sequence = str_pad($count + 1, 3, '0', STR_PAD_LEFT);
+
+                    $nis = $yearPrefix . $birthDatePart . $sequence;
+
+                    \App\Models\Santri::create([
+                        'pendaftaran_id' => $pendaftaran->id,
+                        'nis' => $nis,
+                        'nama_santri' => $pendaftaran->nama_santri,
+                        'tempat_lahir' => $pendaftaran->tempat_lahir,
+                        'tanggal_lahir' => $pendaftaran->tanggal_lahir,
+                        'jenis_kelamin' => $pendaftaran->jenis_kelamin,
+                        'alamat' => $pendaftaran->alamat,
+                        'nama_orang_tua' => $pendaftaran->nama_orang_tua,
+                        'no_hp' => $pendaftaran->no_hp,
+                        'akta_kelahiran' => $pendaftaran->akta_kelahiran,
+                        'kartu_keluarga' => $pendaftaran->kartu_keluarga,
+                    ]);
+                }
+                $pendaftaran->save();
             } elseif ($status->transaction_status === 'pending') {
                 $pendaftaran->status_pembayaran = 'pending';
+                $pendaftaran->save();
             } else {
                 $pendaftaran->status_pembayaran = 'gagal';
+                $pendaftaran->save();
             }
-
-            $pendaftaran->save();
         } catch (\Exception $e) {
             return abort(500, 'Gagal mengambil status transaksi dari Midtrans: ' . $e->getMessage());
         }

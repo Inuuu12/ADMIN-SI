@@ -64,7 +64,7 @@
   </div>
 
   <!-- Guru Grid -->
-  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+  <div class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-4">
     <template x-for="(guru, index) in filteredGurus()" :key="guru.id">
       <div class="guru-card animate-scaleIn" x-show="guru">
         <!-- Gambar -->

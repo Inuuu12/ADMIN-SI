@@ -104,7 +104,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 
 
-// Admin Routes
 Route::prefix('admin')->middleware(['auth', 'web'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/akademik', [GuruController::class, 'webIndex'])->name('akademik');
@@ -174,19 +173,26 @@ Route::prefix('admin')->middleware(['auth', 'web'])->group(function () {
             // Redirect ke halaman sebelumnya
             return redirect()->back();
         }
-        return view('ADMIN-SI.kelas');
+        $kelas = \App\Models\Kelas::all();
+        return view('ADMIN-SI.kelas', compact('kelas'));
     })->name('kelas');
 
-    Route::get('/santri', function () {
-        $user = Auth::user();
-        if (!$user || $user->isAdmin() === false) {
-            Session::flash('error', 'Anda tidak memiliki akses ke halaman ini.');
+    Route::post('/kelas', [\App\Http\Controllers\KelasController::class, 'store'])->name('kelas.store');
+    Route::post('/kelas/{id}/update', [\App\Http\Controllers\KelasController::class, 'update'])->name('kelas.update');
+    Route::delete('/kelas/{id}/delete', [\App\Http\Controllers\KelasController::class, 'destroy'])->name('kelas.destroy');
 
-            // Redirect ke halaman sebelumnya
-            return redirect()->back();
-        }
-        return view('ADMIN-SI.siswa');
-    })->name('santri');
+    Route::get('/kelas/{id}', [\App\Http\Controllers\KelasController::class, 'detail'])->name('kelas.detail');
+    Route::post('/kelas/{id}/tambah-santri', [\App\Http\Controllers\KelasController::class, 'updateSantriKelas'])->name('kelas.tambahSantri');
+    Route::post('/kelas/{kelasId}/hapus-santri/{santriId}', [\App\Http\Controllers\KelasController::class, 'removeSantriFromKelas'])->name('kelas.hapusSantri');
+    Route::post('/kelas/{kelasId}/hapus-semua-santri', [\App\Http\Controllers\KelasController::class, 'removeAllSantriFromKelas'])->name('kelas.hapusSemuaSantri');
+
+    Route::get('/santri', [\App\Http\Controllers\SantriController::class, 'index'])->name('santri');
+
+    Route::post('/santri', [\App\Http\Controllers\SantriController::class, 'store'])->name('santri.store');
+
+    Route::get('/santri/{id}/edit', [\App\Http\Controllers\SantriController::class, 'edit'])->name('santri.edit');
+    Route::put('/santri/{id}', [\App\Http\Controllers\SantriController::class, 'update'])->name('santri.update');
+    Route::delete('/santri/{id}', [\App\Http\Controllers\SantriController::class, 'destroy'])->name('santri.destroy');
 
     Route::get('/profil', function () {
         $user = Auth::user();
