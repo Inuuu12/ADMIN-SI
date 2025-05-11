@@ -26,15 +26,20 @@
       <span>Dashboard</span>
     </a>
 
-    <!-- Kelas Menu -->
-    <a href="{{ route('kelas') }}"
-       class="flex items-center px-4 py-2 sidebar-hover-custom rounded-lg group text-white
-       @if(request()->is('admin/kelas*')) sidebar-active @endif">
-      <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
-      </svg>
-      <span>Kelas</span>
+    <!-- SPP Menu
+    <a href="{{ route('spp') }}" class="flex items-center px-4 py-2 hover:bg-white/10 rounded-lg group {{ request()->is('spp*') ? 'bg-green-600 text-white': 'text-white' }}">
+        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+        </svg>
+        <span>SPP</span>
+    </a> -->
+
+      <!-- Kelas Menu -->
+      <a href="{{ route('kelas') }}" class="flex items-center px-4 py-2 hover:bg-white/10 rounded-lg group {{ request()->is('kelas*') ? 'bg-green-600 text-white': 'text-white' }}">
+        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+        </svg>
+        <span>Kelas</span>
     </a>
 
     <!-- Akademik Menu -->
@@ -81,21 +86,26 @@
       <span>Panduan</span>
     </a>
 
-    {{-- Uncomment if needed --}}
-    {{-- <a href="{{ route('aduan') }}" class="...">Aduan</a> --}}
-  </div>
+    <!-- Aduan Menu -->
+    {{-- <a href="{{ route('aduan') }}" class="flex items-center px-4 py-2 hover:bg-white/10 rounded-lg group {{ request()->is('aduan*') ? 'bg-green-600 text-white': 'text-white' }}">
+    {{-- <a href="{{ route('aduan') }}" class="flex items-center px-4 py-2 hover:bg-white/10 rounded-lg group {{ request()->is('aduan*') ? 'bg-green-600 text-white': 'text-white' }}">
+        <svg class="w-5 h-5 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l9-6 9 6v8a9 9 0 0 1-18 0z" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M8 16h8" />
+        </svg>
+        <span>Aduan</span>
+    </a> --}}
+    </div>
 
-  <!-- Logout Button -->
-  <div class="xl mb-8">
-    <button @click="open = true"
-            class="transition-colors duration-200 hover:text-red-700 flex items-center gap-2 text-left px-4 py-2 sidebar-hover-custom rounded-lg text-white
-            @if(request()->is('keluar*')) sidebar-active @endif">
-      <svg class="w-5 h-5 mr-3 hover:stroke-red-700" fill="none" viewBox="0 0 24 24"
-           stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M15 12H3m12 0l-4 4m4-4l-4-4m8-5H9a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2z"/>
-      </svg>
-      <span>Keluar</span>
+    <!-- Tombol Logout agak naik -->
+    <div class="xl mb-8">
+    <button @click="open = true" class="transition-colors duration-200 hover:text-red-700  flex items-center gap-2 text-left px-4 py-2 hover:bg-white/10 rounded-lg transition {{ request()->is('keluar*') ? 'bg-green-600 text-white': 'text-white' }}">
+    <button @click="open = true" class="transition-colors duration-200 hover:text-red-700  flex items-center gap-2 text-left px-4 py-2 hover:bg-white/10 rounded-lg transition {{ request()->is('keluar*') ? 'bg-green-600 text-white': 'text-white' }}">
+            <!-- Icon Logout -->
+        <svg class="w-5 h-5 mr-3 hover:stroke-red-700" xmlns="hover:red-700 http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class=" w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12H3m12 0l-4 4m4-4l-4-4m8-5H9a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2z" />
+        </svg>
+        <span>Keluar</span>
     </button>
   </div>
 </div>

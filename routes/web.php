@@ -177,22 +177,16 @@ Route::prefix('admin')->middleware(['auth', 'web'])->group(function () {
         return view('ADMIN-SI.kelas', compact('kelas'));
     })->name('kelas');
 
-    Route::post('/kelas', [\App\Http\Controllers\KelasController::class, 'store'])->name('kelas.store');
-    Route::post('/kelas/{id}/update', [\App\Http\Controllers\KelasController::class, 'update'])->name('kelas.update');
-    Route::delete('/kelas/{id}/delete', [\App\Http\Controllers\KelasController::class, 'destroy'])->name('kelas.destroy');
+    Route::get('/santri', function () {
+        $user = Auth::user();
+        if (!$user || $user->isAdmin() === false) {
+            Session::flash('error', 'Anda tidak memiliki akses ke halaman ini.');
 
-    Route::get('/kelas/{id}', [\App\Http\Controllers\KelasController::class, 'detail'])->name('kelas.detail');
-    Route::post('/kelas/{id}/tambah-santri', [\App\Http\Controllers\KelasController::class, 'updateSantriKelas'])->name('kelas.tambahSantri');
-    Route::post('/kelas/{kelasId}/hapus-santri/{santriId}', [\App\Http\Controllers\KelasController::class, 'removeSantriFromKelas'])->name('kelas.hapusSantri');
-    Route::post('/kelas/{kelasId}/hapus-semua-santri', [\App\Http\Controllers\KelasController::class, 'removeAllSantriFromKelas'])->name('kelas.hapusSemuaSantri');
-
-    Route::get('/santri', [\App\Http\Controllers\SantriController::class, 'index'])->name('santri');
-
-    Route::post('/santri', [\App\Http\Controllers\SantriController::class, 'store'])->name('santri.store');
-
-    Route::get('/santri/{id}/edit', [\App\Http\Controllers\SantriController::class, 'edit'])->name('santri.edit');
-    Route::put('/santri/{id}', [\App\Http\Controllers\SantriController::class, 'update'])->name('santri.update');
-    Route::delete('/santri/{id}', [\App\Http\Controllers\SantriController::class, 'destroy'])->name('santri.destroy');
+            // Redirect ke halaman sebelumnya
+            return redirect()->back();
+        }
+        return view('ADMIN-SI.siswa');
+    })->name('santri');
 
     Route::get('/profil', function () {
         $user = Auth::user();
@@ -226,3 +220,8 @@ Route::get('/pembayaran/sukses', function () {
     return view('pembayaran.sukses');
 });
 Route::get('/pembayaran/sukses', [PembayaranController::class, 'suksesPembayaran']);
+
+//Cetak PDF
+Route::get('/pengajar/cetak-pdf', [App\Http\Controllers\GuruController::class, 'cetakPDF'])->name('pengajar.cetak.pdf');
+Route::get('/invoice/cetak/{id}', [PembayaranController::class, 'cetakInvoice'])->name('invoice.cetak');
+

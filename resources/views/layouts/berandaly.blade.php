@@ -15,50 +15,50 @@
     </style>
 </head>
 
-<body class="pt-32">
+<body class="pt-24">
 <nav class="fixed top-0 left-0 w-full bg-white shadow-md z-50">
     <div class="max-w-7xl mx-auto flex justify-between items-center px-4 md:px-10 py-6">
         <!-- Logo -->
         <a href="{{ route('beranda') }}" class="flex items-center space-x-3 text-xl font-bold text-gray-700">
             <img src="{{ asset('img/logotpanurul.png') }}" alt="Logo TPQ" class="h-14 w-auto">
-            <span class="text-lg sm:text-xl">TPQ Nurul Iman</span>
+            <span class="text-xl sm:text-xl">TPQ Nurul Iman</span>
         </a>
 
         <!-- Menu Desktop -->
-        <ul class="hidden md:flex space-x-8 text-sm lg:text-base">
-            <li><a href="{{ route('beranda') }}" class="text-gray-600 hover:text-green-500 transition">Beranda</a></li>
+        <ul class="hidden md:flex space-x-8 text-lg lg:text-base">
+            <li><a href="{{ route('beranda') }}" class="text-gray-600 hover:text-green-500 transition text-lg">Beranda</a></li>
             <li class="relative group">
-                <button onclick="toggleDropdown('profilDropdown')" class="flex items-center text-gray-600 hover:text-green-500 transition">
+                <button onclick="toggleDropdown('profilDropdown')" class="flex items-center text-gray-600 text-lg hover:text-green-500 transition">
                     Profil <i class="ph ph-caret-down ml-1"></i>
                 </button>
-                <ul id="profilDropdown" class="absolute hidden bg-white shadow-md mt-2 py-2 w-40 text-sm lg:text-base">
-                    <li><a href="{{ route('tentang') }}" class="block px-4 py-2 text-gray-600 hover:bg-green-100">Tentang</a></li>
-                    <li><a href="{{ route('pengajar') }}" class="block px-4 py-2 text-gray-600 hover:bg-green-100">Guru</a></li>
-                    <li><a href="{{ route('program') }}" class="block px-4 py-2 text-gray-600 hover:bg-green-100">Program</a></li>
+                <ul id="profilDropdown" class="absolute hidden bg-white shadow-md mt-2 py-2 w-40 text-lg lg:text-base">
+                    <li><a href="{{ route('tentang') }}" class="block px-4 py-2 text-gray-600 hover:bg-green-100 text-lg">Tentang</a></li>
+                    <li><a href="{{ route('pengajar') }}" class="block px-4 py-2 text-gray-600 hover:bg-green-100 text-lg">Guru</a></li>
+                    <li><a href="{{ route('program') }}" class="block px-4 py-2 text-gray-600 hover:bg-green-100 text-lg">Program</a></li>
                 </ul>
             </li>
-            <li><a href="{{ route('galeri') }}" class="text-gray-600 hover:text-green-500 transition">Galeri</a></li>
+            <li><a href="{{ route('galeri') }}" class="text-gray-600 hover:text-green-500 transition text-lg">Galeri</a></li>
             <li class="relative group">
-                <button onclick="toggleDropdown('layananDropdown')" class="flex items-center text-gray-600 hover:text-green-500 transition">
+                <button onclick="toggleDropdown('layananDropdown')" class="flex items-center text-gray-600 hover:text-green-500 transition text-lg">
                     Layanan <i class="ph ph-caret-down ml-1"></i>
                 </button>
                 <ul id="layananDropdown" class="absolute hidden bg-white shadow-md mt-2 py-2 w-48 text-sm lg:text-base">
-                    <li><a href="{{ route('informasi_pendaftaran') }}" class="block px-4 py-2 text-gray-600 hover:bg-green-100">Informasi Pendaftaran</a></li>
-                    <li><a href="{{ route('pendaftaran') }}" class="block px-4 py-2 text-gray-600 hover:bg-green-100">Pendaftaran Online</a></li>
+                    <li><a href="{{ route('informasi_pendaftaran') }}" class="block px-4 py-2 text-gray-600 hover:bg-green-100 text-lg">Informasi Pendaftaran</a></li>
+                    <li><a href="{{ route('pendaftaran') }}" class="block px-4 py-2 text-gray-600 hover:bg-green-100 text-lg">Pendaftaran Online</a></li>
                 </ul>
             </li>
-            <li><a href="{{ route('kontak') }}" class="text-gray-600 hover:text-green-500 transition">Kontak</a></li>
+            <li><a href="{{ route('kontak') }}" class="text-gray-600 hover:text-green-500 transition text-lg">Kontak</a></li>
         </ul>
 
         <!-- Profile (Desktop Only) -->
         <div class="hidden md:block">
             @if(auth()->check() && auth()->user()->role === 'user')
             <div class="relative group">
-                <button onclick="toggleDropdown('userProfileDropdown')" class="flex items-center text-gray-600 hover:text-green-500 transition">
-                    <i class="ph ph-user-circle text-lg mr-2"></i> {{ auth()->user()->name }}
+                <button onclick="toggleDropdown('userProfileDropdown')" class="flex items-center text-gray-600 hover:text-green-500 transition text-lg">
+                    <i class="ph ph-user-circle text-xl mr-2"></i> {{ auth()->user()->name }}
                     <i class="ph ph-caret-down ml-1"></i>
                 </button>
-                <ul id="userProfileDropdown" class="absolute right-0 hidden bg-white shadow-md mt-2 py-2 w-48 text-gray-600 text-sm lg:text-base">
+                <ul id="userProfileDropdown" class="absolute right-0 hidden bg-white shadow-md mt-2 py-2 w-48 text-gray-600 text-sm lg:text-base text-lg">
                     <li>
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
@@ -68,8 +68,8 @@
                 </ul>
             </div>
             @else
-            <a href="{{ route('login') }}" class="text-gray-600 border border-gray-300 rounded-lg py-2 px-4 hover:border-green-500 hover:text-green-500 transition">
-                <i class="ph ph-user-circle text-lg mr-2"></i> Masuk
+            <a href="{{ route('login') }}" class="text-gray-600 border border-gray-300 rounded-lg py-2 px-4 hover:border-green-500 hover:text-green-500 transition text-lg">
+                <i class="ph ph-user-circle text-xl mr-2"></i> Masuk
             </a>
             @endif
         </div>
@@ -111,7 +111,7 @@
         <div class="relative group mt-2">
             <button onclick="toggleDropdown('userMobileDropdown')"
                 class="w-full flex justify-between items-center text-gray-600 border border-gray-300 rounded-lg py-2 px-4 hover:border-green-500 hover:text-green-500 transition">
-                <i class="ph ph-user-circle text-lg mr-2"></i> {{ auth()->user()->name }}
+                <i class="ph ph-user-circle text-xl mr-2"></i> {{ auth()->user()->name }}
                 <i class="ph ph-caret-down ml-2"></i>
             </button>
             <div id="userMobileDropdown" class="hidden mt-1 bg-white border border-gray-200 rounded-md shadow-md">
@@ -123,7 +123,6 @@
         </div>
         @else
         <a href="{{ route('login') }}" class="block text-gray-600 border border-gray-300 rounded-lg text-center mt-2 py-2 hover:border-green-500 hover:text-green-500 transition">
-
             <i class="ph ph-user-circle text-lg mr-2"></i> Masuk
         </a>
         @endif
