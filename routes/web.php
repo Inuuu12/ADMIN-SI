@@ -8,6 +8,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PendaftaranController;
 use App\Http\Controllers\DashboardController;
 use App\Models\User;
+use App\Http\Controllers\SantriController;
+use App\Http\Controllers\KelasController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\PembayaranController;
@@ -177,16 +179,22 @@ Route::prefix('admin')->middleware(['auth', 'web'])->group(function () {
         return view('ADMIN-SI.kelas', compact('kelas'));
     })->name('kelas');
 
-    Route::get('/santri', function () {
-        $user = Auth::user();
-        if (!$user || $user->isAdmin() === false) {
-            Session::flash('error', 'Anda tidak memiliki akses ke halaman ini.');
 
-            // Redirect ke halaman sebelumnya
-            return redirect()->back();
-        }
-        return view('ADMIN-SI.siswa');
-    })->name('santri');
+    Route::get('/santri', [SantriController::class, 'index'])->name('santri');
+
+    Route::get('/kelas/{id}', [KelasController::class, 'detail'])->name('kelas.detail');
+
+    Route::delete('/kelas/{id}', [KelasController::class, 'destroy'])->name('kelas.destroy');
+
+    Route::put('/kelas/{id}', [KelasController::class, 'update'])->name('kelas.update');
+
+    Route::post('/kelas', [KelasController::class, 'store'])->name('kelas.store');
+
+    Route::delete('/kelas/{kelasId}/hapus-semua-santri', [KelasController::class, 'removeAllSantriFromKelas'])->name('kelas.hapusSemuaSantri');
+
+    Route::post('/kelas/{kelasId}/hapus-santri/{santriId}', [KelasController::class, 'removeSantriFromKelas'])->name('kelas.hapusSantri');
+
+    Route::post('/kelas/{id}/tambah-santri', [KelasController::class, 'updateSantriKelas'])->name('kelas.tambahSantri');
 
     Route::get('/profil', function () {
         $user = Auth::user();
