@@ -11,11 +11,10 @@ class NotificationController extends Controller
     {
         $user = Auth::user();
         if (!$user) {
-            return response()->json(['message' => 'Unauthorized'], 401);
+            return response()->json(['message' => 'Unauthorized'], 403);
         }
 
-        $notification = $user->notifications()->where('id', $id)->first();
-
+        $notification = $user->unreadNotifications()->find($id);
         if (!$notification) {
             return response()->json(['message' => 'Notification not found'], 404);
         }

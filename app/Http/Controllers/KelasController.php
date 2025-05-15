@@ -33,17 +33,59 @@ class KelasController extends Controller
     /**
      * Show the detail kelas page with santri list.
      */
-    public function detail($id)
+    public function detail(Request $request, $id)
     {
         $kelas = Kelas::findOrFail($id);
-        $santris = Santri::where('id_kelas', $id)->get();
+
+        $query = Santri::where('id_kelas', $id);
+
+        // Search by nama_santri
+        if ($request->has('search') && $request->search != '') {
+            $search = $request->search;
+            $query->where('nama_santri', 'like', '%' . $search . '%');
+        }
+
+        // Filter by jenis_kelamin
+        if ($request->has('jenis_kelamin') && $request->jenis_kelamin != '') {
+            $query->where('jenis_kelamin', $request->jenis_kelamin);
+        }
+
+        // Sorting
+        if ($request->has('sort_by')) {
+            switch ($request->sort_by) {
+                case 'nama_asc':
+                    $query->orderBy('nama_santri', 'asc');
+                    break;
+                case 'nama_desc':
+                    $query->orderBy('nama_santri', 'desc');
+                    break;
+                case 'terlama':
+                    $query->orderBy('created_at', 'asc');
+                    break;
+                case 'terbaru':
+                default:
+                    $query->orderBy('created_at', 'desc');
+                    break;
+            }
+        } else {
+            $query->orderBy('created_at', 'desc');
+        }
+
+        $santris = $query->paginate(10);
 
         // Calculate age for each santri
-        $santris->transform(function ($santri) {
+        $santris->getCollection()->transform(function ($santri) {
             $birthDate = Carbon::parse($santri->tanggal_lahir);
             $santri->umur = $birthDate->age;
             return $santri;
         });
+
+        if ($request->ajax()) {
+            return response()->json([
+                'santris' => $santris,
+                'totalSantri' => $santris->total(),
+            ]);
+        }
 
         // Get santri with null id_kelas for tambah checkbox list
         $santriNullKelas = Santri::whereNull('id_kelas')->get();

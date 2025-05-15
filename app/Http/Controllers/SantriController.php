@@ -7,10 +7,52 @@ use App\Models\Santri;
 
 class SantriController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $santris = Santri::all();
-        $totalSantri = $santris->count();
+        $query = Santri::query();
+
+        // Search by nama_santri
+        if ($request->has('search') && $request->search != '') {
+            $search = $request->search;
+            $query->where('nama_santri', 'like', '%' . $search . '%');
+        }
+
+        // Filter by jenis_kelamin
+        if ($request->has('jenis_kelamin') && $request->jenis_kelamin != '') {
+            $query->where('jenis_kelamin', $request->jenis_kelamin);
+        }
+
+        // Sorting
+        if ($request->has('sort_by')) {
+            switch ($request->sort_by) {
+                case 'nama_asc':
+                    $query->orderBy('nama_santri', 'asc');
+                    break;
+                case 'nama_desc':
+                    $query->orderBy('nama_santri', 'desc');
+                    break;
+                case 'terlama':
+                    $query->orderBy('created_at', 'asc');
+                    break;
+                case 'terbaru':
+                default:
+                    $query->orderBy('created_at', 'desc');
+                    break;
+            }
+        } else {
+            $query->orderBy('created_at', 'desc');
+        }
+
+        $santris = $query->paginate(10);
+        $totalSantri = $santris->total();
+
+        if ($request->ajax()) {
+            return response()->json([
+                'santris' => $santris,
+                'totalSantri' => $totalSantri,
+            ]);
+        }
+
         return view('ADMIN-SI.santri', compact('santris', 'totalSantri'));
     }
 

@@ -4,9 +4,16 @@
 <div x-data="{ showTambah: false }" class="p-6 bg-[#F8F9FD] min-h-screen">
 
     <!-- Title and Search -->
-    <div class="flex flex-col md:flex-row justify-between items-center mb-2 gap-4">
-        <h1 class="text-2xl font-bold text-[#2B3674]">Kelas: {{ $kelas->kelas }}</h1>
-        <input type="text" id="searchSantri" placeholder="Cari Nama Santri..." class="border rounded-lg px-4 py-3 text-base w-48" oninput="filterAndSortSantri()">
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-2xl font-bold text-[#2B3674]">{{ $kelas->kelas }}</h1>
+        <form method="GET" action="{{ route('kelas.detail', ['id' => $kelas->id]) }}" class="relative w-64">
+            <input type="text" name="search" id="searchSantri" placeholder="Cari Nama Santri..." class="w-full pl-10 pr-4 py-2 text-gray-500 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500" value="{{ request('search') }}">
+            <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg"
+              fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M21 21l-4.35-4.35M17 10a7 7 0 1 0-7 7 7 7 0 0 0 7-7z" />
+            </svg>
+        </form>
     </div>
 
     <!-- Total Santri Card -->
@@ -22,19 +29,19 @@
         </div>
     </div>
 
-    <div class="flex justify-between mb-6">
+    <form method="GET" action="{{ route('kelas.detail', ['id' => $kelas->id]) }}" class="flex justify-between mb-6">
         <!-- Filter & Sorting Controls -->
         <div class="bg-white p-2 rounded-xl flex items-center shadow gap-6 max-w-md">
-            <select id="filterJenisKelamin" class="border rounded-lg px-4 py-3 text-base" onchange="filterAndSortSantri()">
-                <option value="">Semua Jenis Kelamin</option>
-                <option value="L">Laki-laki</option>
-                <option value="P">Perempuan</option>
+            <select name="jenis_kelamin" id="filterJenisKelamin" class="border rounded-lg px-4 py-3 text-base" onchange="this.form.submit()">
+                <option value="" {{ request('jenis_kelamin') == '' ? 'selected' : '' }}>Semua Jenis Kelamin</option>
+                <option value="L" {{ request('jenis_kelamin') == 'L' ? 'selected' : '' }}>Laki-laki</option>
+                <option value="P" {{ request('jenis_kelamin') == 'P' ? 'selected' : '' }}>Perempuan</option>
             </select>
-            <select id="sortBy" class="border rounded-lg px-4 py-3 text-base" onchange="filterAndSortSantri()">
-                <option value="terbaru">Terbaru</option>
-                <option value="terlama">Terlama</option>
-                <option value="nama_asc">Nama (A-Z)</option>
-                <option value="nama_desc">Nama (Z-A)</option>
+            <select name="sort_by" id="sortBy" class="border rounded-lg px-4 py-3 text-base" onchange="this.form.submit()">
+                <option value="terbaru" {{ request('sort_by') == 'terbaru' ? 'selected' : '' }}>Terbaru</option>
+                <option value="terlama" {{ request('sort_by') == 'terlama' ? 'selected' : '' }}>Terlama</option>
+                <option value="nama_asc" {{ request('sort_by') == 'nama_asc' ? 'selected' : '' }}>Nama (A-Z)</option>
+                <option value="nama_desc" {{ request('sort_by') == 'nama_desc' ? 'selected' : '' }}>Nama (Z-A)</option>
             </select>
         </div>
 
@@ -48,7 +55,7 @@
                 Tambah
             </button>
         </div>
-    </div>
+    </form>
 
     <!-- Modal Add Santri -->
     <div x-show="showTambah" x-transition class="fixed inset-0 z-50 flex justify-center items-center bg-black/50 backdrop-blur-sm px-4 overflow-auto">
@@ -92,7 +99,7 @@
             <tbody>
                 @foreach ($santris as $index => $santri)
                 <tr class="border-b hover:bg-gray-50">
-                    <td class="px-6 py-4 text-center">{{ $index + 1 }}</td>
+                    <td class="px-6 py-4 text-center">{{ $santris->firstItem() + $index }}</td>
                     <td class="px-6 py-4 text-center">{{ $santri->nis }}</td>
                     <td class="px-6 py-4 text-center">{{ $santri->nama_santri }}</td>
                     <td class="px-6 py-4 text-center">{{ $santri->umur }}</td>
@@ -115,54 +122,14 @@
                 @endforeach
             </tbody>
         </table>
+        <div class="mt-4">
+            {{ $santris->withQueryString()->links() }}
+        </div>
     </div>
 
 </div>
 
 <script>
-    function filterAndSortSantri() {
-        const searchInput = document.getElementById('searchSantri').value.toLowerCase();
-        const filterGender = document.getElementById('filterJenisKelamin').value;
-        const sortBy = document.getElementById('sortBy').value;
-
-        const table = document.getElementById('santriTable');
-        const rows = Array.from(table.getElementsByTagName('tbody')[0].getElementsByTagName('tr'));
-
-        // Filter rows
-        let filteredRows = rows.filter(row => {
-            const nameCell = row.getElementsByTagName('td')[2];
-            const genderCell = row.getElementsByTagName('td')[4];
-            const name = nameCell.textContent.toLowerCase();
-            const gender = genderCell.textContent.toLowerCase();
-
-            const matchesName = name.includes(searchInput);
-            const matchesGender = filterGender === '' || (filterGender.toLowerCase() === 'l' && gender === 'laki-laki') || (filterGender.toLowerCase() === 'p' && gender === 'perempuan');
-
-            return matchesName && matchesGender;
-        });
-
-        // Sort rows
-        filteredRows.sort((a, b) => {
-            if (sortBy === 'nama_asc') {
-                return a.getElementsByTagName('td')[2].textContent.localeCompare(b.getElementsByTagName('td')[2].textContent);
-            } else if (sortBy === 'nama_desc') {
-                return b.getElementsByTagName('td')[2].textContent.localeCompare(a.getElementsByTagName('td')[2].textContent);
-            } else if (sortBy === 'terbaru') {
-                // Assuming the latest santri are at the end, so reverse order
-                return b.rowIndex - a.rowIndex;
-            } else if (sortBy === 'terlama') {
-                return a.rowIndex - b.rowIndex;
-            }
-            return 0;
-        });
-
-        // Clear table body and append filtered and sorted rows
-        const tbody = table.getElementsByTagName('tbody')[0];
-        tbody.innerHTML = '';
-        filteredRows.forEach(row => tbody.appendChild(row));
-
-        // Update total santri count
-        document.getElementById('totalSantriCount').textContent = filteredRows.length;
-    }
+    // Client-side filtering removed as server-side filtering is implemented
 </script>
 @endsection

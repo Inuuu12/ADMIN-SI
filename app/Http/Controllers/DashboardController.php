@@ -12,7 +12,7 @@ use App\Mail\SantriRejected;
 
 class DashboardController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::user();
         if (!$user || $user->isAdmin() === false) {
@@ -27,9 +27,71 @@ class DashboardController extends Controller
         $menungguCount = Pendaftaran::where('status', 'pending')->count();
         $ditolakCount = Pendaftaran::where('status', 'rejected')->count();
 
-        $pendaftaran = Pendaftaran::all()->map(function ($item) {
+        $query = Pendaftaran::query();
+
+        // Search filter
+        if ($request->has('search') && $request->search != '') {
+            $search = $request->search;
+            $query->where('nama_santri', 'like', '%' . $search . '%');
+        }
+
+        // Status filter
+        if ($request->has('filterStatus') && $request->filterStatus != '') {
+            $statusMap = [
+                'Diterima' => 'accepted',
+                'Menunggu' => 'pending',
+                'Ditolak' => 'rejected',
+            ];
+            $status = $statusMap[$request->filterStatus] ?? null;
+            if ($status) {
+                $query->where('status', $status);
+            }
+        }
+
+        // Age filter
+        if ($request->has('filterUsia') && $request->filterUsia != '') {
+            $ageRange = $request->filterUsia;
+            $query->where(function ($q) use ($ageRange) {
+                if ($ageRange === '11-12') {
+                    $q->whereRaw('TIMESTAMPDIFF(YEAR, tanggal_lahir, CURDATE()) BETWEEN 11 AND 12');
+                } elseif ($ageRange === '13-14') {
+                    $q->whereRaw('TIMESTAMPDIFF(YEAR, tanggal_lahir, CURDATE()) BETWEEN 13 AND 14');
+                } elseif ($ageRange === '15+') {
+                    $q->whereRaw('TIMESTAMPDIFF(YEAR, tanggal_lahir, CURDATE()) >= 15');
+                }
+            });
+        }
+
+        // Sorting
+        if ($request->has('sortBy')) {
+            switch ($request->sortBy) {
+                case 'nama_asc':
+                    $query->orderBy('nama_santri', 'asc');
+                    break;
+                case 'nama_desc':
+                    $query->orderBy('nama_santri', 'desc');
+                    break;
+                case 'terlama':
+                    $query->orderBy('created_at', 'asc');
+                    break;
+                case 'terbaru':
+                default:
+                    $query->orderBy('created_at', 'desc');
+                    break;
+            }
+        } else {
+            $query->orderBy('created_at', 'desc');
+        }
+
+        $pendaftaran = $query->paginate(5)->withQueryString();
+
+        $pendaftaran->getCollection()->transform(function ($item) {
             $tanggalLahir = Carbon::parse($item->tanggal_lahir);
             $usia = $tanggalLahir->age; // Calculate age from tanggal_lahir
+
+            // Transform file paths to full URLs
+            $aktaKelahiranUrl = $item->akta_kelahiran ? asset('gambar/akta_kelahiran/' . $item->akta_kelahiran) : null;
+            $kartuKeluargaUrl = $item->kartu_keluarga ? asset('gambar/kartu_keluarga/' . $item->kartu_keluarga) : null;
 
             return [
                 'id' => $item->id,
@@ -41,8 +103,8 @@ class DashboardController extends Controller
                 'nama_orang_tua' => $item->nama_orang_tua,
                 'no_hp' => $item->no_hp,
                 'alamat' => $item->alamat,
-                'akta_kelahiran' => $item->akta_kelahiran,
-                'kartu_keluarga' => $item->kartu_keluarga,
+                'akta_kelahiran' => $aktaKelahiranUrl,
+                'kartu_keluarga' => $kartuKeluargaUrl,
                 'status' => $item->status === 'pending' ? 'Menunggu' : ($item->status === 'accepted' ? 'Diterima' : ($item->status === "rejected" ? "Ditolak" : $item->status)),
             ];
         });

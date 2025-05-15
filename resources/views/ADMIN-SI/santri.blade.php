@@ -1,12 +1,19 @@
 @extends('layouts.app')
 
 @section('content')
-<div x-data="{ showTambah: false, showEdit: false }" class="p-6 bg-[#F8F9FD] min-h-screen">
+    <div x-data="{ showTambah: false, showEdit: false }" class="p-6 bg-[#F8F9FD] min-h-screen">
 
     <!-- Title and Search -->
-    <div class="flex flex-col md:flex-row justify-between items-center mb-2 gap-4">
+    <div class="flex justify-between items-center mb-6">
         <h1 class="text-2xl font-bold text-[#2B3674]">Santri</h1>
-        <input type="text" id="searchNama" placeholder="Cari Nama Santri..." class="border rounded-lg px-4 py-3 text-base w-48" oninput="renderTable()">
+        <form method="GET" action="{{ url('/admin/santri') }}" class="relative w-64">
+            <input type="text" name="search" id="searchNama" placeholder="Cari Nama Santri..." class="w-full pl-10 pr-4 py-2 text-gray-500 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500" value="{{ request('search') }}" onkeydown="if(event.key === 'Enter'){ this.form.submit(); }" />
+            <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg"
+              fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M21 21l-4.35-4.35M17 10a7 7 0 1 0-7 7 7 7 0 0 0 7-7z" />
+            </svg>
+        </form>
     </div>
 
     <!-- Total Santri Card -->
@@ -18,31 +25,32 @@
         </div>
         <div>
             <p class="text-gray-500">Total Santri</p>
-            <h3 class="text-2xl font-bold">{{ $totalSantri ?? 0 }}</h3>
+            <h3 id="totalSantriCount" class="text-2xl font-bold">{{ $santris->count() }}</h3>
         </div>
     </div>
 
-    <div class="flex justify-between mb-6">
-        <!-- Filter & Sorting Controls -->
+    <!-- Filter & Sorting Controls and Tambah Santri Button -->
+    <form method="GET" action="{{ url('/admin/santri') }}" class="flex justify-between mb-6">
+        <input type="hidden" name="search" value="{{ request('search') }}">
         <div class="bg-white p-2 rounded-xl flex items-center shadow gap-6 max-w-md">
-            <select id="filterJenisKelamin" class="border rounded-lg px-3 py-2 text-base" onchange="renderTable()">
-                <option value="">Semua Jenis Kelamin</option>
-                <option value="L">Laki-laki</option>
-                <option value="P">Perempuan</option>
+            <select name="jenis_kelamin" id="filterJenisKelamin" class="border rounded-lg px-3 py-2 text-base" onchange="this.form.submit()">
+                <option value="" {{ request('jenis_kelamin') == '' ? 'selected' : '' }}>Semua Jenis Kelamin</option>
+                <option value="L" {{ request('jenis_kelamin') == 'L' ? 'selected' : '' }}>Laki-laki</option>
+                <option value="P" {{ request('jenis_kelamin') == 'P' ? 'selected' : '' }}>Perempuan</option>
             </select>
-            <select id="sortBy" class="border rounded-lg px-3 py-2 text-base" onchange="renderTable()">
-                <option value="terbaru">Terbaru</option>
-                <option value="terlama">Terlama</option>
-                <option value="nama_asc">Nama (A-Z)</option>
-                <option value="nama_desc">Nama (Z-A)</option>
+            <select name="sort_by" id="sortBy" class="border rounded-lg px-3 py-2 text-base" onchange="this.form.submit()">
+                <option value="terbaru" {{ request('sort_by') == 'terbaru' ? 'selected' : '' }}>Terbaru</option>
+                <option value="terlama" {{ request('sort_by') == 'terlama' ? 'selected' : '' }}>Terlama</option>
+                <option value="nama_asc" {{ request('sort_by') == 'nama_asc' ? 'selected' : '' }}>Nama (A-Z)</option>
+                <option value="nama_desc" {{ request('sort_by') == 'nama_desc' ? 'selected' : '' }}>Nama (Z-A)</option>
             </select>
         </div>
 
-        <!-- Tambah Santri Button -->
-        <button @click="showTambah = true" class="bg-emerald-500 text-white px-4 py-3 text-lg rounded-lg shadow-md hover:bg-emerald-600 whitespace-nowrap">
+        <button type="button" @click="showTambah = true" class="bg-emerald-500 text-white px-4 py-3 text-lg rounded-lg shadow-md hover:bg-emerald-600 whitespace-nowrap">
             Tambah Santri Baru
         </button>
-    </div>
+    </form>
+ 
 
     <!-- Tabel Santri -->
     <div class="bg-white rounded-md overflow-x-auto shadow-md">
@@ -59,25 +67,25 @@
             </thead>
             <tbody>
                 @foreach ($santris as $index => $santri)
-                <tr class="border-b hover:bg-gray-50">
-                    <td class="px-6 py-4 text-center">{{ $index + 1 }}</td>
-                    <td class="px-6 py-4 text-center">{{ $santri->nis }}</td>
-                    <td class="px-6 py-4 text-center">{{ $santri->nama_santri }}</td>
-                    <td class="px-6 py-4 text-center">
+                <tr class="border-b hover:bg-gray-50" data-index="{{ $index }}" data-tanggal="{{ $santri->tanggal_lahir }}">
+                    <td class="px-6 py-3 text-center">{{ $santris->firstItem() + $index }}</td>
+                    <td class="px-6 py-3 text-center">{{ $santri->nis }}</td>
+                    <td class="px-6 py-3 text-center">{{ $santri->nama_santri }}</td>
+                    <td class="px-6 py-3 text-center">
                         @php
                             $birthDate = \Carbon\Carbon::parse($santri->tanggal_lahir);
                             $age = $birthDate->age;
                         @endphp
                         {{ $age }} tahun
                     </td>
-                    <td class="px-6 py-4 text-center">
+                    <td class="px-6 py-3 text-center">
                         {{ $santri->jenis_kelamin == 'P' ? 'Perempuan' : 'Laki-laki' }}
                     </td>
-                    <td class="px-6 py-4 text-center">
+                    <td class="px-6 py-3 text-center">
                         <div class="flex flex-col md:flex-row gap-2 justify-center">
                             <button type="button" onclick="showDetail({{ $index }})" class="bg-blue-500 text-white px-3 py-1 rounded text-sm">Detail</button>
                             <button type="button" onclick="showEdit({{ $index }})" class="bg-yellow-500 text-white px-3 py-1 rounded text-sm">Edit</button>
-                            <form method="POST" action="{{ url('/santri/' . $santri->id) }}" onsubmit="return confirm('Apakah Anda yakin ingin menghapus santri ini?');" class="inline">
+                            <form method="POST" action="{{ url('/admin/santri/' . $santri->id) }}" onsubmit="return confirm('Apakah Anda yakin ingin menghapus santri ini?');" class="inline">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="bg-red-600 text-white px-3 py-1 rounded text-sm">Hapus</button>
@@ -200,130 +208,5 @@
             <button class="w-full py-2 bg-red-500 text-white rounded-md hover:bg-red-600" @click="showEdit = false">Tutup</button>
         </div>
     </div>
-
-    <!-- Modal Detail -->
-    <div id="modalDetail" class="hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center px-4">
-        <div class="bg-white rounded-xl shadow-xl w-full max-w-3xl p-8 overflow-y-auto max-h-[80vh] space-y-6">
-            <h2 class="text-2xl font-bold text-center text-emerald-600 mb-4">Detail Santri</h2>
-            <!-- Detail isi -->
-            <template x-for="(field, label) in {
-                'Nama Santri': 'detailNama',
-                'Jenis Kelamin': 'detailJenisKelamin',
-                'Usia': 'detailUsia',
-                'Nama Orang Tua': 'detailNamaOrangTua',
-                'Tempat Lahir': 'detailTempatLahir',
-                'Tanggal Lahir': 'detailTanggalLahir',
-                'No HP': 'detailNoHp',
-                'Alamat': 'detailAlamat'
-            }" :key="label">
-                <div>
-                    <label class="block font-medium text-gray-700 mb-1" x-text="label"></label>
-                    <div :id="field" class="w-full border rounded px-4 py-2 bg-gray-100 text-gray-800"></div>
-                </div>
-            </template>
-
-            <!-- Akta -->
-            <div>
-                <label class="block font-medium text-gray-700 mb-1">Akta Kelahiran</label>
-                <div id="aktaPreviewContainer" class="w-full border rounded bg-gray-100 p-2 text-gray-800 flex flex-col h-[60vh]">
-                    <iframe id="detailAktaKelahiran" class="w-full flex-grow hidden" frameborder="0"></iframe>
-                    <a id="aktaLink" href="#" target="_blank" class="text-blue-600 underline mt-2">Lihat Akta Kelahiran</a>
-                </div>
-            </div>
-            <!-- KK -->
-            <div>
-                <label class="block font-medium text-gray-700 mb-1">Kartu Keluarga</label>
-                <div id="kkPreviewContainer" class="w-full border rounded bg-gray-100 p-2 text-gray-800 flex flex-col h-[60vh]">
-                    <iframe id="detailKartuKeluarga" class="w-full flex-grow hidden" frameborder="0"></iframe>
-                    <a id="kkLink" href="#" target="_blank" class="text-blue-600 underline mt-2">Lihat Kartu Keluarga</a>
-                </div>
-            </div>
-
-            <button onclick="closeDetail()" class="mt-6 w-full py-2 bg-rose-500 hover:bg-rose-600 text-white rounded-lg">Tutup</button>
-        </div>
-    </div>
 </div>
-
-<script>
-    const santris = @json($santris);
-
-    document.addEventListener('DOMContentLoaded', () => {
-        const today = new Date();
-
-        const maxAge = 5;
-        const minAge = 12;
-
-        const maxDate = new Date(today.getFullYear() - maxAge, today.getMonth(), today.getDate());
-        const minDate = new Date(today.getFullYear() - minAge, today.getMonth(), today.getDate());
-
-        const formatDate = (date) => {
-            const y = date.getFullYear();
-            const m = String(date.getMonth() + 1).padStart(2, '0');
-            const d = String(date.getDate()).padStart(2, '0');
-            return `${y}-${m}-${d}`;
-        };
-
-        const tambahTanggalInput = document.getElementById('tambahTanggalLahir');
-        if (tambahTanggalInput) {
-            tambahTanggalInput.min = formatDate(minDate);
-            tambahTanggalInput.max = formatDate(maxDate);
-        }
-
-        const editTanggalInput = document.getElementById('editTanggalLahir');
-        if (editTanggalInput) {
-            editTanggalInput.min = formatDate(minDate);
-            editTanggalInput.max = formatDate(maxDate);
-        }
-    });
-
-    function renderTable() {
-        const searchInput = document.getElementById('searchNama').value.toLowerCase();
-        const filterGender = document.getElementById('filterJenisKelamin').value;
-        const sortBy = document.getElementById('sortBy').value;
-
-        const table = document.getElementById('santriTable');
-        const rows = Array.from(table.getElementsByTagName('tbody')[0].getElementsByTagName('tr'));
-
-        // Filter rows
-        let filteredRows = rows.filter(row => {
-            const nameCell = row.getElementsByTagName('td')[2];
-            const genderCell = row.getElementsByTagName('td')[4];
-            const name = nameCell.textContent.toLowerCase();
-            const gender = genderCell.textContent.toLowerCase();
-
-            const matchesName = name.includes(searchInput);
-            const matchesGender = filterGender === '' || (filterGender.toLowerCase() === 'l' && gender === 'laki-laki') || (filterGender.toLowerCase() === 'p' && gender === 'perempuan');
-
-            return matchesName && matchesGender;
-        });
-
-        // Sort rows
-        filteredRows.sort((a, b) => {
-            if (sortBy === 'nama_asc') {
-                return a.getElementsByTagName('td')[2].textContent.localeCompare(b.getElementsByTagName('td')[2].textContent);
-            } else if (sortBy === 'nama_desc') {
-                return b.getElementsByTagName('td')[2].textContent.localeCompare(a.getElementsByTagName('td')[2].textContent);
-            } else if (sortBy === 'terbaru') {
-                // Assuming the latest santri are at the end, so reverse order
-                return b.rowIndex - a.rowIndex;
-            } else if (sortBy === 'terlama') {
-                return a.rowIndex - b.rowIndex;
-            }
-            return 0;
-        });
-
-        // Clear table body and append filtered and sorted rows
-        const tbody = table.getElementsByTagName('tbody')[0];
-        tbody.innerHTML = '';
-        filteredRows.forEach(row => tbody.appendChild(row));
-
-        // Update total santri count
-        const totalSantriCountElem = document.getElementById('totalSantriCount');
-        if (totalSantriCountElem) {
-            totalSantriCountElem.textContent = filteredRows.length;
-        }
-    }
-
-    // The rest of the JS functions remain unchanged (showDetail, showEdit, submitEditSiswa, etc.)
-</script>
 @endsection

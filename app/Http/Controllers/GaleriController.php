@@ -240,7 +240,7 @@ class GaleriController extends Controller
             $query->orderBy('tanggal', 'desc');
         }
 
-        $galeris = $query->get();
+        $galeris = $query->paginate(10);
 
         return view('ADMIN-SI.fotokegiatan', compact('galeris'));
     }
