@@ -1,34 +1,48 @@
 @extends('layouts.berandaly')
 
-<div class="w-3/4 mb-[100px] mx-auto drop-shadow">
-    <a href="">
-        <img src="{{ asset('img/bannerpendaftaran.png') }}" alt="">
+<div class="w-11/12 md:w-3/4 mb-[100px] mx-auto drop-shadow-lg">
+    <a href="#">
+        <img src="{{ asset('img/bannerpendaftaran1.png') }}" alt="Banner Pendaftaran" class="rounded-lg mb-6 w-full">
     </a>
-    <div class="flex flex-col p-10 bg-white">
-        <div class="card flex bg-white shadow-sm rounded-lg overflow-hidden w-full md:w-full border border-gray-300">
-            <div class="bg-white rounded-lg p-6 w-full">
-                <h1 class="text-xl font-bold text-gray-800 mb-6 text-center">Pembayaran Awal</h1>
-                
-                <!-- Cek status pembayaran -->
-                @if($pendaftaran->status_pembayaran == 'sudah') 
-                    <div class="mb-6">
-                        <p class="text-sm text-gray-600">Pembayaran Anda sudah berhasil</p>
-                        <p class="text-2xl font-bold text-green-600">Terima kasih telah melakukan pembayaran</p>
-                    </div>
-                @else
-                    <div class="mb-6">  
-                        <p class="text-sm text-gray-600">Total Pembayaran</p>
-                        <p class="text-2xl font-bold text-gray-800">Rp{{ number_format(10000, 0, ',', '.') }}</p>
-                    </div>
-                    <div>
-                        <button id="pay-button"
-                            class="w-full px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
-                            Bayar
-                        </button>
-                    </div>
-                @endif
+
+    <div class="flex flex-col p-8 bg-white rounded-xl shadow-lg border border-gray-300">
+        <h1 class="text-2xl font-bold text-gray-800 mb-4 text-center">Detail Pembayaran Awal</h1>
+
+        @if($pendaftaran->status_pembayaran == 'sudah') 
+            <div class="bg-green-100 p-6 rounded-lg text-center">
+                <p class="text-gray-700 text-sm mb-2">Status Pembayaran:</p>
+                <p class="text-2xl font-bold text-green-700">Sudah Dibayar</p>
+                <p class="mt-4 text-gray-600">Terima kasih telah melakukan pembayaran. Proses pendaftaran Anda sedang kami verifikasi.</p>
             </div>
-        </div>
+        @else
+            <div class="bg-gray-100 p-6 rounded-lg">
+                <table class="w-full text-left text-sm text-gray-700 mb-6">
+                    <tbody>
+                        <tr>
+                            <td class="py-2">Biaya Pendaftaran</td>
+                            <td class="py-2 font-semibold">Rp100.000</td>
+                        </tr>
+                        <tr>
+                            <td class="py-2">Infak Bulanan</td>
+                            <td class="py-2 font-semibold">Rp50.000</td>
+                        </tr>
+                        <tr>
+                            <td class="py-2">Uang Rapot</td>
+                            <td class="py-2 font-semibold">Rp50.000</td>
+                        </tr>
+                        <tr class="border-t border-gray-300">
+                            <td class="py-3 font-bold text-lg">Total</td>
+                            <td class="py-3 font-bold text-lg text-green-700">Rp{{ number_format(200000, 0, ',', '.') }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <button id="pay-button"
+                    class="w-full px-4 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition duration-200">
+                    Bayar Sekarang
+                </button>
+            </div>
+        @endif
     </div>
 </div>
 
@@ -41,28 +55,28 @@
 <script type="text/javascript">
     document.addEventListener('DOMContentLoaded', function () {
         const payButton = document.getElementById('pay-button');
-        payButton.addEventListener('click', function (e) {
-            e.preventDefault();
+        if (payButton) {
+            payButton.addEventListener('click', function (e) {
+                e.preventDefault();
+                const snapToken = "{{ $snapToken }}";
 
-            const snapToken = "{{ $snapToken }}";
-
-            snap.pay(snapToken, {
-                onSuccess: function (result) {
-                    window.location.href = "/pembayaran/sukses?order_id={{ $pendaftaran->order_id }}";
-                },
-
-                onPending: function (result) {
-                    console.log("Pending:", result);
-                    alert("Pembayaran masih pending.");
-                },
-                onError: function (result) {
-                    console.error("Error:", result);
-                    alert("Terjadi kesalahan saat pembayaran.");
-                },
-                onClose: function () {
-                    alert("Popup ditutup tanpa menyelesaikan pembayaran.");
-                }
+                snap.pay(snapToken, {
+                    onSuccess: function (result) {
+                        window.location.href = "/pembayaran/sukses?order_id={{ $pendaftaran->order_id }}";
+                    },
+                    onPending: function (result) {
+                        console.log("Pending:", result);
+                        alert("Pembayaran masih pending.");
+                    },
+                    onError: function (result) {
+                        console.error("Error:", result);
+                        alert("Terjadi kesalahan saat pembayaran.");
+                    },
+                    onClose: function () {
+                        alert("Popup ditutup tanpa menyelesaikan pembayaran.");
+                    }
+                });
             });
-        });
+        }
     });
 </script>

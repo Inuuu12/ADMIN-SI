@@ -56,7 +56,7 @@ class PembayaranController extends Controller
             $params = [
                 'transaction_details' => [
                     'order_id' => $orderId,
-                    'gross_amount' => 10000,
+                    'gross_amount' => 200000,
                 ],
                 'customer_details' => [
                     'first_name' => $pendaftaran->nama_santri,
@@ -83,7 +83,7 @@ class PembayaranController extends Controller
         $params = [
             'transaction_details' => [
                 'order_id' => $orderId,
-                'gross_amount' => 10000,
+                'gross_amount' => 200000,
             ],
             'customer_details' => [
                 'first_name' => 'Santri Baru',

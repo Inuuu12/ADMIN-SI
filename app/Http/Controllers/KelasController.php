@@ -14,6 +14,13 @@ class KelasController extends Controller
     /**
      * Store a newly created kelas in storage.
      */
+
+     public function index()
+    {
+        $data = Kelas::all(); // atau kamu bisa ubah variabel sesuai dengan view kamu
+        return view('ADMIN-SI.kelas', ['kelas' => $data]);
+    }
+
     public function store(Request $request)
     {
         $request->validate([
@@ -131,7 +138,7 @@ class KelasController extends Controller
 
         return redirect()->route('kelas.detail', ['id' => $kelasId])->with('success', 'Semua santri berhasil dihapus dari kelas.');
     }
-
+    
     /**
      * Update the specified kelas in storage.
      */

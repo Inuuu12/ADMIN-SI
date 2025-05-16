@@ -89,7 +89,7 @@ class GuruController extends Controller
             'mata_pelajaran' => 'required',
             'pengalaman' => 'required|integer',
             'pendidikan_terakhir' => 'required|max:100',
-            'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:10000',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:200000',
         ], [
             'nama.required' => 'Nama wajib diisi.',
             'nama.max' => 'Nama maksimal 100 karakter.',
@@ -138,7 +138,7 @@ class GuruController extends Controller
             'mata_pelajaran' => 'required',
             'pengalaman' => 'required|integer',
             'pendidikan_terakhir' => 'required|max:100',
-            'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:10000',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:200000',
         ], [
             'nama.required' => 'Nama wajib diisi.',
             'nama.max' => 'Nama maksimal 100 karakter.',
@@ -211,7 +211,7 @@ class GuruController extends Controller
             'mata_pelajaran' => 'required',
             'pengalaman' => 'required|integer',
             'pendidikan_terakhir' => 'required|max:100',
-            'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:10000',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:200000',
         ], [
             'nama.required' => 'Nama wajib diisi.',
             'nama.max' => 'Nama maksimal 100 karakter.',
@@ -251,7 +251,7 @@ class GuruController extends Controller
             'mata_pelajaran' => 'required',
             'pengalaman' => 'required|integer',
             'pendidikan_terakhir' => 'required|max:100',
-            'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:10000',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:200000',
         ], [
             'nama.required' => 'Nama wajib diisi.',
             'nama.max' => 'Nama maksimal 100 karakter.',

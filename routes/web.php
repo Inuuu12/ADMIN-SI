@@ -7,6 +7,7 @@ use App\Http\Controllers\GaleriController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PendaftaranController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\KelasController;
 use App\Models\User;
 use App\Http\Controllers\SantriController;
 use App\Http\Controllers\KelasController;
@@ -178,6 +179,8 @@ Route::prefix('admin')->middleware(['auth', 'web'])->group(function () {
         $kelas = \App\Models\Kelas::all();
         return view('ADMIN-SI.kelas', compact('kelas'));
     })->name('kelas');
+    
+    Route::resource('kelas', KelasController::class);
 
 
     Route::get('/santri', [SantriController::class, 'index'])->name('santri');
