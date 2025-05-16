@@ -181,6 +181,10 @@ Route::prefix('admin')->middleware(['auth', 'web'])->group(function () {
 
 
     Route::get('/santri', [SantriController::class, 'index'])->name('santri');
+    Route::post('/santri', [SantriController::class, 'store'])->name('santri.store');
+    Route::put('/santri/{id}', [SantriController::class, 'update'])->name('santri.update');
+    Route::post('/santri/{id}', [SantriController::class, 'update'])->name('santri.update.post');
+    Route::delete('/santri/{id}', [SantriController::class, 'destroy'])->name('santri.destroy');
 
     Route::get('/kelas/{id}', [KelasController::class, 'detail'])->name('kelas.detail');
 

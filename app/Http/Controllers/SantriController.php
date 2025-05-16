@@ -43,17 +43,21 @@ class SantriController extends Controller
             $query->orderBy('created_at', 'desc');
         }
 
-        $santris = $query->paginate(10);
+        $santris = $query->paginate(5);
         $totalSantri = $santris->total();
+
+        // Get total count of all santri regardless of filters
+        $totalSantriAll = Santri::count();
 
         if ($request->ajax()) {
             return response()->json([
                 'santris' => $santris,
                 'totalSantri' => $totalSantri,
+                'totalSantriAll' => $totalSantriAll,
             ]);
         }
 
-        return view('ADMIN-SI.santri', compact('santris', 'totalSantri'));
+        return view('ADMIN-SI.santri', compact('santris', 'totalSantri', 'totalSantriAll'));
     }
 
     public function store(Request $request)
@@ -70,6 +74,19 @@ class SantriController extends Controller
             'kartu_keluarga' => 'required|file|mimes:pdf|max:2048',
         ]);
 
+        // Generate NIS: 2 digits year of registration + 6 digits date of birth (ddmmyy) + 3 digits random number ensuring uniqueness
+        $year = date('y'); // current year two digits
+        $dob = date('dmy', strtotime($validated['tanggal_lahir'])); // date of birth in ddmmyy format
+
+        $prefix = $year . $dob;
+
+        // Generate 3 random digits and ensure uniqueness
+        do {
+            $randomDigits = str_pad(rand(0, 999), 3, '0', STR_PAD_LEFT);
+            $nis = $prefix . $randomDigits;
+            $exists = Santri::where('nis', $nis)->exists();
+        } while ($exists);
+
         $aktaKelahiranFileName = null;
         if ($request->hasFile('akta_kelahiran')) {
             $aktaKelahiranFile = $request->file('akta_kelahiran');
@@ -85,6 +102,7 @@ class SantriController extends Controller
         }
 
         $santri = new Santri();
+        $santri->nis = $nis;
         $santri->nama_santri = $validated['nama_santri'];
         $santri->jenis_kelamin = $validated['jenis_kelamin'];
         $santri->tempat_lahir = $validated['tempat_lahir'];
@@ -110,8 +128,10 @@ class SantriController extends Controller
 
     public function update(Request $request, $id)
     {
+        \Log::info('SantriController@update called with id: ' . $id);
         $santri = Santri::find($id);
         if (!$santri) {
+            \Log::warning('Santri not found with id: ' . $id);
             return response()->json(['message' => 'Santri tidak ditemukan'], 404);
         }
 
@@ -149,6 +169,8 @@ class SantriController extends Controller
         $santri->no_hp = $validated['no_hp'];
         $santri->alamat = $validated['alamat'];
         $santri->save();
+
+        \Log::info('Santri updated successfully: ' . $santri->id);
 
         return response()->json(['message' => 'Santri berhasil diperbarui']);
     }

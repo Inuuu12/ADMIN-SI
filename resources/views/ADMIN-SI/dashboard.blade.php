@@ -320,12 +320,12 @@ setTimeout(() => {
                             <td class="px-6 py-4 text-center">{{ $item['status'] === 'pending' ? 'Menunggu' : ($item['status'] === 'accepted' ? 'Diterima' : ($item['status'] === 'rejected' ? 'Ditolak' : $item['status'])) }}</td>
                             <td class="px-6 py-4 text-center">
                                 <div class="flex flex-wrap justify-center gap-2">
-                                    <button onclick="showDetail({{ $index }})" class="bg-blue-500 text-white px-3 py-1 rounded text-sm hover:bg-blue-600 transition">Detail</button>
                                     @if ($item['status'] !== 'Ditolak' && $item['status'] !== 'Diterima')
                                     <button onclick="showApprove({{ $index }})" class="bg-emerald-500 text-white px-3 py-1 rounded text-sm hover:bg-emerald-600 transition">Diterima</button>
-                                    <button onclick="showDitolak({{ $index }})" class="bg-red-600 text-white px-3 py-1 rounded text-sm hover:bg-red-700 transition">Ditolak</button>
+                                    <button onclick="showDitolak({{ $index }})" class="bg-red-500 text-white px-3 py-1 rounded text-sm hover:bg-red-600 transition">Ditolak</button>
                                     @endif
-                                    <button onclick="deleteSiswa({{ $index }})" class="bg-red-500 text-white px-3 py-1 rounded text-sm hover:bg-red-600 transition">Hapus</button>
+                                    <button onclick="showDetail({{ $index }})" class="bg-blue-500 text-white px-3 py-1 rounded text-sm hover:bg-blue-600 transition">Detail</button>
+                                    <button onclick="deleteSiswa({{ $index }})" class="bg-red-700 text-white px-3 py-1 rounded text-sm hover:bg-red-800 transition">Hapus</button>
                                 </div>
                             </td>
                         </tr>
@@ -452,7 +452,7 @@ setTimeout(() => {
 <!-- Modal Diterima -->
 <div id="modalApprove" class="hidden fixed inset-0 z-50 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center transition-opacity duration-300 px-4">
   <div class="bg-white rounded-xl shadow-xl w-full max-w-md p-6 animate-scaleIn">
-    <h2 class="text-xl font-semibold text-center text-yellow-600 mb-4">Konfirmasi Diterima</h2>
+    <h2 class="text-xl font-semibold text-center text-green-600 mb-4">Konfirmasi Diterima</h2>
     <input type="hidden" id="approveIndex">
     <p class="text-center text-gray-700 mb-6">Setujui status Santri <strong id="approveNama"></strong> menjadi <strong>Diterima</strong>?</p>
     <div class="flex gap-3 justify-center">
@@ -467,6 +467,7 @@ setTimeout(() => {
   <div class="bg-white rounded-xl shadow-xl w-full max-w-sm p-6 animate-scaleIn text-center">
     <h2 class="text-2xl font-bold text-red-600 mb-2">Konfirmasi Hapus</h2>
     <p class="text-gray-700 mb-4" id="hapusNama"></p>
+    <input type="hidden" id="deleteIndex" />
     <div class="flex flex-col sm:flex-row justify-center gap-4">
       <button onclick="confirmDelete()" class="flex-1 bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg">Ya, Hapus</button>
       <button onclick="closeHapus()" class="flex-1 bg-gray-400 hover:bg-gray-500 text-white px-3 py-2 rounded-lg">Batal</button>
@@ -506,26 +507,10 @@ setTimeout(() => {
     const aktaLink = document.getElementById('aktaLink');
     const aktaIframe = document.getElementById('detailAktaKelahiran');
     if (item.akta_kelahiran) {
-      // Preserve original URL without modification
       let aktaUrl = item.akta_kelahiran;
       aktaLink.href = aktaUrl;
-      // Use embed tag instead of iframe for better PDF support
-      aktaIframe.style.display = 'none';
-      const aktaEmbed = document.createElement('embed');
-      aktaEmbed.src = aktaUrl;
-      aktaEmbed.type = 'application/pdf';
-      aktaEmbed.style.width = '100%';
-      aktaEmbed.style.height = '60vh';
-      const aktaContainer = document.getElementById('aktaPreviewContainer');
-      aktaContainer.innerHTML = '';
-      aktaContainer.appendChild(aktaEmbed);
-      // Add clickable link below embed
-      const aktaLinkElement = document.createElement('a');
-      aktaLinkElement.href = aktaUrl;
-      aktaLinkElement.textContent = 'Lihat Akta Kelahiran';
-      aktaLinkElement.target = '_blank';
-      aktaLinkElement.className = 'text-blue-600 underline mt-2 block';
-      aktaContainer.appendChild(aktaLinkElement);
+      aktaIframe.src = aktaUrl;
+      aktaIframe.style.display = 'block';
     } else {
       aktaLink.href = '#';
       aktaIframe.src = '';
@@ -536,29 +521,13 @@ setTimeout(() => {
     const kkLink = document.getElementById('kkLink');
     const kkIframe = document.getElementById('detailKartuKeluarga');
     if (item.kartu_keluarga) {
-      // Fix URL for iframe src to ensure it is absolute or accessible
       let kkUrl = item.kartu_keluarga;
       if (!kkUrl.startsWith('http') && !kkUrl.startsWith('/')) {
         kkUrl = '/' + kkUrl;
       }
       kkLink.href = kkUrl;
-      // Use embed tag instead of iframe for better PDF support
-      kkIframe.style.display = 'none';
-      const kkEmbed = document.createElement('embed');
-      kkEmbed.src = kkUrl;
-      kkEmbed.type = 'application/pdf';
-      kkEmbed.style.width = '100%';
-      kkEmbed.style.height = '60vh';
-      const kkContainer = document.getElementById('kkPreviewContainer');
-      kkContainer.innerHTML = '';
-      kkContainer.appendChild(kkEmbed);
-      // Add clickable link below embed
-      const kkLinkElement = document.createElement('a');
-      kkLinkElement.href = kkUrl;
-      kkLinkElement.textContent = 'Lihat Kartu Keluarga';
-      kkLinkElement.target = '_blank';
-      kkLinkElement.className = 'text-blue-600 underline mt-2 block';
-      kkContainer.appendChild(kkLinkElement);
+      kkIframe.src = kkUrl;
+      kkIframe.style.display = 'block';
     } else {
       kkLink.href = '#';
       kkIframe.src = '';
@@ -586,7 +555,7 @@ setTimeout(() => {
   function confirmApprove() {
     const index = document.getElementById('approveIndex').value;
     const item = pendaftaran[index];
-    fetch(`/admin/dashboard/approve/${item.id}`, {
+    fetch(`/admin/pendaftaran/${item.id}/approve`, {
       method: 'POST',
       headers: {
         'X-CSRF-TOKEN': '{{ csrf_token() }}',
@@ -617,7 +586,7 @@ setTimeout(() => {
   function confirmDitolak() {
     const index = document.getElementById('ditolakIndex').value;
     const item = pendaftaran[index];
-    fetch(`/admin/dashboard/reject/${item.id}`, {
+    fetch(`/admin/pendaftaran/${item.id}/reject`, {
       method: 'POST',
       headers: {
         'X-CSRF-TOKEN': '{{ csrf_token() }}',
@@ -648,7 +617,7 @@ setTimeout(() => {
   function confirmDelete() {
     const index = document.getElementById('deleteIndex').value;
     const item = pendaftaran[index];
-    fetch(`/admin/dashboard/delete/${item.id}`, {
+    fetch(`/admin/pendaftaran/${item.id}`, {
       method: 'DELETE',
       headers: {
         'X-CSRF-TOKEN': '{{ csrf_token() }}',
