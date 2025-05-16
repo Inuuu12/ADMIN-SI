@@ -10,7 +10,6 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KelasController;
 use App\Models\User;
 use App\Http\Controllers\SantriController;
-use App\Http\Controllers\KelasController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\PembayaranController;
@@ -179,9 +178,6 @@ Route::prefix('admin')->middleware(['auth', 'web'])->group(function () {
         $kelas = \App\Models\Kelas::all();
         return view('ADMIN-SI.kelas', compact('kelas'));
     })->name('kelas');
-    
-    Route::resource('kelas', KelasController::class);
-
 
     Route::get('/santri', [SantriController::class, 'index'])->name('santri');
     Route::post('/santri', [SantriController::class, 'store'])->name('santri.store');

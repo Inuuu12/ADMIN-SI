@@ -21,7 +21,7 @@ return new class extends Migration
             $table->enum('jenis_kelamin', ['L', 'P']);
             $table->text('alamat');
             $table->string('nama_orang_tua', 100);
-            $table->string('no_hp', 15);
+            $table->string('no_hp', 20);
             $table->string('akta_kelahiran', 255); // path file gambar
             $table->string('kartu_keluarga', 255); // path file gambar
             $table->timestamps(); // created_at & updated_at
