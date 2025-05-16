@@ -293,32 +293,31 @@ setTimeout(() => {
         </div>
     </form>
 
-    <div class="mt-4">
-        <!-- Tailwind CSS styled table -->
-        <div class="max-w-7xl mx-auto mt-8 px-4">
-            <div class="w-full overflow-x-auto rounded-md">
-                <table class="min-w-full bg-white shadow-md text-sm">
-                    <thead class="bg-gray-200">
-                        <tr>
-                            <th class="px-6 py-3 text-center text-gray-600 whitespace-nowrap">No</th>
-                            <th class="px-6 py-3 text-center text-gray-600 whitespace-nowrap">Nama Santri</th>
-                            <th class="px-6 py-3 text-center text-gray-600 whitespace-nowrap">Jenis Kelamin</th>
-                            <th class="px-6 py-3 text-center text-gray-600 whitespace-nowrap">Usia</th>
-                            <th class="px-6 py-3 text-center text-gray-600 whitespace-nowrap">Orang Tua</th>
-                            <th class="px-6 py-3 text-center text-gray-600 whitespace-nowrap">Status</th>
-                            <th class="px-6 py-3 text-center text-gray-600 whitespace-nowrap">Aksi</th>
-                        </tr>
-                    </thead>
+    <div class="mt-4 w-full">
+    <div class="w-full px-4">
+        <div class="overflow-x-auto w-full">
+            <table class="w-full min-w-full bg-white shadow-md text-sm">
+                <thead class="bg-gray-200">
+                    <tr>
+                        <th class="px-4 py-2 text-center text-gray-600">No</th>
+                        <th class="px-4 py-2 text-center text-gray-600">Nama Santri</th>
+                        <th class="px-4 py-2 text-center text-gray-600">Jenis Kelamin</th>
+                        <th class="px-4 py-2 text-center text-gray-600">Usia</th>
+                        <th class="px-4 py-2 text-center text-gray-600">Orang Tua</th>
+                        <th class="px-4 py-2 text-center text-gray-600">Status</th>
+                        <th class="px-4 py-2 text-center text-gray-600">Aksi</th>
+                    </tr>
+                </thead>
                     <tbody>
                         @foreach ($pendaftaran as $index => $item)
                         <tr>
-                            <td class="px-6 py-4 text-center">{{ ($pendaftaran->currentPage() - 1) * $pendaftaran->perPage() + $index + 1 }}</td>
-                            <td class="px-6 py-4 text-center">{{ $item['nama_santri'] }}</td>
-                            <td class="px-6 py-4 text-center">{{ $item['jenis_kelamin'] === 'L' ? 'Laki-laki' : ($item['jenis_kelamin'] === 'P' ? 'Perempuan' : $item['jenis_kelamin']) }}</td>
-                            <td class="px-6 py-4 text-center">{{ \Carbon\Carbon::parse($item['tanggal_lahir'])->age }}</td>
-                            <td class="px-6 py-4 text-center">{{ $item['nama_orang_tua'] }}</td>
-                            <td class="px-6 py-4 text-center">{{ $item['status'] === 'pending' ? 'Menunggu' : ($item['status'] === 'accepted' ? 'Diterima' : ($item['status'] === 'rejected' ? 'Ditolak' : $item['status'])) }}</td>
-                            <td class="px-6 py-4 text-center">
+<td class="px-6 py-4 text-center whitespace-nowrap">{{ ($pendaftaran->currentPage() - 1) * $pendaftaran->perPage() + $index + 1 }}</td>
+<td class="px-6 py-4 text-center whitespace-nowrap">{{ $item['nama_santri'] }}</td>
+<td class="px-6 py-4 text-center whitespace-nowrap">{{ $item['jenis_kelamin'] === 'L' ? 'Laki-laki' : ($item['jenis_kelamin'] === 'P' ? 'Perempuan' : $item['jenis_kelamin']) }}</td>
+<td class="px-6 py-4 text-center whitespace-nowrap">{{ \Carbon\Carbon::parse($item['tanggal_lahir'])->age }}</td>
+<td class="px-6 py-4 text-center whitespace-nowrap">{{ $item['nama_orang_tua'] }}</td>
+<td class="px-6 py-4 text-center whitespace-nowrap">{{ $item['status'] === 'pending' ? 'Menunggu' : ($item['status'] === 'accepted' ? 'Diterima' : ($item['status'] === 'rejected' ? 'Ditolak' : $item['status'])) }}</td>
+<td class="px-6 py-4 text-center whitespace-nowrap">
                                 <div class="flex flex-wrap justify-center gap-2">
                                     @if ($item['status'] !== 'Ditolak' && $item['status'] !== 'Diterima')
                                     <button onclick="showApprove({{ $index }})" class="bg-emerald-500 text-white px-3 py-1 rounded text-sm hover:bg-emerald-600 transition">Diterima</button>

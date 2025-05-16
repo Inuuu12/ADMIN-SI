@@ -54,35 +54,37 @@
  
 
     <!-- Tabel Santri -->
+    <div class="mt-4 w-full">
+    <div class="w-full px-4">
     <div class="bg-white rounded-md overflow-x-auto shadow-md">
         <table class="w-full text-sm text-left border-collapse" id="santriTable">
             <thead class="bg-gray-200">
                 <tr>
-                    <th class="px-6 py-3 text-center text-gray-600 whitespace-nowrap">No</th>
-                    <th class="px-6 py-3 text-center text-gray-600 whitespace-nowrap">NIS</th>
-                    <th class="px-6 py-3 text-center text-gray-600 whitespace-nowrap">Nama Santri</th>
-                    <th class="px-6 py-3 text-center text-gray-600 whitespace-nowrap">Usia</th>
-                    <th class="px-6 py-3 text-center text-gray-600 whitespace-nowrap">Jenis Kelamin</th>
-                    <th class="px-6 py-3 text-center text-gray-600 whitespace-nowrap">Aksi</th>
+<th class="px-6 py-3 text-center text-gray-600 whitespace-nowrap">No</th>
+<th class="px-6 py-3 text-center text-gray-600 whitespace-nowrap">NIS</th>
+<th class="px-6 py-3 text-center text-gray-600 whitespace-nowrap">Nama Santri</th>
+<th class="px-6 py-3 text-center text-gray-600 whitespace-nowrap">Usia</th>
+<th class="px-6 py-3 text-center text-gray-600 whitespace-nowrap">Jenis Kelamin</th>
+<th class="px-6 py-3 text-center text-gray-600 whitespace-nowrap">Aksi</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($santris as $index => $santri)
                 <tr class="border-b hover:bg-gray-50" data-index="{{ $index }}" data-tanggal="{{ $santri->tanggal_lahir }}">
-                    <td class="px-6 py-3 text-center">{{ $santris->firstItem() + $index }}</td>
-                    <td class="px-6 py-3 text-center">{{ $santri->nis }}</td>
-                    <td class="px-6 py-3 text-center">{{ $santri->nama_santri }}</td>
-                    <td class="px-6 py-3 text-center">
+                    <td class="px-6 py-3 text-center whitespace-nowrap">{{ $santris->firstItem() + $index }}</td>
+                    <td class="px-6 py-3 text-center whitespace-nowrap">{{ $santri->nis }}</td>
+                    <td class="px-6 py-3 text-center whitespace-nowrap">{{ $santri->nama_santri }}</td>
+                    <td class="px-6 py-3 text-center whitespace-nowrap">
                         @php
                             $birthDate = \Carbon\Carbon::parse($santri->tanggal_lahir);
                             $age = $birthDate->age;
                         @endphp
                         {{ $age }} tahun
                     </td>
-                    <td class="px-6 py-3 text-center">
+                    <td class="px-6 py-3 text-center whitespace-nowrap">
                         {{ $santri->jenis_kelamin == 'P' ? 'Perempuan' : 'Laki-laki' }}
                     </td>
-                    <td class="px-6 py-3 text-center">
+                    <td class="px-6 py-3 text-center whitespace-nowrap">
                         <div class="flex flex-col md:flex-row gap-2 justify-center">
                             <button type="button" onclick="showDetail({{ $index }})" class="bg-blue-500 text-white px-3 py-1 rounded text-sm">Detail</button>
                             <button type="button" onclick="showEdit({{ $index }})" class="bg-yellow-500 text-white px-3 py-1 rounded text-sm">Edit</button>
@@ -93,6 +95,8 @@
                 @endforeach
             </tbody>
         </table>
+    </div>
+    </div>
     </div>
 
     <!-- Modal Tambah -->
