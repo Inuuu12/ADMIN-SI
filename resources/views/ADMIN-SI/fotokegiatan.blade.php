@@ -86,7 +86,7 @@
             <tbody class="divide-y divide-gray-200">
                 @foreach($galeris as $index => $galeri)
                 <tr class="hover:bg-gray-50 text-center">
-                    <td class="px-4 py-4 text-gray-500">{{ $index + 1 }}</td>
+                    <td class="px-4 py-4 text-gray-500">{{ $galeris->firstItem() + $index }}</td>
 <td class="px-4 py-4 break-words whitespace-normal max-w-xs">{{ $galeri->judul }}</td>
 <td class="px-4 py-4 break-words whitespace-normal max-w-xs">{{ $galeri->deskripsi }}</td>
                     <td class="px-4 py-4">{{ \Carbon\Carbon::parse($galeri->tanggal)->format('d M Y') }}</td>
@@ -108,6 +108,66 @@
                 @endforeach
             </tbody>
         </table>
+    </div>
+
+    <!-- Pagination Links -->
+    <div class="mt-6 flex justify-center items-center space-x-2">
+        <a href="{{ $galeris->url(1) }}" class="px-3 py-1 rounded border border-gray-300 hover:bg-gray-100">First</a>
+        @if ($galeris->onFirstPage())
+            <span class="px-3 py-1 rounded border border-gray-300 text-gray-400 cursor-not-allowed">Previous</span>
+        @else
+            <a href="{{ $galeris->previousPageUrl() }}" class="px-3 py-1 rounded border border-gray-300 hover:bg-gray-100">Previous</a>
+        @endif
+
+        @php
+            $lastPage = $galeris->lastPage();
+            $currentPage = $galeris->currentPage();
+
+            if ($lastPage <= 5) {
+                $pages = range(1, $lastPage);
+                $showFirst = false;
+                $showLast = false;
+            } else {
+                if ($currentPage <= 3) {
+                    $pages = range(1, 4);
+                    $showFirst = false;
+                    $showLast = true;
+                } elseif ($currentPage >= $lastPage - 2) {
+                    $pages = range($lastPage - 3, $lastPage);
+                    $showFirst = true;
+                    $showLast = false;
+                } else {
+                    $pages = range($currentPage - 1, $currentPage + 1);
+                    $showFirst = true;
+                    $showLast = true;
+                }
+            }
+        @endphp
+
+        @if ($showFirst)
+            <a href="{{ $galeris->url(1) }}" class="px-3 py-1 rounded border border-gray-300 hover:bg-gray-100">1</a>
+            <span class="px-3 py-1">...</span>
+        @endif
+
+        @foreach ($pages as $page)
+            @if ($page == $galeris->currentPage())
+                <span class="px-3 py-1 rounded border border-blue-500 bg-blue-100 font-semibold">{{ $page }}</span>
+            @else
+                <a href="{{ $galeris->url($page) }}" class="px-3 py-1 rounded border border-gray-300 hover:bg-gray-100">{{ $page }}</a>
+            @endif
+        @endforeach
+
+        @if ($showLast)
+            <span class="px-3 py-1">...</span>
+            <a href="{{ $galeris->url($lastPage) }}" class="px-3 py-1 rounded border border-gray-300 hover:bg-gray-100">{{ $lastPage }}</a>
+        @endif
+
+        @if ($galeris->hasMorePages())
+            <a href="{{ $galeris->nextPageUrl() }}" class="px-3 py-1 rounded border border-gray-300 hover:bg-gray-100">Next</a>
+        @else
+            <span class="px-3 py-1 rounded border border-gray-300 text-gray-400 cursor-not-allowed">Next</span>
+        @endif
+        <a href="{{ $galeris->url($galeris->lastPage()) }}" class="px-3 py-1 rounded border border-gray-300 hover:bg-gray-100">Last</a>
     </div>
 
     <!-- Modal -->

@@ -87,17 +87,20 @@ class KelasController extends Controller
             return $santri;
         });
 
+        // Get total santri count in the class without filters/search
+        $totalSantriInClass = Santri::where('id_kelas', $id)->count();
+
         if ($request->ajax()) {
             return response()->json([
                 'santris' => $santris,
-                'totalSantri' => $santris->total(),
+                'totalSantri' => $totalSantriInClass,
             ]);
         }
 
         // Get santri with null id_kelas for tambah checkbox list
         $santriNullKelas = Santri::whereNull('id_kelas')->get();
 
-        return view('ADMIN-SI.detailkelas', compact('kelas', 'santris', 'santriNullKelas'));
+        return view('ADMIN-SI.detailkelas', compact('kelas', 'santris', 'santriNullKelas', 'totalSantriInClass'));
     }
 
     /**

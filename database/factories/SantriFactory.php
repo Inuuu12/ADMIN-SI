@@ -30,7 +30,7 @@ class SantriFactory extends Factory
             'tempat_lahir' => $this->faker->city(),
             'tanggal_lahir' => $birthDate->format('Y-m-d'),
             'nama_orang_tua' => $this->faker->name(),
-            'no_hp' => $this->faker->phoneNumber(),
+            'no_hp' => substr($this->faker->phoneNumber(), 0, 15),
             'alamat' => $this->faker->address(),
             'akta_kelahiran' => $this->faker->lexify('akta_??????.pdf'),
             'kartu_keluarga' => $this->faker->lexify('kk_??????.pdf'),

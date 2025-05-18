@@ -51,14 +51,15 @@
             <div x-show="showEdit" x-transition class="fixed inset-0 z-50 flex justify-center items-center bg-black/50 backdrop-blur-sm px-4 overflow-auto">
                 <div @click.away="showEdit = false" class="bg-white w-full max-w-md rounded-lg shadow-lg p-6 animate-scaleIn">
                     <h3 class="text-xl font-semibold mb-4">Edit Nama Kelas</h3>
-                    <form method="POST" action="{{ route('kelas.update', ['id' => $kelasItem->id]) }}">
-                        @csrf
-                        <input type="text" name="nama_kelas" x-model="editNamaKelas" class="w-full p-2 border rounded mb-4" required>
-                        <div class="flex justify-end gap-2">
-                            <button type="submit" class="bg-emerald-500 text-white px-4 py-2 rounded hover:bg-emerald-600">Simpan</button>
-                            <button type="button" @click="showEdit = false" class="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400">Batal</button>
-                        </div>
-                    </form>
+<form method="POST" action="{{ route('kelas.update', ['id' => $kelasItem->id]) }}">
+    @csrf
+    @method('PUT')
+    <input type="text" name="nama_kelas" x-model="editNamaKelas" class="w-full p-2 border rounded mb-4" required>
+    <div class="flex justify-end gap-2">
+        <button type="submit" class="bg-emerald-500 text-white px-4 py-2 rounded hover:bg-emerald-600">Simpan</button>
+        <button type="button" @click="showEdit = false" class="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400">Batal</button>
+    </div>
+</form>
                 </div>
             </div>
         </div>
@@ -120,39 +121,42 @@
         }
     }, 3000);
 
-    function saveTambahKelas(event) {
-        event.preventDefault();
+function saveTambahKelas(event) {
+    event.preventDefault();
 
-        const namaKelas = document.getElementById('tambahNamaKelas').value;
+    const namaKelas = document.getElementById('tambahNamaKelas').value;
 
-        if (!namaKelas) {
-            alert('Nama Kelas harus diisi.');
-            return;
-        }
-
-        const formData = new FormData();
-        formData.append('nama_kelas', namaKelas);
-
-        fetch('{{ route("kelas.store") }}', {
-            method: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-            },
-            body: formData
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Gagal menyimpan data kelas.');
-            }
-            return response.json();
-        })
-        .then(data => {
-            alert(data.message);
-            window.location.reload();
-        })
-        .catch(error => {
-            alert(error.message);
-        });
+    if (!namaKelas) {
+        alert('Nama Kelas harus diisi.');
+        return;
     }
+
+    const formData = new FormData();
+    formData.append('nama_kelas', namaKelas);
+
+    console.log('Submitting new kelas:', namaKelas); // Added log for debugging
+
+    fetch('{{ route("kelas.store") }}', {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        },
+        body: formData
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Gagal menyimpan data kelas.');
+        }
+        return response.json();
+    })
+    .then(data => {
+        alert(data.message);
+        window.location.reload();
+    })
+    .catch(error => {
+        alert(error.message);
+        console.error('Error adding kelas:', error); // Added error log
+    });
+}
 </script>
 @endsection

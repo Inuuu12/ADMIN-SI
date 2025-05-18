@@ -25,7 +25,7 @@
         </div>
         <div>
             <p class="text-gray-500">Total Santri</p>
-            <h3 id="totalSantriCount" class="text-2xl font-bold">{{ $santris->count() }}</h3>
+            <h3 id="totalSantriCount" class="text-2xl font-bold">{{ $totalSantriInClass }}</h3>
         </div>
     </div>
 
@@ -51,7 +51,7 @@
                 @csrf
                 <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 whitespace-nowrap">Hapus Semua</button>
             </form>
-            <button @click="showTambah = true" class="bg-emerald-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-emerald-600 whitespace-nowrap">
+            <button type="button" @click="showTambah = true" class="bg-emerald-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-emerald-600 whitespace-nowrap">
                 Tambah
             </button>
         </div>
@@ -122,10 +122,65 @@
                 @endforeach
             </tbody>
         </table>
-        <div class="mt-4">
-            {{ $santris->withQueryString()->links() }}
-        </div>
     </div>
+    <div class="mt-6 flex justify-center items-center space-x-2">
+            <a href="{{ $santris->url(1) }}" class="px-3 py-1 rounded border border-gray-300 hover:bg-gray-100">First</a>
+            @if ($santris->onFirstPage())
+                <span class="px-3 py-1 rounded border border-gray-300 text-gray-400 cursor-not-allowed">Previous</span>
+            @else
+                <a href="{{ $santris->previousPageUrl() }}" class="px-3 py-1 rounded border border-gray-300 hover:bg-gray-100">Previous</a>
+            @endif
+
+            @php
+                $lastPage = $santris->lastPage();
+                $currentPage = $santris->currentPage();
+
+                if ($lastPage <= 5) {
+                    $pages = range(1, $lastPage);
+                    $showFirst = false;
+                    $showLast = false;
+                } else {
+                    if ($currentPage <= 3) {
+                        $pages = range(1, 4);
+                        $showFirst = false;
+                        $showLast = true;
+                    } elseif ($currentPage >= $lastPage - 2) {
+                        $pages = range($lastPage - 3, $lastPage);
+                        $showFirst = true;
+                        $showLast = false;
+                    } else {
+                        $pages = range($currentPage - 1, $currentPage + 1);
+                        $showFirst = true;
+                        $showLast = true;
+                    }
+                }
+            @endphp
+
+            @if ($showFirst)
+                <a href="{{ $santris->url(1) }}" class="px-3 py-1 rounded border border-gray-300 hover:bg-gray-100">1</a>
+                <span class="px-3 py-1">...</span>
+            @endif
+
+            @foreach ($pages as $page)
+                @if ($page == $santris->currentPage())
+                    <span class="px-3 py-1 rounded border border-blue-500 bg-blue-100 font-semibold">{{ $page }}</span>
+                @else
+                    <a href="{{ $santris->url($page) }}" class="px-3 py-1 rounded border border-gray-300 hover:bg-gray-100">{{ $page }}</a>
+                @endif
+            @endforeach
+
+            @if ($showLast)
+                <span class="px-3 py-1">...</span>
+                <a href="{{ $santris->url($lastPage) }}" class="px-3 py-1 rounded border border-gray-300 hover:bg-gray-100">{{ $lastPage }}</a>
+            @endif
+
+            @if ($santris->hasMorePages())
+                <a href="{{ $santris->nextPageUrl() }}" class="px-3 py-1 rounded border border-gray-300 hover:bg-gray-100">Next</a>
+            @else
+                <span class="px-3 py-1 rounded border border-gray-300 text-gray-400 cursor-not-allowed">Next</span>
+            @endif
+            <a href="{{ $santris->url($santris->lastPage()) }}" class="px-3 py-1 rounded border border-gray-300 hover:bg-gray-100">Last</a>
+        </div>
 
 </div>
 
