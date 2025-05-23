@@ -78,7 +78,7 @@ class KelasController extends Controller
             $query->orderBy('created_at', 'desc');
         }
 
-        $santris = $query->paginate(10);
+        $santris = $query->paginate(5);
 
         // Calculate age for each santri
         $santris->getCollection()->transform(function ($santri) {

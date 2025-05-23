@@ -11,8 +11,8 @@
   <!-- Sidebar Content -->
   <div class="overflow-y-auto flex-grow space-y-2">
     <div class="flex items-center mb-6">
-      <img src="{{ asset('img/dashboard/logo.png') }}" alt="Logo" class="w-8 h-8 mr-2">
-      <span class="text-xl font-bold">Ngaji Yuk</span>
+      <img src="{{ asset('img/11zon_cropped.png') }}" alt="Logo" class="w-12 h-12 mr-2">
+      <span class="text-xl font-bold">TPQ Nurul Iman</span>
     </div>
 
     <!-- Dashboard Menu -->
@@ -35,12 +35,17 @@
     </a> -->
 
       <!-- Kelas Menu -->
-      <a href="{{ route('kelas') }}" class="flex items-center px-4 py-2 sidebar-hover-custom rounded-lg group text-white @if(request()->is('admin/kelas*')) sidebar-active @endif">
-        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
-        </svg>
-        <span>Kelas</span>
-    </a>
+     <a href="{{ route('kelas') }}" class="flex items-center px-4 py-2 sidebar-hover-custom rounded-lg group text-white @if(request()->is('admin/kelas*')) sidebar-active @endif">
+  <svg class="w-6 h-6 mr-3" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Bingkai papan tulis -->
+    <rect x="3" y="4" width="18" height="12" rx="2" ry="2" />
+    <line x1="7" y1="20" x2="7" y2="16" />
+    <line x1="17" y1="20" x2="17" y2="16" />
+    <line x1="7" y1="20" x2="17" y2="20" />
+  </svg>
+  <span>Kelas</span>
+</a>
+
 
     <!-- Akademik Menu -->
     <a href="{{ route('akademik') }}"
@@ -69,9 +74,9 @@
        class="flex items-center px-4 py-2 sidebar-hover-custom rounded-lg group text-white
        @if(request()->is('admin/santri*')) sidebar-active @endif">
       <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-      </svg>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+        </svg>
+
       <span>Santri</span>
     </a>
 

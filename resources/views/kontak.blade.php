@@ -49,13 +49,13 @@
                         </div>
                     </div>
 
-                    <div class="flex px-4 sm:px-6 md:px-10 lg:px-28 mt-12">
+                    <!-- <div class="flex px-4 sm:px-6 md:px-10 lg:px-28 mt-12">
                         <div class="relative w-full">
                             <textarea placeholder="Kirim masukan" class="bg-gray-100 p-2 w-full border border-gray-300 rounded-md h-60 resize-none text-lg"></textarea>
                             <button class="absolute bottom-2 right-2 bg-gradient-to-br from-green-600 to-green-700 text-white px-12 py-4 rounded-md text-lg">Kirim</button>
                         </div>
 
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>

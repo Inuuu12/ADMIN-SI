@@ -10,6 +10,24 @@
   .animate-scaleIn {
     animation: scaleIn 0.3s ease-out forwards;
   }
+
+  .typewriter {
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 2px solid #1e40af; /* Tailwind's blue-800 */
+    width: 0;
+    animation: typing 2s steps(10, end) forwards, blink-caret 0.7s step-end infinite;
+  }
+
+  @keyframes typing {
+    from { width: 0 }
+    to { width: 7ch } /* "Memuat..." = 7 characters */
+  }
+
+  @keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: #1e40af; }
+  }
 </style>
 
 <div id="mainContent" class="p-6 bg-[#F8F9FD]">
@@ -26,6 +44,10 @@
                     <input type="text" name="search" id="searchQuery" placeholder="Cari Santri Baru..."
                         value="{{ request('search') }}"
                         class="w-full pl-10 pr-4 py-2 text-gray-500 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                        <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg"
+                          fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M21 21l-4.35-4.35M17 10a7 7 0 1 0-7 7 7 7 0 0 0 7-7z" /></svg>
                 </form>
 
                 <!-- Notifikasi -->
@@ -105,63 +127,13 @@
         </div>
     </div>
 
-    <!-- Modal Popup -->
-    <div x-show="showModal" x-transition
-        class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 px-4">
-        <div class="bg-white w-full max-w-2xl rounded-lg shadow-lg max-h-[80vh] space-y-6">
-            <!-- Modal Header -->
-            <div class="flex justify-between items-center px-6 py-4 border-b">
-                <h3 class="text-lg font-semibold">Notifikasi</h3>
-                <button @click="showModal = false" class="text-gray-500 hover:text-gray-700 text-xl">&times;</button>
-            </div>
-
-            <!-- Modal Body -->
-            <div class="p-6 overflow-x-auto max-h-80 overflow-y-auto">
-                <!-- Jika tidak ada notifikasi -->
-                <template x-if="notifications.length === 0">
-                    <p class="text-center text-gray-500">Tidak ada notifikasi baru.</p>
-                </template>
-                <!-- Jika ada notifikasi -->
-                <template x-if="notifications.length > 0">
-                    <table class="min-w-full text-left text-sm text-gray-600">
-                        <thead class="bg-gray-100">
-                            <tr>
-                                <th class="px-4 py-2">Pesan</th>
-                                <th class="px-4 py-2">Waktu</th>
-                                <th class="px-4 py-2 text-right">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <template x-for="notification in notifications" :key="notification.id">
-                                <tr class="hover:bg-gray-50 border-b">
-                                    <td class="px-4 py-2" x-text="notification.message"></td>
-                                    <td class="px-4 py-2 text-xs"
-                                        x-text="new Date(notification.created_at).toLocaleString()"></td>
-                                    <td class="px-4 py-2 text-right">
-                                        <button @click.stop="markAsRead(notification.id)"
-                                            class="text-blue-500 hover:underline text-xs">Sudah Dibaca</button>
-                                    </td>
-                                </tr>
-                            </template>
-                        </tbody>
-                    </table>
-                </template>
-            </div>
-
-            <!-- Modal Footer -->
-            <div class="flex justify-end px-6 py-4 border-t">
-                <button @click="showModal = false"
-                    class="bg-emerald-500 text-white px-4 py-2 rounded hover:bg-emerald-600">Tutup</button>
-            </div>
-        </div>
-    </div>
 </div>
 
 
             <!-- Profile -->
-            <div class="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-600 font-medium">
+            <!-- <div class="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-600 font-medium">
                 HF
-            </div>
+            </div> -->
         </div>
     </div>
 
@@ -215,10 +187,10 @@ setTimeout(() => {
 
         <!-- Diterima -->
         <div class="bg-white p-6 rounded-xl flex items-center gap-4">
-            <div class="bg-green-100 p-4 rounded-full">
-                <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                </svg>
+            <div class="bg-emerald-100 p-4 rounded-full">
+              <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
             </div>
             <div>
                 <p class="text-gray-500">Diterima</p>
@@ -273,9 +245,9 @@ setTimeout(() => {
                 <label class="block text-sm font-medium text-gray-700 mb-1">Rentang Usia</label>
                 <select id="filterUsia" name="filterUsia" onchange="this.form.submit()" class="w-full border rounded-lg px-3 py-2">
                     <option value="">Semua Usia</option>
-                    <option value="11-12" {{ request('filterUsia') == '11-12' ? 'selected' : '' }}>11-12 tahun</option>
-                    <option value="13-14" {{ request('filterUsia') == '13-14' ? 'selected' : '' }}>13-14 tahun</option>
-                    <option value="15+" {{ request('filterUsia') == '15+' ? 'selected' : '' }}>15+ tahun</option>
+                    <option value="4-6" {{ request('filterUsia') == '4-6' ? 'selected' : '' }}>4-6 tahun</option>
+                    <option value="7-12" {{ request('filterUsia') == '7-12' ? 'selected' : '' }}>7-12 tahun</option>
+                    <option value="13-15" {{ request('filterUsia') == '13-15' ? 'selected' : '' }}>13-15 tahun</option>
                 </select>
             </div>
 
@@ -335,11 +307,11 @@ setTimeout(() => {
         </div>
 
         <div class="mt-4 flex justify-center items-center space-x-2">
-            <a href="{{ $pendaftaran->url(1) }}" class="px-3 py-1 rounded border border-gray-300 hover:bg-gray-100">First</a>
+            <a href="{{ $pendaftaran->url(1) }}" class="px-3 py-1 rounded border border-gray-300 hover:bg-gray-100"><<</a>
             @if ($pendaftaran->onFirstPage())
-                <span class="px-3 py-1 rounded border border-gray-300 text-gray-400 cursor-not-allowed">Previous</span>
+                <span class="px-3 py-1 rounded border border-gray-300 text-gray-400 cursor-not-allowed"><</span>
             @else
-                <a href="{{ $pendaftaran->previousPageUrl() }}" class="px-3 py-1 rounded border border-gray-300 hover:bg-gray-100">Previous</a>
+                <a href="{{ $pendaftaran->previousPageUrl() }}" class="px-3 py-1 rounded border border-gray-300 hover:bg-gray-100"><</a>
             @endif
 
             @php
@@ -386,11 +358,11 @@ setTimeout(() => {
             @endif
 
             @if ($pendaftaran->hasMorePages())
-                <a href="{{ $pendaftaran->nextPageUrl() }}" class="px-3 py-1 rounded border border-gray-300 hover:bg-gray-100">Next</a>
+                <a href="{{ $pendaftaran->nextPageUrl() }}" class="px-3 py-1 rounded border border-gray-300 hover:bg-gray-100">></a>
             @else
-                <span class="px-3 py-1 rounded border border-gray-300 text-gray-400 cursor-not-allowed">Next</span>
+                <span class="px-3 py-1 rounded border border-gray-300 text-gray-400 cursor-not-allowed">></span>
             @endif
-            <a href="{{ $pendaftaran->url($pendaftaran->lastPage()) }}" class="px-3 py-1 rounded border border-gray-300 hover:bg-gray-100">Last</a>
+            <a href="{{ $pendaftaran->url($pendaftaran->lastPage()) }}" class="px-3 py-1 rounded border border-gray-300 hover:bg-gray-100">>></a>
         </div>
     </div>
 
@@ -455,8 +427,9 @@ setTimeout(() => {
     <input type="hidden" id="approveIndex">
     <p class="text-center text-gray-700 mb-6">Setujui status Santri <strong id="approveNama"></strong> menjadi <strong>Diterima</strong>?</p>
     <div class="flex gap-3 justify-center">
-      <button onclick="confirmApprove()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md">Ya, Setujui</button>
-      <button onclick="closeApprove()" class="bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded-md">Batal</button>
+      <button id="approveConfirmBtn" onclick="confirmApprove()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md">Ya, Setujui</button>
+      <button id="approveCancelBtn" onclick="closeApprove()" class="bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded-md">Batal</button>
+      <button id="approveLoadingBtn" class="bg-gray-400 text-white px-4 py-2 rounded-md hidden cursor-not-allowed" disabled>Memuat...</button>
     </div>
   </div>
 </div>
@@ -481,8 +454,9 @@ setTimeout(() => {
     <input type="hidden" id="ditolakIndex">
     <p class="text-center text-gray-700 mb-6">Tolak status Santri <strong id="ditolakNama"></strong>?</p>
     <div class="flex gap-3 justify-center">
-      <button onclick="confirmDitolak()" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md">Ya, Tolak</button>
-      <button onclick="closeDitolak()" class="bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded-md">Batal</button>
+      <button id="rejectConfirmBtn" onclick="confirmDitolak()" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md">Ya, Tolak</button>
+      <button id="rejectCancelBtn" onclick="closeDitolak()" class="bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded-md">Batal</button>
+      <button id="rejectLoadingBtn" class="bg-gray-400 text-white px-4 py-2 rounded-md hidden cursor-not-allowed" disabled>Memuat...</button>
     </div>
 </div>
 
@@ -554,22 +528,39 @@ setTimeout(() => {
   function confirmApprove() {
     const index = document.getElementById('approveIndex').value;
     const item = pendaftaran[index];
+
+    const confirmBtn = document.getElementById('approveConfirmBtn');
+    const cancelBtn = document.getElementById('approveCancelBtn');
+    const loadingBtn = document.getElementById('approveLoadingBtn');
+
+    confirmBtn.classList.add('hidden');
+    cancelBtn.classList.add('hidden');
+    loadingBtn.classList.remove('hidden');
+
     fetch(`/admin/pendaftaran/${item.id}/approve`, {
-      method: 'POST',
-      headers: {
-        'X-CSRF-TOKEN': '{{ csrf_token() }}',
-        'Content-Type': 'application/json'
-      }
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+            'Content-Type': 'application/json'
+        }
     }).then(response => {
-      if (response.ok) {
-        window.location.reload();
-      } else {
-        alert('Gagal menyetujui pendaftaran.');
-      }
+        if (response.ok) {
+            window.location.reload();
+        } else {
+            confirmBtn.classList.remove('hidden');
+            cancelBtn.classList.remove('hidden');
+            loadingBtn.classList.add('hidden');
+            alert('Gagal menyetujui pendaftaran.');
+        }
     }).catch(() => {
-      alert('Terjadi kesalahan saat menghubungi server.');
+        confirmBtn.classList.remove('hidden');
+        cancelBtn.classList.remove('hidden');
+        loadingBtn.classList.add('hidden');
+
+        alert('Terjadi kesalahan saat menghubungi server.');
     });
-  }
+}
+
 
   function showDitolak(index) {
     const item = pendaftaran[index];
@@ -585,6 +576,15 @@ setTimeout(() => {
   function confirmDitolak() {
     const index = document.getElementById('ditolakIndex').value;
     const item = pendaftaran[index];
+
+    const confirmBtn = document.getElementById('rejectConfirmBtn');
+    const cancelBtn = document.getElementById('rejectCancelBtn');
+    const loadingBtn = document.getElementById('rejectLoadingBtn');
+
+    confirmBtn.classList.add('hidden');
+    cancelBtn.classList.add('hidden');
+    loadingBtn.classList.remove('hidden');
+
     fetch(`/admin/pendaftaran/${item.id}/reject`, {
       method: 'POST',
       headers: {
@@ -595,9 +595,16 @@ setTimeout(() => {
       if (response.ok) {
         window.location.reload();
       } else {
+        confirmBtn.classList.remove('hidden');
+        cancelBtn.classList.remove('hidden');
+        loadingBtn.classList.add('hidden');
         alert('Gagal menolak pendaftaran.');
       }
     }).catch(() => {
+      confirmBtn.classList.remove('hidden');
+      cancelBtn.classList.remove('hidden');
+      loadingBtn.classList.add('hidden');
+
       alert('Terjadi kesalahan saat menghubungi server.');
     });
   }
@@ -652,5 +659,8 @@ setTimeout(() => {
     });
   }
 </script>
+
+
+
 
 @endsection

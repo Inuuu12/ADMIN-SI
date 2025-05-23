@@ -25,9 +25,9 @@
                 <input type="hidden" name="sort" value="{{ request('sort') }}">
             </form>
             <div class="flex items-center gap-3">
-                <div class="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-600 font-medium">
+                <!-- <div class="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-600 font-medium">
                     HF
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
@@ -112,11 +112,11 @@
 
     <!-- Pagination Links -->
     <div class="mt-6 flex justify-center items-center space-x-2">
-        <a href="{{ $galeris->url(1) }}" class="px-3 py-1 rounded border border-gray-300 hover:bg-gray-100">First</a>
+        <a href="{{ $galeris->url(1) }}" class="px-3 py-1 rounded border border-gray-300 hover:bg-gray-100"><<</a>
         @if ($galeris->onFirstPage())
-            <span class="px-3 py-1 rounded border border-gray-300 text-gray-400 cursor-not-allowed">Previous</span>
+            <span class="px-3 py-1 rounded border border-gray-300 text-gray-400 cursor-not-allowed"><</span>
         @else
-            <a href="{{ $galeris->previousPageUrl() }}" class="px-3 py-1 rounded border border-gray-300 hover:bg-gray-100">Previous</a>
+            <a href="{{ $galeris->previousPageUrl() }}" class="px-3 py-1 rounded border border-gray-300 hover:bg-gray-100"><</a>
         @endif
 
         @php
@@ -163,11 +163,11 @@
         @endif
 
         @if ($galeris->hasMorePages())
-            <a href="{{ $galeris->nextPageUrl() }}" class="px-3 py-1 rounded border border-gray-300 hover:bg-gray-100">Next</a>
+            <a href="{{ $galeris->nextPageUrl() }}" class="px-3 py-1 rounded border border-gray-300 hover:bg-gray-100">></a>
         @else
-            <span class="px-3 py-1 rounded border border-gray-300 text-gray-400 cursor-not-allowed">Next</span>
+            <span class="px-3 py-1 rounded border border-gray-300 text-gray-400 cursor-not-allowed">></span>
         @endif
-        <a href="{{ $galeris->url($galeris->lastPage()) }}" class="px-3 py-1 rounded border border-gray-300 hover:bg-gray-100">Last</a>
+        <a href="{{ $galeris->url($galeris->lastPage()) }}" class="px-3 py-1 rounded border border-gray-300 hover:bg-gray-100">>></a>
     </div>
 
     <!-- Modal -->

@@ -13,6 +13,7 @@
 
     <!-- Kiri: Form Lupa Password -->
     <div class="w-full md:w-1/2 p-8 flex items-center justify-center">
+      
 
       <div class="w-full max-w-md">
         <a href="{{ route('login') }}" class="border border-red-500 text-red-500 px-4 py-2 rounded text-center hover:bg-red-100 inline-flex items-center gap-2 mb-4">
@@ -27,15 +28,33 @@
           <p class="text-gray-600 mt-2">Masukkan email untuk reset password</p>
         </div>
 
+        @if(session('status'))
+      <div class="mb-4 p-3 bg-green-100 text-green-700 rounded">
+        {{ session('status') }}
+      </div>
+    @endif
+
+    @if($errors->any())
+      <div class="mb-4 p-3 bg-red-100 text-red-700 rounded">
+        <ul class="list-disc list-inside">
+          @foreach($errors->all() as $error)
+            <li>{{ $error }}</li>
+          @endforeach
+        </ul>
+      </div>
+    @endif
         <!-- Form -->
         <form action="{{ route('password.email') }}" method="POST">
+          
           @csrf
+          
 
           <!-- Email -->
           <div class="mb-6">
             <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email</label>
             <input id="email" type="email" name="email" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-400" placeholder="Masukkan email Anda">
           </div>
+          
 
           <button type="submit" class="w-full bg-emerald-500 text-white py-3 rounded-lg font-semibold hover:bg-emerald-600 transition">
             Selanjutnya
@@ -50,24 +69,5 @@
     </div>
 
   </div>
-
-    {{-- Menampilkan error validasi --}}
-    @if ($errors->any())
-    <div class="alert alert-danger col-md-6 mt-3" style="max-width: 400px">
-        <ul class="mb-0">
-        @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-        @endforeach
-        </ul>
-    </div>
-    @endif
-
-    {{-- Menampilkan pesan status --}}
-    @if (session('status'))
-    <div class="alert alert-success col-md-6 mt-3" style="max-width: 400px">
-        {{ session('status') }}
-    </div>
-    @endif
-
 </body>
 </html>

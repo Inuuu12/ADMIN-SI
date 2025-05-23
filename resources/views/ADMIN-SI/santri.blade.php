@@ -220,11 +220,11 @@
 
     <!-- Pagination Links -->
     <div class="mt-6 flex justify-center items-center space-x-2">
-        <a href="{{ $santris->url(1) }}" class="px-3 py-1 rounded border border-gray-300 hover:bg-gray-100">First</a>
+        <a href="{{ $santris->url(1) }}" class="px-3 py-1 rounded border border-gray-300 hover:bg-gray-100"><<</a>
         @if ($santris->onFirstPage())
-            <span class="px-3 py-1 rounded border border-gray-300 text-gray-400 cursor-not-allowed">Previous</span>
+            <span class="px-3 py-1 rounded border border-gray-300 text-gray-400 cursor-not-allowed"><</span>
         @else
-            <a href="{{ $santris->previousPageUrl() }}" class="px-3 py-1 rounded border border-gray-300 hover:bg-gray-100">Previous</a>
+            <a href="{{ $santris->previousPageUrl() }}" class="px-3 py-1 rounded border border-gray-300 hover:bg-gray-100"><</a>
         @endif
 
         @php
@@ -271,11 +271,11 @@
         @endif
 
         @if ($santris->hasMorePages())
-            <a href="{{ $santris->nextPageUrl() }}" class="px-3 py-1 rounded border border-gray-300 hover:bg-gray-100">Next</a>
+            <a href="{{ $santris->nextPageUrl() }}" class="px-3 py-1 rounded border border-gray-300 hover:bg-gray-100">></a>
         @else
-            <span class="px-3 py-1 rounded border border-gray-300 text-gray-400 cursor-not-allowed">Next</span>
+            <span class="px-3 py-1 rounded border border-gray-300 text-gray-400 cursor-not-allowed">></span>
         @endif
-        <a href="{{ $santris->url($santris->lastPage()) }}" class="px-3 py-1 rounded border border-gray-300 hover:bg-gray-100">Last</a>
+        <a href="{{ $santris->url($santris->lastPage()) }}" class="px-3 py-1 rounded border border-gray-300 hover:bg-gray-100">>></a>
     </div>
 </div>
 

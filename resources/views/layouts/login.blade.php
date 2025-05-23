@@ -30,9 +30,14 @@
   <div class="w-full md:w-1/2 p-8 opacity-0 translate-y-5 animate-fadeInUp flex items-center justify-center">
 
     <div class="w-full max-w-md">
-    <a href="{{ route('beranda') }}" class="border border-red-500 text-red-500 px-4 py-2 rounded text-center hover:bg-red-50 inline-flex items-center gap-2">
-      <i class="fas fa-arrow-left"></i> Kembali
-    </a>
+<div>
+  <a href="{{ route('beranda') }}" class="hidden md:inline-flex border border-red-500 text-red-500 px-4 py-2 rounded text-center hover:bg-red-50 items-center gap-2">
+    <i class="fas fa-arrow-left"></i> Kembali
+  </a>
+  <a href="{{ route('beranda') }}" class="inline-flex md:hidden text-red-500 text-xl p-2 rounded hover:bg-red-50 items-center justify-center">
+    <i class="fas fa-arrow-left"></i>
+  </a>
+</div>
 
       <div class="text-center mb-8">
 
@@ -54,33 +59,35 @@
         <div class="mb-6">
           <label class="block text-sm font-medium text-gray-700 mb-2">Kata Sandi</label>
           <input type="password" name="password" required class="w-full px-4 py-3 rounded-lg border border-gray-300" placeholder="Masukkan kata sandi Anda">
+          <div class="mb-6 mt-2 text-left">
+            <a href="{{ route('password.request') }}" class="text-emerald-600 hover:underline text-sm">Lupa Kata Sandi?</a>
+          </div>
         </div>
 
         <button type="submit" class="w-full bg-emerald-500 text-white py-3 rounded-lg font-semibold hover:bg-emerald-600">
   Masuk
 </button>
 
-        <div class="flex mb-6 mt-6 justify-between items-center w-full">
-        <!-- Verifikasi di kiri -->
+
+        <!-- <div class="flex mb-6 mt-6 justify-between items-center w-full">
+        Verifikasi di kiri
         <a href ="{{ route('resend.email.form') }}" class="text-emerald-500 hover:underline">Kirim Ulang Verifikasi</a>
-
-        <!-- Lupa Password di kanan -->
+        
+        Lupa Password di kanan
         <a href="{{ route('password.request') }}" class="text-emerald-600 hover:underline">Lupa Kata Sandi?</a>
-        </div>
-
-
+        </div>  -->
 
         <p class="mt-6 text-center text-gray-600">
           Belum memiliki akun?
           <a href="{{ route('register') }}" class="ml-1 text-emerald-500 hover:text-emerald-700 font-semibold">Daftar</a>
         </p>
       </form>
-      <hr class="my-6 border-t border-gray-300">
+      <!-- <hr class="my-6 border-t border-gray-300">
       <div class="text-center">
         <a href="{{ route('login-admin') }}" class="border border-emerald-500 text-emerald-500 px-4 py-2 rounded text-center hover:bg-emerald-50 inline-flex items-center gap-2">
           Masuk sebagai Admin
         </a>
-      </div>
+      </div> -->
     </div>
   </div>
 

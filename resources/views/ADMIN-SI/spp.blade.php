@@ -39,7 +39,7 @@
             <thead class="bg-gray-100">
                 <tr>
                     <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">No</th>
-                    <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">Nama Siswa</th>
+                    <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">Nama Santri</th>
                     <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">Status Pembayaran</th>
                     <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">Tanggal Pembayaran</th>
                     <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">Jumlah</th>

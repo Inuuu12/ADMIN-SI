@@ -96,10 +96,11 @@
 
 <!-- Loading Overlay -->
 <div id="loadingOverlay" class="hidden fixed inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center z-50">
-  <!-- Green Spinner -->
-  <div class="w-16 h-16 border-4 border-green-500 border-t-transparent rounded-full animate-spin"></div>
-
-  <!-- Loading Text -->
+  <div class="flex flex-row gap-2 mr-4">
+      <div class="w-4 h-4 rounded-full bg-green-700 animate-bounce"></div>
+      <div class="w-4 h-4 rounded-full bg-green-700 animate-bounce" style="animation-delay: -0.3s;"></div>
+      <div class="w-4 h-4 rounded-full bg-green-700 animate-bounce" style="animation-delay: -0.5s;"></div>
+    </div>
   <p class="mt-4 text-white font-medium text-base animate-pulse">Memuat... Mohon tunggu</p>
 </div>
 

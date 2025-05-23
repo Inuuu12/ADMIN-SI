@@ -21,49 +21,70 @@
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         @foreach ($kelas as $kelasItem)
-        <div x-data="{ showEdit: false, editNamaKelas: '{{ $kelasItem->kelas }}' }" class="mt-8 bg-white rounded-xl shadow-md overflow-hidden flex flex-col max-w-sm w-full">
-            <div class="relative bg-emerald-500 p-4 flex items-center justify-between">
-                <div>
-                    <h2 class="text-white text-2xl font-bold leading-tight">{{ $kelasItem->kelas }}</h2>
-                    <!-- Removed <p> tag for teacher name as requested -->
-                </div>
-                <!-- <div class="w-24 h-24">
-                    @if($kelasItem->foto_guru)
-                    <img class="w-full h-full rounded-full border-4 border-white object-cover" src="/gambar/{{ $kelasItem->foto_guru }}" alt="Guru">
-                    @else
-                    <img class="w-full h-full rounded-full border-4 border-white object-cover" src="/img/photo1.jpg" alt="Guru">
-                    @endif
-                </div> -->
+    <div 
+        x-data="{ showEdit: false, editNamaKelas: '{{ $kelasItem->kelas }}' }" 
+        class="mt-8 bg-white rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden flex flex-col max-w-sm w-full"
+    >
+        <div class="relative bg-emerald-600 p-5 flex items-center justify-between rounded-t-2xl">
+            <h2 class="text-white text-3xl font-extrabold tracking-tight select-none">
+                {{ $kelasItem->kelas }}
+            </h2>
+            <!-- Jika ingin pakai foto guru, bisa aktifkan ini -->
+            <!--
+            <div class="w-20 h-20 rounded-full border-4 border-white overflow-hidden">
+                @if($kelasItem->foto_guru)
+                <img src="/gambar/{{ $kelasItem->foto_guru }}" alt="Guru" class="object-cover w-full h-full">
+                @else
+                <img src="/img/photo1.jpg" alt="Guru" class="object-cover w-full h-full">
+                @endif
             </div>
-            <div class="border-t mt-auto py-3 px-4 flex justify-between items-center gap-2">
-                <a href="{{ route('kelas.detail', ['id' => $kelasItem->id]) }}" class="text-emerald-500 font-semibold text-left block hover:text-emerald-700">Daftar Siswa</a>
-                <div class="flex gap-4 text-white">
-                    <span @click="showEdit = true" class="cursor-pointer text-yellow-500 font-semibold hover:text-yellow-700">Edit</span>
-                    <form method="POST" action="{{ route('kelas.destroy', ['id' => $kelasItem->id]) }}" onsubmit="return confirm('Yakin ingin menghapus kelas ini?');" style="display:inline;">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="bg-transparent border-none p-0 m-0 cursor-pointer text-red-500 font-semibold hover:text-red-700">Hapus</button>
-                    </form>
-                </div>
-            </div>
-
-            <!-- Edit Modal -->
-            <div x-show="showEdit" x-transition class="fixed inset-0 z-50 flex justify-center items-center bg-black/50 backdrop-blur-sm px-4 overflow-auto">
-                <div @click.away="showEdit = false" class="bg-white w-full max-w-md rounded-lg shadow-lg p-6 animate-scaleIn">
-                    <h3 class="text-xl font-semibold mb-4">Edit Nama Kelas</h3>
-<form method="POST" action="{{ route('kelas.update', ['id' => $kelasItem->id]) }}">
-    @csrf
-    @method('PUT')
-    <input type="text" name="nama_kelas" x-model="editNamaKelas" class="w-full p-2 border rounded mb-4" required>
-    <div class="flex justify-end gap-2">
-        <button type="submit" class="bg-emerald-500 text-white px-4 py-2 rounded hover:bg-emerald-600">Simpan</button>
-        <button type="button" @click="showEdit = false" class="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400">Batal</button>
-    </div>
-</form>
-                </div>
+            -->
+        </div>
+        
+        <div class="border-t mt-auto py-4 px-6 flex justify-between items-center bg-gray-50">
+            <a href="{{ route('kelas.detail', ['id' => $kelasItem->id]) }}" class="text-emerald-600 font-semibold hover:text-emerald-800 transition-colors">
+                Daftar Santri
+            </a>
+            <div class="flex gap-6 text-sm">
+                <span 
+                    @click="showEdit = true" 
+                    class="cursor-pointer text-yellow-600 font-semibold hover:text-yellow-800 transition-colors select-none"
+                    title="Edit Kelas"
+                >
+                    ✏️ Edit
+                </span>
+                <form method="POST" action="{{ route('kelas.destroy', ['id' => $kelasItem->id]) }}" onsubmit="return confirm('Yakin ingin menghapus kelas ini?');" style="display:inline;">
+                    @csrf
+                    @method('DELETE')
+                    <button 
+                        type="submit" 
+                        class="bg-transparent border-none p-0 m-0 cursor-pointer text-red-600 font-semibold hover:text-red-800 transition-colors select-none"
+                        title="Hapus Kelas"
+                    >
+                        🗑️ Hapus
+                    </button>
+                </form>
             </div>
         </div>
-        @endforeach
+
+        <!-- Edit Modal tetap sama -->
+        <div x-show="showEdit" x-transition class="fixed inset-0 z-50 flex justify-center items-center bg-black/50 backdrop-blur-sm px-4 overflow-auto">
+            <div @click.away="showEdit = false" class="bg-white w-full max-w-md rounded-lg shadow-lg p-6 animate-scaleIn">
+                <h3 class="text-xl font-semibold mb-4">Edit Nama Kelas</h3>
+                <form method="POST" action="{{ route('kelas.update', ['id' => $kelasItem->id]) }}">
+                    @csrf
+                    @method('PUT')
+                    <input type="text" name="nama_kelas" x-model="editNamaKelas" class="w-full p-2 border rounded mb-4" required>
+                    <div class="flex justify-end gap-2">
+                        <button type="submit" class="bg-emerald-500 text-white px-4 py-2 rounded hover:bg-emerald-600">Simpan</button>
+                        <button type="button" @click="showEdit = false" class="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400">Batal</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+@endforeach
+
     </div>
 
     <!-- Modal Tambah Kelas -->
