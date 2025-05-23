@@ -21,6 +21,7 @@ class PendaftaranController extends Controller
         }
 
         $validatedData = $request->validate([
+            'nik' => 'required|numeric|digits:16|unique:tblpendaftaran,nik',
             'nama_santri' => 'required|string|max:255',
             'tempat_lahir' => 'required|string|max:255',
             'tanggal_lahir' => ['required', 'date', function ($attribute, $value, $fail) {

@@ -272,10 +272,11 @@ setTimeout(() => {
                 <thead class="bg-gray-200">
                     <tr>
                         <th class="px-4 py-2 text-center text-gray-600">No</th>
+                        <th class="px-4 py-2 text-center text-gray-600">NIK</th>
                         <th class="px-4 py-2 text-center text-gray-600">Nama Santri</th>
                         <th class="px-4 py-2 text-center text-gray-600">Jenis Kelamin</th>
                         <th class="px-4 py-2 text-center text-gray-600">Usia</th>
-                        <th class="px-4 py-2 text-center text-gray-600">Orang Tua</th>
+                        <th class="px-4 py-2 text-center text-gray-600">Tanggal</th>
                         <th class="px-4 py-2 text-center text-gray-600">Status</th>
                         <th class="px-4 py-2 text-center text-gray-600">Aksi</th>
                     </tr>
@@ -283,13 +284,14 @@ setTimeout(() => {
                     <tbody>
                         @foreach ($pendaftaran as $index => $item)
                         <tr>
-<td class="px-6 py-4 text-center whitespace-nowrap">{{ ($pendaftaran->currentPage() - 1) * $pendaftaran->perPage() + $index + 1 }}</td>
-<td class="px-6 py-4 text-center whitespace-nowrap">{{ $item['nama_santri'] }}</td>
-<td class="px-6 py-4 text-center whitespace-nowrap">{{ $item['jenis_kelamin'] === 'L' ? 'Laki-laki' : ($item['jenis_kelamin'] === 'P' ? 'Perempuan' : $item['jenis_kelamin']) }}</td>
-<td class="px-6 py-4 text-center whitespace-nowrap">{{ \Carbon\Carbon::parse($item['tanggal_lahir'])->age }}</td>
-<td class="px-6 py-4 text-center whitespace-nowrap">{{ $item['nama_orang_tua'] }}</td>
-<td class="px-6 py-4 text-center whitespace-nowrap">{{ $item['status'] === 'pending' ? 'Menunggu' : ($item['status'] === 'accepted' ? 'Diterima' : ($item['status'] === 'rejected' ? 'Ditolak' : $item['status'])) }}</td>
-<td class="px-6 py-4 text-center whitespace-nowrap">
+                        <td class="px-6 py-4 text-center whitespace">{{ ($pendaftaran->currentPage() - 1) * $pendaftaran->perPage() + $index + 1 }}</td>
+                        <td class="px-2 py-1 text-center whitespace">{{ $item['nik'] }}</td>
+                        <td class="px-4 py-2 text-center whitespace">{{ $item['nama_santri'] }}</td>
+                        <td class="px-4 py-2 text-center whitespace">{{ $item['jenis_kelamin'] === 'L' ? 'Laki-laki' : ($item['jenis_kelamin'] === 'P' ? 'Perempuan' : $item['jenis_kelamin']) }}</td>
+                        <td class="px-4 py-2 text-center whitespace">{{ \Carbon\Carbon::parse($item['tanggal_lahir'])->age }}</td>
+                        <td class="px-4 py-2 text-center whitespace">{{ \Carbon\Carbon::parse($item['created_at'])->locale('id')->isoFormat('D MMMM YYYY') }}</td>
+                        <td class="px-4 py-2 text-center whitespace">{{ $item['status'] === 'pending' ? 'Menunggu' : ($item['status'] === 'accepted' ? 'Diterima' : ($item['status'] === 'rejected' ? 'Ditolak' : $item['status'])) }}</td>
+                        <td class="px-6 py-4 text-center whitespace-nowrap">
                                 <div class="flex flex-wrap justify-center gap-2">
                                     @if ($item['status'] !== 'Ditolak' && $item['status'] !== 'Diterima')
                                     <button onclick="showApprove({{ $index }})" class="bg-emerald-500 text-white px-3 py-1 rounded text-sm hover:bg-emerald-600 transition">Diterima</button>
@@ -375,16 +377,16 @@ setTimeout(() => {
       <div id="detailNama" class="w-full border rounded px-4 py-2 bg-gray-100 text-gray-800"></div>
     </div>
     <div>
+      <label class="block font-medium text-gray-700 mb-1">NIK</label>
+      <div id="detailNik" class="w-full border rounded px-4 py-2 bg-gray-100 text-gray-800"></div>
+    </div>
+    <div>
       <label class="block font-medium text-gray-700 mb-1">Jenis Kelamin</label>
       <div id="detailJenisKelamin" class="w-full border rounded px-4 py-2 bg-gray-100 text-gray-800"></div>
     </div>
     <div>
       <label class="block font-medium text-gray-700 mb-1">Usia</label>
       <div id="detailUsia" class="w-full border rounded px-4 py-2 bg-gray-100 text-gray-800"></div>
-    </div>
-    <div>
-      <label class="block font-medium text-gray-700 mb-1">Nama Orang Tua</label>
-      <div id="detailNamaOrangTua" class="w-full border rounded px-4 py-2 bg-gray-100 text-gray-800"></div>
     </div>
     <div>
       <label class="block font-medium text-gray-700 mb-1">Tempat Lahir</label>
@@ -467,12 +469,12 @@ setTimeout(() => {
 
   function showDetail(index) {
     const item = pendaftaran[index];
+    document.getElementById('detailNik').textContent = item.nik || '';
     document.getElementById('detailNama').textContent = item.nama_santri;
-    document.getElementById('detailJenisKelamin').textContent = item.jenis_kelamin === 'L' ? 'Laki-laki' : (item.jenis_kelamin === 'P' ? 'Perempuan' : item.jenis_kelamin);
+    document.getElementById('detailJenisKelamin').textContent = item.jenis_kelamin;
     document.getElementById('detailUsia').textContent = new Date().getFullYear() - new Date(item.tanggal_lahir).getFullYear();
-    document.getElementById('detailNamaOrangTua').textContent = item.nama_orang_tua;
     document.getElementById('detailTempatLahir').textContent = item.tempat_lahir || '';
-    document.getElementById('detailTanggalLahir').textContent = item.tanggal_lahir;
+    document.getElementById('detailTanggalLahir').textContent = new Date(item.tanggal_lahir).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
     document.getElementById('detailNoHp').textContent = item.no_hp || '';
     document.getElementById('detailAlamat').textContent = item.alamat || '';
 

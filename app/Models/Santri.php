@@ -12,7 +12,7 @@ class Santri extends Model
     protected $table = 'tblsantri';
 
     protected $fillable = [
-        'pendaftaran_id', 'nis', 'nama_santri', 'tempat_lahir', 'tanggal_lahir',
+        'pendaftaran_id', 'nik', 'nama_santri', 'tempat_lahir', 'tanggal_lahir',
         'jenis_kelamin', 'alamat', 'nama_orang_tua', 'no_hp',
         'akta_kelahiran', 'kartu_keluarga', 'id_kelas'
     ];

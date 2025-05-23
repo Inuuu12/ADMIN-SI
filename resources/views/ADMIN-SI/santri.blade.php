@@ -68,7 +68,7 @@
             <thead class="bg-gray-200">
                 <tr>
 <th class="px-6 py-3 text-center text-gray-600 whitespace-nowrap">No</th>
-<th class="px-6 py-3 text-center text-gray-600 whitespace-nowrap">NIS</th>
+<th class="px-6 py-3 text-center text-gray-600 whitespace-nowrap">NIK</th>
 <th class="px-6 py-3 text-center text-gray-600 whitespace-nowrap">Nama Santri</th>
 <th class="px-6 py-3 text-center text-gray-600 whitespace-nowrap">Usia</th>
 <th class="px-6 py-3 text-center text-gray-600 whitespace-nowrap">Jenis Kelamin</th>
@@ -79,7 +79,7 @@
                 @foreach ($santris as $index => $santri)
                 <tr class="border-b hover:bg-gray-50" data-index="{{ $index }}" data-tanggal="{{ $santri->tanggal_lahir }}">
                     <td class="px-6 py-3 text-center whitespace-nowrap">{{ $santris->firstItem() + $index }}</td>
-                    <td class="px-6 py-3 text-center whitespace-nowrap">{{ $santri->nis }}</td>
+                    <td class="px-6 py-3 text-center whitespace-nowrap">{{ $santri->nik ?? ($santri->pendaftaran ? $santri->pendaftaran->nik : '') }}</td>
                     <td class="px-6 py-3 text-center whitespace-nowrap">{{ $santri->nama_santri }}</td>
                     <td class="px-6 py-3 text-center whitespace-nowrap">
                         @php
@@ -114,6 +114,10 @@
                 <div>
                     <label class="block font-medium mb-1">Nama Santri:</label>
                     <input type="text" class="w-full p-2 border rounded-md focus:ring focus:ring-emerald-300" id="tambahNama" name="nama_santri" placeholder="Nama Santri" required>
+                </div>
+                <div>
+                    <label class="block font-medium mb-1">NIK:</label>
+                    <input type="text" class="w-full p-2 border rounded-md focus:ring focus:ring-emerald-300" id="tambahNik" name="nik" placeholder="Masukkan NIK" required maxlength="16" pattern="\d{16}" title="NIK harus 16 digit angka">
                 </div>
                 <div>
                     <label class="block font-medium mb-1">Jenis Kelamin:</label>
@@ -160,11 +164,15 @@
     <div id="editModal" class="hidden fixed inset-0 z-50 flex justify-center items-center bg-black/50 backdrop-blur-sm px-4 overflow-auto" onclick="window.closeEdit()">
         <div onclick="event.stopPropagation()" class="bg-white w-full max-w-2xl rounded-lg shadow-lg p-8 animate-scaleIn overflow-y-auto max-h-[80vh] space-y-6">
             <h3 class="text-2xl font-semibold text-center mb-4">Form Edit Santri</h3>
-            <form id="editSiswaForm" class="space-y-4" enctype="multipart/form-data" onsubmit="event.preventDefault(); window.submitEditSiswa(event);">
+                <form id="editSiswaForm" class="space-y-4" enctype="multipart/form-data" onsubmit="event.preventDefault(); window.submitEditSiswa(event);">
                 <input type="hidden" id="editId" name="id">
                 <div>
                     <label class="block font-medium mb-1">Nama Santri:</label>
                     <input type="text" name="nama_santri" class="w-full p-2 border rounded-md focus:ring focus:ring-emerald-300" id="editNama" placeholder="Nama Santri" required>
+                </div>
+                <div>
+                    <label class="block font-medium mb-1">NIK:</label>
+                    <input type="text" name="nik" class="w-full p-2 border rounded-md focus:ring focus:ring-emerald-300" id="editNik" placeholder="Masukkan NIK" required maxlength="16" pattern="\d{16}" title="NIK harus 16 digit angka">
                 </div>
                 <div>
                     <label class="block font-medium mb-1">Jenis Kelamin:</label>
@@ -284,8 +292,8 @@
   <div class="bg-white w-full max-w-2xl rounded-lg shadow-lg p-8 animate-scaleIn overflow-y-auto max-h-[80vh] space-y-6">
     <h2 class="text-2xl font-bold text-center text-emerald-600 mb-4">Detail Santri</h2>
     <div>
-      <label class="block font-medium text-gray-700 mb-1">NIS</label>
-      <div id="detailNis" class="w-full border rounded px-4 py-2 bg-gray-100 text-gray-800"></div>
+<label class="block font-medium text-gray-700 mb-1">NIK</label>
+<div id="detailNik" class="w-full border rounded px-4 py-2 bg-gray-100 text-gray-800"></div>
     </div>
     <div>
       <label class="block font-medium text-gray-700 mb-1">Nama Santri</label>
@@ -352,7 +360,7 @@
 
     function showDetail(index) {
         const item = santris.data[index];
-        document.getElementById('detailNis').textContent = item.nis || '';
+        document.getElementById('detailNik').textContent = item.nik ?? (item.pendaftaran ? item.pendaftaran.nik : '');
         document.getElementById('detailNama').textContent = item.nama_santri;
         document.getElementById('detailJenisKelamin').textContent = item.jenis_kelamin === 'L' ? 'Laki-laki' : (item.jenis_kelamin === 'P' ? 'Perempuan' : item.jenis_kelamin);
         document.getElementById('detailUsia').textContent = Math.floor((new Date() - new Date(item.tanggal_lahir)) / (365.25 * 24 * 60 * 60 * 1000)) + ' tahun';
@@ -433,6 +441,7 @@
         }
         document.getElementById('editId').value = item.id;
         document.getElementById('editNama').value = item.nama_santri;
+        document.getElementById('editNik').value = item.nik ?? (item.pendaftaran ? item.pendaftaran.nik : '');
         const editForm = document.getElementById('editSiswaForm');
         if (item.jenis_kelamin === 'P') {
             setTimeout(() => {
@@ -453,6 +462,7 @@
         }
         document.getElementById('editTempatLahir').value = item.tempat_lahir || '';
         document.getElementById('editTanggalLahir').value = item.tanggal_lahir;
+
 
         // Clear and recreate Akta Kelahiran preview container
         const aktaContainer = document.getElementById('currentEditAktaKelahiran');

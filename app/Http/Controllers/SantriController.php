@@ -9,7 +9,7 @@ class SantriController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Santri::query();
+        $query = Santri::with('pendaftaran');
 
         // Search by nama_santri
         if ($request->has('search') && $request->search != '') {
@@ -49,20 +49,26 @@ class SantriController extends Controller
         // Get total count of all santri regardless of filters
         $totalSantriAll = Santri::count();
 
+        // Get approved pendaftaran for dropdown
+        $approvedPendaftaran = \App\Models\Pendaftaran::where('status', 'approved')->get();
+
         if ($request->ajax()) {
             return response()->json([
                 'santris' => $santris,
                 'totalSantri' => $totalSantri,
                 'totalSantriAll' => $totalSantriAll,
+                'approvedPendaftaran' => $approvedPendaftaran,
             ]);
         }
 
-        return view('ADMIN-SI.santri', compact('santris', 'totalSantri', 'totalSantriAll'));
+        return view('ADMIN-SI.santri', compact('santris', 'totalSantri', 'totalSantriAll', 'approvedPendaftaran'));
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
+            'pendaftaran_id' => 'nullable|exists:tblpendaftaran,id',
+            'nik' => 'required|string|max:16',
             'nama_santri' => 'required|string|max:255',
             'jenis_kelamin' => 'required|string|max:1',
             'tempat_lahir' => 'required|string|max:255',
@@ -74,18 +80,16 @@ class SantriController extends Controller
             'kartu_keluarga' => 'required|file|mimes:pdf|max:2048',
         ]);
 
-        // Generate NIS: 2 digits year of registration + 6 digits date of birth (ddmmyy) + 3 digits random number ensuring uniqueness
-        $year = date('y'); // current year two digits
-        $dob = date('dmy', strtotime($validated['tanggal_lahir'])); // date of birth in ddmmyy format
+        $pendaftaran = null;
+        if (!empty($validated['pendaftaran_id'])) {
+            $pendaftaran = \App\Models\Pendaftaran::where('id', $validated['pendaftaran_id'])
+                ->where('status', 'approved')
+                ->first();
 
-        $prefix = $year . $dob;
-
-        // Generate 3 random digits and ensure uniqueness
-        do {
-            $randomDigits = str_pad(rand(0, 999), 3, '0', STR_PAD_LEFT);
-            $nis = $prefix . $randomDigits;
-            $exists = Santri::where('nis', $nis)->exists();
-        } while ($exists);
+            if (!$pendaftaran) {
+                return response()->json(['message' => 'Pendaftaran tidak ditemukan atau belum disetujui'], 404);
+            }
+        }
 
         $aktaKelahiranFileName = null;
         if ($request->hasFile('akta_kelahiran')) {
@@ -102,7 +106,12 @@ class SantriController extends Controller
         }
 
         $santri = new Santri();
-        $santri->nis = $nis;
+        if ($pendaftaran) {
+            $santri->pendaftaran_id = $pendaftaran->id;
+            $santri->nik = $pendaftaran->nik;
+        } else {
+            $santri->nik = $validated['nik'] ?? null;
+        }
         $santri->nama_santri = $validated['nama_santri'];
         $santri->jenis_kelamin = $validated['jenis_kelamin'];
         $santri->tempat_lahir = $validated['tempat_lahir'];
@@ -136,6 +145,8 @@ class SantriController extends Controller
         }
 
         $validated = $request->validate([
+            'pendaftaran_id' => 'nullable|exists:tblpendaftaran,id',
+            'nik' => 'nullable|string|max:16',
             'nama_santri' => 'required|string|max:255',
             'jenis_kelamin' => 'required|string|max:1',
             'tempat_lahir' => 'required|string|max:255',
@@ -146,6 +157,17 @@ class SantriController extends Controller
             'akta_kelahiran' => 'nullable|file|mimes:pdf|max:2048',
             'kartu_keluarga' => 'nullable|file|mimes:pdf|max:2048',
         ]);
+
+        $pendaftaran = null;
+        if (!empty($validated['pendaftaran_id'])) {
+            $pendaftaran = \App\Models\Pendaftaran::where('id', $validated['pendaftaran_id'])
+                ->where('status', 'approved')
+                ->first();
+
+            if (!$pendaftaran) {
+                return response()->json(['message' => 'Pendaftaran tidak ditemukan atau belum disetujui'], 404);
+            }
+        }
 
         if ($request->hasFile('akta_kelahiran')) {
             $aktaKelahiranFile = $request->file('akta_kelahiran');
@@ -161,6 +183,13 @@ class SantriController extends Controller
             $santri->kartu_keluarga = $kartuKeluargaFileName;
         }
 
+        if ($pendaftaran) {
+            $santri->pendaftaran_id = $pendaftaran->id;
+            $santri->nik = $pendaftaran->nik;
+        } else {
+            $santri->nik = $validated['nik'] ?? null;
+            $santri->pendaftaran_id = null;
+        }
         $santri->nama_santri = $validated['nama_santri'];
         $santri->jenis_kelamin = $validated['jenis_kelamin'];
         $santri->tempat_lahir = $validated['tempat_lahir'];

@@ -95,16 +95,17 @@ class DashboardController extends Controller
 
             return [
                 'id' => $item->id,
+                'nik' => $item->nik,
                 'nama_santri' => $item->nama_santri,
                 'tempat_lahir' => $item->tempat_lahir,
                 'tanggal_lahir' => $item->tanggal_lahir,
                 'jenis_kelamin' => $item->jenis_kelamin === 'L' ? 'Laki-laki' : ($item->jenis_kelamin === 'P' ? 'Perempuan' : $item->jenis_kelamin),
                 'usia' => $usia,
-                'nama_orang_tua' => $item->nama_orang_tua,
                 'no_hp' => $item->no_hp,
                 'alamat' => $item->alamat,
                 'akta_kelahiran' => $aktaKelahiranUrl,
                 'kartu_keluarga' => $kartuKeluargaUrl,
+                'created_at' => $item->created_at,
                 'status' => $item->status === 'pending' ? 'Menunggu' : ($item->status === 'accepted' ? 'Diterima' : ($item->status === "rejected" ? "Ditolak" : $item->status)),
             ];
         });

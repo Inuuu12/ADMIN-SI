@@ -22,6 +22,9 @@
                                 <label class="block text-sm font-medium mb-4">A. DATA SANTRI</label>
                                 <input type="text" name="nama_santri" placeholder="Nama Calon Santri" class="w-full px-4 bg-gray-100 text-sm py-3 shadow" required>
                             </div>
+                            <div class="w-full mb-7">
+                                <input type="text" name="nik" placeholder="NIK" class="w-full px-4 bg-gray-100 text-sm py-3 shadow" required maxlength="16" pattern="\d{16}" title="NIK harus 16 digit angka">
+                            </div>
 
                             <div class="w-full mb-7 text-sm font-sm">
                                 <div class="block text-gray-600 font-medium mb-2">Jenis Kelamin</div>
