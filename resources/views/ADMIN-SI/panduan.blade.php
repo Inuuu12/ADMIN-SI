@@ -6,8 +6,8 @@
     <div class="flex justify-between items-center mb-8">
         <h1 class="text-2xl font-bold text-[#2B3674]">Panduan</h1>
 
-        
-    <div class="bg-white rounded-xl p-6">
+    <!-- Konten Panduan -->
+    <div class="bg-white rounded-xl p-6 mt-6">
         <h2 class="text-2xl font-semibold mb-6">Cara menggunakan Aplikasi</h2>
         <div class="space-y-4" x-data="{ active: null }">
 

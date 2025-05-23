@@ -451,17 +451,17 @@ setTimeout(() => {
   </div>
 </div>
 
-<!-- Modal Hapus -->
-<div id="modalHapus" class="hidden fixed inset-0 z-50 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center transition-opacity duration-300 px-4">
-  <div class="bg-white rounded-xl shadow-xl w-full max-w-sm p-6 animate-scaleIn text-center">
-    <h2 class="text-2xl font-bold text-red-600 mb-2">Konfirmasi Hapus</h2>
-    <p class="text-gray-700 mb-4" id="hapusNama"></p>
-    <input type="hidden" id="deleteIndex" />
-    <div class="flex flex-col sm:flex-row justify-center gap-4">
-      <button onclick="confirmDelete()" class="flex-1 bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg">Ya, Hapus</button>
-      <button onclick="closeHapus()" class="flex-1 bg-gray-400 hover:bg-gray-500 text-white px-3 py-2 rounded-lg">Batal</button>
+  <!-- Modal Hapus -->
+  <div id="modalHapus" class="hidden fixed inset-0 z-50 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center transition-opacity duration-300 px-4">
+    <div class="bg-white rounded-xl shadow-xl w-full max-w-sm p-6 animate-scaleIn text-center">
+      <h2 class="text-2xl font-bold text-red-600 mb-2">Konfirmasi Hapus</h2>
+      <p class="text-gray-700 mb-4" id="hapusNama"></p>
+      <input type="hidden" id="deleteIndex" />
+      <div class="flex flex-col sm:flex-row justify-center gap-4">
+        <button onclick="confirmDelete()" class="flex-1 bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg">Ya, Hapus</button>
+        <button onclick="closeHapus()" class="flex-1 bg-gray-400 hover:bg-gray-500 text-white px-3 py-2 rounded-lg">Batal</button>
+      </div>
     </div>
-  </div>
 </div>
 
 <!-- Modal Ditolak -->
