@@ -6,27 +6,9 @@
     <div class="flex justify-between items-center mb-8">
         <h1 class="text-2xl font-bold text-[#2B3674]">Panduan</h1>
 
-        <div class="flex items-center gap-4">
-            <!-- Search Bar -->
-            <form action="{{ route('search') }}" method="GET" class="relative">
-                <input type="text" name="query" placeholder="Cari panduan..."
-                    class="w-full pl-10 pr-4 py-2 text-gray-500 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500">
-                <div class="absolute left-3 top-1/2 transform -translate-y-1/2">
-            </div>
-            </form>
-            
-            <div class="flex items-center gap-3">
-                <!-- <div class="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-600 font-medium">
-                    HF
-                </div> -->
-            </div>
-        </div>
-    </div>
-
-    <!-- Quick Start Guide -->
-    
+        
     <div class="bg-white rounded-xl p-6">
-        <h2 class="text-2xl font-semibold mb-6">Pertanyaan yang Sering Diajukan</h2>
+        <h2 class="text-2xl font-semibold mb-6">Cara menggunakan Aplikasi</h2>
         <div class="space-y-4" x-data="{ active: null }">
 
             <!-- FAQ Item 1 -->

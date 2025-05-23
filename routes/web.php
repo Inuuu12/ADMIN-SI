@@ -223,7 +223,7 @@ Route::middleware(['web'])->group(function () {
 });
 
 //Pembayaran 
-Route::get('/bayar/{id}', [PembayaranController::class, 'formBayar']);
+Route::get('/bayar/{kode_unik}', [PembayaranController::class, 'formBayar']);
 Route::post('/bayar/process', [PembayaranController::class, 'processBayar']);
 
 //incase kalau bayar berhasil

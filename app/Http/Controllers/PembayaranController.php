@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Midtrans\Snap;
 use Midtrans\Config;
 use Midtrans\Transaction;
+use Illuminate\Support\Str;
 use Barryvdh\DomPDF\Facade as PDF;
 
 class PembayaranController extends Controller
@@ -24,12 +25,18 @@ class PembayaranController extends Controller
         }
     }
 
-    public function formBayar($id)
+    public function formBayar($kode_unik)
     {
-        $pendaftaran = Pendaftaran::find($id);
+        $pendaftaran = Pendaftaran::where('kode_unik', $kode_unik)->first();
 
         if (!$pendaftaran || $pendaftaran->status != 'accepted') {
             return abort(404, 'Data pendaftaran belum disetujui atau tidak ditemukan.');
+        }
+
+        // Generate payment_token jika belum ada
+        if (!$pendaftaran->payment_token) {
+            $pendaftaran->payment_token = Str::uuid()->toString(); // UUID unik
+            $pendaftaran->save();
         }
 
         $snapToken = $pendaftaran->snap_token;
@@ -104,28 +111,35 @@ class PembayaranController extends Controller
 
     public function suksesPembayaran(Request $request)
     {
-        $orderId = $request->get('order_id');
+        // Ambil token dari URL (query parameter)
+        $token = $request->get('token');
 
-        $pendaftaran = Pendaftaran::where('order_id', $orderId)->first();
+        // Cari data pendaftaran berdasarkan payment_token
+        $pendaftaran = Pendaftaran::where('payment_token', $token)->first();
 
+        // Jika tidak ditemukan, tampilkan error 404
         if (!$pendaftaran) {
             return abort(404, 'Pendaftaran tidak ditemukan');
         }
 
+        // Ambil order_id dari data pendaftaran untuk cek status transaksi di Midtrans
+        $orderId = $pendaftaran->order_id;
+
         try {
-            $status = Transaction::status($orderId);
+            // Ambil status transaksi dari Midtrans menggunakan order_id
+            $status = \Midtrans\Transaction::status($orderId);
 
             if ($status->transaction_status === 'settlement') {
+                // Jika pembayaran berhasil
                 $pendaftaran->status_pembayaran = 'sudah';
 
-                // Insert into tblsantri if not exists
+                // Cek apakah santri sudah ada, jika belum buat data santri baru
                 $existingSantri = \App\Models\Santri::where('pendaftaran_id', $pendaftaran->id)->first();
                 if (!$existingSantri) {
-                    // Generate NIS
-                    $yearPrefix = \Carbon\Carbon::parse($pendaftaran->created_at)->format('y'); // 2 digit year
+                    $yearPrefix = \Carbon\Carbon::parse($pendaftaran->created_at)->format('y'); // 2 digit tahun
                     $birthDatePart = \Carbon\Carbon::parse($pendaftaran->tanggal_lahir)->format('dmy'); // ddmmyy
 
-                    // Count existing santri with same yearPrefix and birthDatePart to get sequence number
+                    // Hitung jumlah santri dengan pola NIS yang sama untuk urutan
                     $count = \App\Models\Santri::where('nis', 'like', $yearPrefix . $birthDatePart . '%')->count();
                     $sequence = str_pad($count + 1, 3, '0', STR_PAD_LEFT);
 
@@ -146,19 +160,26 @@ class PembayaranController extends Controller
                     ]);
                 }
                 $pendaftaran->save();
+
             } elseif ($status->transaction_status === 'pending') {
+                // Jika transaksi masih pending
                 $pendaftaran->status_pembayaran = 'pending';
                 $pendaftaran->save();
+
             } else {
+                // Jika transaksi gagal atau dibatalkan
                 $pendaftaran->status_pembayaran = 'gagal';
                 $pendaftaran->save();
             }
         } catch (\Exception $e) {
+            // Jika gagal mengambil status transaksi dari Midtrans
             return abort(500, 'Gagal mengambil status transaksi dari Midtrans: ' . $e->getMessage());
         }
 
+        // Tampilkan view sukses pembayaran
         return view('pembayaran.sukses', compact('pendaftaran'));
     }
+
 
 
     public function checkTransactionStatus($orderId)

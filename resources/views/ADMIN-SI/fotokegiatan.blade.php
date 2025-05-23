@@ -77,8 +77,7 @@
                 <tr>
                     <th class="px-4 py-3 text-center">No.</th>
                     <th class="px-4 py-3 text-center">Judul</th>
-                    <th class="px-4 py-3 text-center">Deskripsi Singkat</th>
-                    <th class="px-4 py-3 text-center">Tanggal</th>
+                    <th class="px-4 py-3 text-center">Tanggal Kegiatan</th>
                     <th class="px-4 py-3 text-center">Preview</th>
                     <th class="px-4 py-3 text-center">Aksi</th>
                 </tr>
@@ -87,8 +86,7 @@
                 @foreach($galeris as $index => $galeri)
                 <tr class="hover:bg-gray-50 text-center">
                     <td class="px-4 py-4 text-gray-500">{{ $galeris->firstItem() + $index }}</td>
-<td class="px-4 py-4 break-words whitespace-normal max-w-xs">{{ $galeri->judul }}</td>
-<td class="px-4 py-4 break-words whitespace-normal max-w-xs">{{ $galeri->deskripsi }}</td>
+                    <td class="px-4 py-4 break-words whitespace-normal max-w-xs">{{ $galeri->judul }}</td>
                     <td class="px-4 py-4">{{ \Carbon\Carbon::parse($galeri->tanggal)->format('d M Y') }}</td>
                     <td class="px-4 py-4">
                         @if($galeri->gambar)
@@ -176,15 +174,28 @@
             <h2 class="text-xl font-bold mb-4 text-gray-700" x-text="modalTitle"></h2>
 
             <template x-if="modalType === 'detail'">
-                <div class="flex flex-col items-center">
+                <div class="flex flex-col items-center space-y-4 max-h-[80vh] overflow-y-auto px-4">
                     <template x-if="form.gambarPreview">
-                        <img :src="form.gambarPreview" alt="Gambar Kegiatan" class="max-w-full max-h-64 object-contain rounded-lg shadow-md mb-4">
+                    <img 
+                        :src="form.gambarPreview" 
+                        alt="Gambar Kegiatan" 
+                        class="max-w-full max-h-64 object-contain rounded-lg shadow-md border border-gray-200"
+                    >
                     </template>
-                    <h3 class="text-center font-bold text-lg mb-2" x-text="form.judul"></h3>
-                    <p class="text-justify text-gray-700" x-text="form.deskripsi"></p>
-                    <button type="button" @click="closeModal()" class="mt-6 px-6 py-2 bg-emerald-500 text-white rounded-lg">Kembali</button>
+
+                    <h3 class="text-center font-extrabold text-2xl text-gray-800" x-text="form.judul"></h3>
+
+                    <p class="text-justify text-gray-700 whitespace-pre-wrap leading-relaxed" x-text="form.deskripsi"></p>
+
+                    <button 
+                    type="button" 
+                    @click="closeModal()" 
+                    class="mt-6 px-6 py-2 bg-emerald-500 hover:bg-emerald-600 transition-colors text-white rounded-lg font-semibold"
+                    >
+                    Kembali
+                    </button>
                 </div>
-            </template>
+                </template>
 
             <form :action="formAction" method="POST" enctype="multipart/form-data" @submit.prevent="submitForm" x-ref="formElement" x-show="modalType !== 'detail'">
                 <template x-if="modalType !== 'hapus'">
@@ -197,7 +208,7 @@
                         <textarea name="deskripsi" x-model="form.deskripsi" :class="{'mb-4': !errors.deskripsi, 'mb-1': errors.deskripsi}" class="border p-2 w-full mb-2 rounded-lg" :readonly="modalType === 'detail'"></textarea>
                         <template x-if="errors.deskripsi"><div class="text-red-500 text-sm mt-0.5 mb-4" x-text="errors.deskripsi"></div></template>
 
-                        <label class="block text-sm font-medium">Tanggal</label>
+                        <label class="block text-sm font-medium">Tanggal Kegiatan</label>
                         <input type="date" name="tanggal" x-model="form.tanggal" :class="{'mb-4': !errors.tanggal, 'mb-1': errors.tanggal}" class="border p-2 w-full mb-2 rounded-lg" :readonly="modalType === 'detail'">
                         <template x-if="errors.tanggal"><div class="text-red-500 text-sm mt-0.5 mb-4" x-text="errors.tanggal"></div></template>
 

@@ -14,6 +14,29 @@ use App\Models\User;
 
 class PendaftaranController extends Controller
 {
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    //     $this->middleware('role:admin')->only('approve'); // Middleware khusus admin untuk approve
+    // }
+
+    public function showForm()
+    {
+        $userId = Auth::id();
+        $pendaftaran = Pendaftaran::where('user_id', $userId)->latest()->first();
+
+        if ($pendaftaran) {
+            if ($pendaftaran->status_pembayaran == 'lunas') {
+                return redirect()->route('pendaftaran.status');
+            } elseif ($pendaftaran->status_pembayaran == 'belum') {
+                return view('pendaftaran.belum_bayar', compact('pendaftaran'));
+            }
+        }
+
+        return view('pendaftaran.form');
+    }
+
+
     public function store(Request $request)
     {
         if (!Auth::check() || Auth::user()->role !== 'user') {
@@ -34,6 +57,7 @@ class PendaftaranController extends Controller
             'alamat' => 'required|string',
             'nama_orang_tua' => 'required|string|max:255',
             'no_hp' => 'required|string|max:20',
+            'email' => 'required|email|max:255', // validasi email ditambahkan
             'akta_kelahiran' => 'required|file|mimes:pdf|max:10240',
             'kartu_keluarga' => 'required|file|mimes:pdf|max:10240',
         ], [
@@ -41,19 +65,14 @@ class PendaftaranController extends Controller
             'kartu_keluarga.max' => 'Ukuran kartu keluarga tidak boleh lebih dari 10 MB.',
         ]);
 
-        // Simpan file akta_kelahiran
+        // Simpan file menggunakan storage disk public
         if ($request->hasFile('akta_kelahiran')) {
-            $aktaFile = $request->file('akta_kelahiran');
-            $aktaName = time() . '_akta.' . $aktaFile->getClientOriginalExtension();
-            $aktaFile->move(public_path('gambar/akta_kelahiran'), $aktaName);
+            $aktaName = $request->file('akta_kelahiran')->store('akta_kelahiran', 'public');
             $validatedData['akta_kelahiran'] = $aktaName;
         }
 
-        // Simpan file kartu_keluarga
         if ($request->hasFile('kartu_keluarga')) {
-            $kkFile = $request->file('kartu_keluarga');
-            $kkName = time() . '_kk.' . $kkFile->getClientOriginalExtension();
-            $kkFile->move(public_path('gambar/kartu_keluarga'), $kkName);
+            $kkName = $request->file('kartu_keluarga')->store('kartu_keluarga', 'public');
             $validatedData['kartu_keluarga'] = $kkName;
         }
 
@@ -62,7 +81,7 @@ class PendaftaranController extends Controller
 
         $pendaftaran = Pendaftaran::create($validatedData);
 
-        // Send notification to admin users
+        // Kirim notifikasi ke admin
         $admins = User::where('role', 'admin')->get();
         foreach ($admins as $admin) {
             $admin->notify(new NewPendaftaranNotification($pendaftaran));
@@ -74,11 +93,17 @@ class PendaftaranController extends Controller
     public function approve($id)
     {
         $pendaftaran = Pendaftaran::findOrFail($id);
-        $pendaftaran->status = 'Diterima';
+        $pendaftaran->status = 'diterima';
         $pendaftaran->save();
 
-        // Kirim email ke santri atau wali
-        Mail::to($pendaftaran->email)->send(new SantriApproved($pendaftaran));
+        if (!empty($pendaftaran->email)) {
+            try {
+                Mail::to($pendaftaran->email)->send(new SantriApproved($pendaftaran));
+            } catch (\Exception $e) {
+                // Log error jika email gagal dikirim
+                \Log::error('Gagal mengirim email approval: ' . $e->getMessage());
+            }
+        }
 
         return response()->json(['success' => true]);
     }

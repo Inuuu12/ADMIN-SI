@@ -74,7 +74,7 @@
             <span x-text="notifications.length"></span>
         </span>
     </button>
-    
+   
 
     <!-- Modal Popup -->
     <div x-show="showModal" x-transition
@@ -99,7 +99,7 @@
                             <tr>
                                 <th class="px-4 py-2">Pesan</th>
                                 <th class="px-4 py-2">Waktu</th>
-                                <th class="px-4 py-2 text-right">Aksi</th>
+                                <th class="px-4 py-2">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -109,8 +109,15 @@
                                     <td class="px-4 py-2 text-xs"
                                         x-text="new Date(notification.created_at).toLocaleString()"></td>
                                     <td class="px-4 py-2 text-right">
-                                        <button @click.stop="markAsRead(notification.id)"
-                                            class="text-blue-500 hover:underline text-xs">Sudah Dibaca</button>
+                                      <button @click.stop="markAsRead(notification.id)"
+                                          class="text-gray-600 border border-gray-300 rounded-lg p-1 hover:border-green-500 hover:text-green-500 transition"
+                                          aria-label="Mark as read" title="Sudah Dibaca">
+                                          <!-- Icon centang -->
+                                          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                                          </svg>
+                                      </button>
+>>>>>>> f9c2840 (keep perubahan ardien)
                                     </td>
                                 </tr>
                             </template>
@@ -126,7 +133,6 @@
             </div>
         </div>
     </div>
-
 </div>
 
 
@@ -185,18 +191,27 @@ setTimeout(() => {
             </div>
         </div>
 
-        <!-- Diterima -->
-        <div class="bg-white p-6 rounded-xl flex items-center gap-4">
-            <div class="bg-emerald-100 p-4 rounded-full">
-              <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-              </svg>
-            </div>
-            <div>
-                <p class="text-gray-500">Diterima</p>
-                <h3 class="text-2xl font-bold">{{ $diterimaCount }}</h3>
-            </div>
+        <div class="bg-white p-6 rounded-xl flex items-center gap-5">
+          <div class="bg-green-100 p-3 rounded-full flex items-center justify-center">
+            <svg 
+              class="w-7 h-7 text-green-600" 
+              fill="none" 
+              stroke="currentColor" 
+              viewBox="0 0 24 24" 
+              stroke-width="2" 
+              stroke-linecap="round" 
+              stroke-linejoin="round"
+              >
+              <path d="M9 12l2 2 4-4" />
+              <circle cx="12" cy="12" r="9" />
+            </svg>
+          </div>
+          <div>
+            <p class="text-gray-500 text-sm">Diterima</p>
+            <h3 class="text-2xl font-bold">{{ $diterimaCount }}</h3>
+          </div>
         </div>
+
 
         <!-- Menunggu -->
         <div class="bg-white p-6 rounded-xl flex items-center gap-4">
