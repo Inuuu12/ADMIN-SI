@@ -1,5 +1,6 @@
 @extends('layouts.berandaly')
 
+@section('content')
 <div class="flex justify-center items-center min-h-screen bg-gray-100">
     <div class="bg-white p-10 rounded-xl shadow-lg max-w-lg text-center animate-fadeIn">
         <svg class="mx-auto mb-6 w-20 h-20 text-green-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
@@ -14,14 +15,16 @@
             Kembali ke Beranda
         </a>
     </div>
-</div iv>
+</div>
 
 @if(session('error'))
     <div id="popup-error" class="popup-alert">
         {{ session('error') }}
     </div>
 @endif
+@endsection
 
+@section('styles')
 <style>
     @keyframes fadeIn {
         from {
@@ -34,11 +37,11 @@
         }
     }
 
-        .popup-alert {
+    .popup-alert {
         position: fixed;
         bottom: 30px;
         right: 30px;
-        background-color: #f44336; /* Merah untuk error */
+        background-color: #f44336;
         color: white;
         padding: 12px 20px;
         border-radius: 8px;
@@ -52,8 +55,9 @@
         animation: fadeIn 0.8s ease forwards;
     }
 </style>
+@endsection
 
-
+@section('scripts')
 <script>
     setTimeout(() => {
         const popup = document.getElementById('popup-error');
@@ -63,5 +67,4 @@
         }
     }, 3000);
 </script>
-
-@extends('layouts.footerly')
+@endsection

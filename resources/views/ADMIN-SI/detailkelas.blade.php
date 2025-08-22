@@ -67,7 +67,7 @@
                     @forelse ($santriNullKelas as $santri)
                     <label class="flex items-center gap-2">
                         <input type="checkbox" name="santri_ids[]" value="{{ $santri->id }}" class="form-checkbox">
-                        <span>{{ $santri->nama_santri }} (NIS: {{ $santri->nis }})</span>
+                        <span>{{ $santri->nama_santri }} (NIK: {{ $santri->nik }})</span>
                     </label>
                     @empty
                     <p class="whitespace-nowrap">Tidak ada santri yang belum memiliki kelas.</p>

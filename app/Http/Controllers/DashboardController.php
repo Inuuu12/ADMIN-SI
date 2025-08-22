@@ -90,8 +90,9 @@ class DashboardController extends Controller
             $usia = $tanggalLahir->age; // Calculate age from tanggal_lahir
 
             // Transform file paths to full URLs
-            $aktaKelahiranUrl = $item->akta_kelahiran ? asset('gambar/akta_kelahiran/' . $item->akta_kelahiran) : null;
-            $kartuKeluargaUrl = $item->kartu_keluarga ? asset('gambar/kartu_keluarga/' . $item->kartu_keluarga) : null;
+            $aktaKelahiranUrl = $item->akta_kelahiran ? url('storage/akta_kelahiran/' . $item->akta_kelahiran) : null;
+            $kartuKeluargaUrl = $item->kartu_keluarga ? url('storage/kartu_keluarga/' . $item->kartu_keluarga) : null;
+
 
             return [
                 'id' => $item->id,

@@ -25,9 +25,9 @@ class PembayaranController extends Controller
         }
     }
 
-    public function formBayar($kode_unik)
+    public function formBayar($id)
     {
-        $pendaftaran = Pendaftaran::where('kode_unik', $kode_unik)->first();
+        $pendaftaran = Pendaftaran::where('id', $id)->first();
 
         if (!$pendaftaran || $pendaftaran->status != 'accepted') {
             return abort(404, 'Data pendaftaran belum disetujui atau tidak ditemukan.');
@@ -113,6 +113,7 @@ class PembayaranController extends Controller
     {
         // Ambil token dari URL (query parameter)
         $token = $request->get('token');
+        
 
         // Cari data pendaftaran berdasarkan payment_token
         $pendaftaran = Pendaftaran::where('payment_token', $token)->first();
@@ -139,15 +140,15 @@ class PembayaranController extends Controller
                     $yearPrefix = \Carbon\Carbon::parse($pendaftaran->created_at)->format('y'); // 2 digit tahun
                     $birthDatePart = \Carbon\Carbon::parse($pendaftaran->tanggal_lahir)->format('dmy'); // ddmmyy
 
-                    // Hitung jumlah santri dengan pola NIS yang sama untuk urutan
+                    // Hitung jumlah santri dengan pola NIK yang sama untuk urutan
                     $count = \App\Models\Santri::where('nis', 'like', $yearPrefix . $birthDatePart . '%')->count();
                     $sequence = str_pad($count + 1, 3, '0', STR_PAD_LEFT);
 
-                    $nis = $yearPrefix . $birthDatePart . $sequence;
+                    $nik = $yearPrefix . $birthDatePart . $sequence;
 
                     \App\Models\Santri::create([
                         'pendaftaran_id' => $pendaftaran->id,
-                        'nis' => $nis,
+                        'nik' => $nik,
                         'nama_santri' => $pendaftaran->nama_santri,
                         'tempat_lahir' => $pendaftaran->tempat_lahir,
                         'tanggal_lahir' => $pendaftaran->tanggal_lahir,
@@ -192,28 +193,6 @@ class PembayaranController extends Controller
         }
     }
 
-    public function cetakInvoice($id)
-    {
-        // Ambil data pendaftaran berdasarkan ID
-        $pendaftaran = Pendaftaran::findOrFail($id);
 
-        // Cek jika pembayaran sudah selesai
-        if ($pendaftaran->status_pembayaran != 'sudah') {
-            return abort(404, 'Pembayaran belum selesai.');
-        }
-
-        // Siapkan data untuk template PDF
-        $data = [
-            'pendaftaran' => $pendaftaran,
-            'paymentDate' => $pendaftaran->updated_at->format('d M Y'), // Tanggal pembayaran
-            // Tambahkan data lain yang dibutuhkan untuk invoice
-        ];
-
-        // Gunakan DomPDF untuk menghasilkan PDF
-        $pdf = PDF::loadView('invoice.cetak', $data);
-
-        // Menghasilkan dan mengunduh file PDF
-        return $pdf->download('invoice-' . $pendaftaran->order_id . '.pdf');
-    }
 
 }

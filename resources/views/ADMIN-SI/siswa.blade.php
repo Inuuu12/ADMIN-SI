@@ -6,7 +6,7 @@
     <table class="min-w-full bg-white border border-gray-300">
         <thead>
             <tr>
-                <th class="py-2 px-4 border-b border-gray-300">NIS</th>
+                <th class="py-2 px-4 border-b border-gray-300">NIK</th>
                 <th class="py-2 px-4 border-b border-gray-300">Nama Santri</th>
                 <th class="py-2 px-4 border-b border-gray-300">Usia</th>
                 <th class="py-2 px-4 border-b border-gray-300">Jenis Kelamin</th>
@@ -15,7 +15,7 @@
         <tbody>
             @foreach ($santris as $santri)
             <tr>
-                <td class="py-2 px-4 border-b border-gray-300">{{ $santri->nis }}</td>
+                <td class="py-2 px-4 border-b border-gray-300">{{ $santri->nik }}</td>
                 <td class="py-2 px-4 border-b border-gray-300">{{ $santri->nama_santri }}</td>
                 <td class="py-2 px-4 border-b border-gray-300">
                     @php

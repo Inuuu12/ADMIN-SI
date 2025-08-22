@@ -223,16 +223,31 @@ Route::middleware(['web'])->group(function () {
 });
 
 //Pembayaran 
-Route::get('/bayar/{kode_unik}', [PembayaranController::class, 'formBayar']);
+Route::get('/bayar/{id}', [PembayaranController::class, 'formBayar']);
 Route::post('/bayar/process', [PembayaranController::class, 'processBayar']);
 
 //incase kalau bayar berhasil
 Route::get('/pembayaran/sukses', function () {
     return view('pembayaran.sukses');
 });
-Route::get('/pembayaran/sukses', [PembayaranController::class, 'suksesPembayaran']);
 
 //Cetak PDF
 Route::get('/pengajar/cetak-pdf', [App\Http\Controllers\GuruController::class, 'cetakPDF'])->name('pengajar.cetak.pdf');
-Route::get('/invoice/cetak/{id}', [PembayaranController::class, 'cetakInvoice'])->name('invoice.cetak');
+
+Route::get('/dokumen/pdf/{filename}', function ($filename) {
+    $path = storage_path('app/pdf/' . $filename);
+
+    if (!File::exists($path)) {
+        abort(404);
+    }
+
+    $file = File::get($path);
+    $type = File::mimeType($path);
+
+    $response = Response::make($file, 200);
+    $response->header("Content-Type", $type);
+
+    return $response;
+});
+
 

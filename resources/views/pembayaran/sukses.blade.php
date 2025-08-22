@@ -16,11 +16,7 @@
                 <a href="{{ url('/') }}" class="inline-block bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-300">
                     Kembali ke Beranda
                 </a>
-
-                <!-- Tombol Cetak Invoice -->
-                <a href="{{ route('pdf.cetakinvoice', ['id' => $payment->id]) }}" target="_blank" class="inline-block ml-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-300">
-                    Cetak Invoice
-                </a>
+                
             </div>
         </div>
         

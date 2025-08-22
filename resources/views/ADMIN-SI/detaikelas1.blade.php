@@ -114,10 +114,10 @@
     }, 3000);
     let deleteIndex = null;
     let murid = [
-        { nama: "Budi Santoso", nis: "12001", email: "budi@gmail.com" },
-        { nama: "Siti Aminah", nis: "12002", email: "siti@gmail.com" },
-        { nama: "hakkam", nis: "12003", email: "hakkam@gmail.com" },
-        { nama: "widho", nis: "12004", email: "widho@gmail.com" }
+        { nama: "Budi Santoso", nik: "12001", email: "budi@gmail.com" },
+        { nama: "Siti Aminah", nik: "12002", email: "siti@gmail.com" },
+        { nama: "hakkam", nik: "12003", email: "hakkam@gmail.com" },
+        { nama: "widho", nik: "12004", email: "widho@gmail.com" }
     ];
 
     function showDelete(i) {

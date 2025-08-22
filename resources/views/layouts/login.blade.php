@@ -82,12 +82,12 @@
           <a href="{{ route('register') }}" class="ml-1 text-emerald-500 hover:text-emerald-700 font-semibold">Daftar</a>
         </p>
       </form>
-      <!-- <hr class="my-6 border-t border-gray-300">
+      <hr class="my-6 border-t border-gray-300">
       <div class="text-center">
         <a href="{{ route('login-admin') }}" class="border border-emerald-500 text-emerald-500 px-4 py-2 rounded text-center hover:bg-emerald-50 inline-flex items-center gap-2">
           Masuk sebagai Admin
         </a>
-      </div> -->
+      </div> 
     </div>
   </div>
 

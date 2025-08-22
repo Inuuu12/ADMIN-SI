@@ -117,7 +117,6 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
                                           </svg>
                                       </button>
->>>>>>> f9c2840 (keep perubahan ardien)
                                     </td>
                                 </tr>
                             </template>
@@ -681,3 +680,4 @@ setTimeout(() => {
 
 
 @endsection
+

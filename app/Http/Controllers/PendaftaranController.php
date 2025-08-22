@@ -57,7 +57,7 @@ class PendaftaranController extends Controller
             'alamat' => 'required|string',
             'nama_orang_tua' => 'required|string|max:255',
             'no_hp' => 'required|string|max:20',
-            'email' => 'required|email|max:255', // validasi email ditambahkan
+            'email' => 'nullable|email',
             'akta_kelahiran' => 'required|file|mimes:pdf|max:10240',
             'kartu_keluarga' => 'required|file|mimes:pdf|max:10240',
         ], [
